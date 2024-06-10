@@ -15,27 +15,30 @@ pip install eseas
 Alternatively, you can install it from a local wheel file:
 
 ```bash
-pip install ./evdspyproseas-0.1.0-py3-none-any.whl
+pip install ./eseas-0.1.0-py3-none-any.whl
 ```
 
 ### jwsacruncher
 
-The `jwsacruncher` tool is required and can be obtained from the [jdemetra releases](https://github.com/jdemetra/jwsacruncher/releases/tag/v2.2.4).
+The `jwsacruncher` tool is required for this package to function. You can download the latest release of `jwsacruncher` from the [jdemetra releases](https://github.com/jdemetra/jwsacruncher/releases/tag/v2.2.4).
 
 ```bash
 # Download jwsacruncher
 cd jdemetra/jswacruncher
 ```
 
+After downloading `jwsacruncher`, you need to specify its location when using the `SeasonalOptions` function from the `eseas` package.
+
 ## Usage
 
 Here's an example of how to use the `eseas` package:
 
 ```python
-from eseas import Seasonal, SeasonalOptions
+from eseas import SeasonalADV, SeasonalOptions
 import time
 
 def main():
+    # Specify the path to the jwsacruncher bin directory
     java_folder = r'../jwsacruncher-2.2.4/bin'
     demetra_source_folder = r"./demetra_source_folder"
     local_folder = r"./test_out"
@@ -44,11 +47,11 @@ def main():
         demetra_source_folder,
         java_folder,
         local_folder,
-        result_file_names=("sa", "s_f", "cal"), # see [Demetra Components](./docs/demetra_components.md)
+        result_file_names=("sa", "s_f", "cal"),
         workspace_mode=True,
         file_name_explanation=True,
     )
-    seas = Seasonal(options)
+    seas = SeasonalADV(options)
     
     seas.part1()
     time.sleep(10)
