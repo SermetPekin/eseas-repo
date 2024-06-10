@@ -64,10 +64,10 @@ class SingleOptions:
 #     """CommonSpaceOptionsNotSet"""
 
 #     def __init__(self, *args, **kwargs):
-#         self.msg = """ 
+#         self.msg = """
 #         !=================================================================
 #         First we need a common space [some_folder]
-#         # Example  
+#         # Example
 #         cs_opts = CommonSpaceOptions()
 #         cs_opts.set(cs_opts , r"./some_folder...")
 #         !=================================================================
@@ -228,10 +228,8 @@ def search_folders_general(
     f = list_files_recursive(root)
     if not f:
         return f
-    files_filtered  = filter_func(f)
-    return files_filtered 
-
-
+    files_filtered = filter_func(f)
+    return files_filtered
 
 
 def get_type_of_files_demetra(folder, filter_func=filter_xls) -> list[FileItem]:
@@ -242,8 +240,6 @@ def get_type_of_files_demetra(folder, filter_func=filter_xls) -> list[FileItem]:
 def get_type_of_files(folder, filter_func=filter_xls):
     files = search_folders_general(folder, filter_func)  # search_folders()
     return files
-
-
 
 
 def get_xml_demetra(folder) -> list[FileItem]:

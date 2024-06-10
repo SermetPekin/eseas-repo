@@ -121,4 +121,3 @@ def replace_light(string):
 
 def replace_medium(string):
     return base_replace(string, "medium")
-

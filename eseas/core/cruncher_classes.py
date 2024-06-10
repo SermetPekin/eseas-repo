@@ -7,10 +7,7 @@ from evdspy.EVDSlocal.utils.utils_general import replace_recursive
 import time
 import tempfile
 import os
-
-
-
-
+from typing import Union
 
 
 class Cruncher:
@@ -118,7 +115,11 @@ _______________________________________________________________
         checked = True
 
 
-def check_write_permission(folder):
+def check_write_permission(folder: Union[str, Path]) -> bool:
+    if not os.path.isdir(folder):
+        raise NotADirectoryError(folder)
+        return False
+
     try:
         testfile = tempfile.TemporaryFile(dir=folder)
         testfile.close()
@@ -127,11 +128,11 @@ def check_write_permission(folder):
         return False
 
 
-def check_read_permission(directory):
-    if not os.path.isdir(directory):
-        return False
-
-    return os.access(directory, os.R_OK)
+def check_read_permission(folder: Union[str, Path]) -> bool:
+    if not os.path.isdir(folder):
+        raise NotADirectoryError(folder)
+        # return False
+    return os.access(folder, os.R_OK)
 
 
 def check_cruncher(cls):
