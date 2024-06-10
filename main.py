@@ -1,10 +1,10 @@
 from dataclasses import dataclass
 from pathlib import Path
-from evdspySeas import SeasonalADV
-from evdspySeas import SeasonalOptions
+from eseas import SeasonalADV
+from eseas import SeasonalOptions
 from typing import Union
 
-TESTING_FOLDER = r"./evdspySeas/data_for_testing"
+TESTING_FOLDER = r"./eseas/data_for_testing"
 # TESTING_FOLDER = r"../data_for_testing"
 
 
@@ -75,7 +75,7 @@ def m2(part=1):
     check_folder(java_folder)
     check_folder(demetra_source_folder)
     check_folder(local_folder)
-    # local_folder = r'/Users/sermetpekin/Documents/evdspySeasPri/testevds/test_out'
+    # local_folder = r'/Users/sermetpekin/Documents/eseasPri/testevds/test_out'
     options = Options(java_folder, local_folder, demetra_source_folder)
     seasonal_main(options, part=part)
 

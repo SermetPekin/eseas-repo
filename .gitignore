@@ -3,7 +3,7 @@ __pycache__/
 
 .venv/ 
 .pytest_cache/
-evdspyseas_output/ 
+eseas_output/ 
 
 
 

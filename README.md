@@ -1,15 +1,15 @@
-# evdspySeas
+# eseas
 
-evdspySeas is a Python package that acts as a wrapper for the `jwsacruncher` Java package. This tool allows users to process Demetra workspace XML files, create batch files, execute them, and collect the desired outputs into individual Excel files.
+eseas is a Python package that acts as a wrapper for the `jwsacruncher` Java package. This tool allows users to process Demetra workspace XML files, create batch files, execute them, and collect the desired outputs into individual Excel files.
 
 ## Installation
 
-### evdspySeas
+### eseas
 
-You can install the `evdspySeas` package via pip:
+You can install the `eseas` package via pip:
 
 ```bash
-pip install evdspySeas
+pip install eseas
 ```
 
 Alternatively, you can install it from a local wheel file:
@@ -29,10 +29,10 @@ cd jdemetra/jswacruncher
 
 ## Usage
 
-Here's an example of how to use the `evdspySeas` package:
+Here's an example of how to use the `eseas` package:
 
 ```python
-from evdspySeas import Seasonal, SeasonalOptions
+from eseas import Seasonal, SeasonalOptions
 import time
 
 def main():

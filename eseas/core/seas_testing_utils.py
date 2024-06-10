@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from pathlib import Path
 
-from evdspySeas.core.utils_general_copy import create_dir
+from eseas.core.utils_general_copy import create_dir
 
 from .utils_general_copy import get_os
 
@@ -29,7 +29,7 @@ def get_testing_utils():
     if get_os() != "win":
         fold = "unix"
 
-    demetra_folder = rf"./evdspySeas/data_for_testing/{fold}"
+    demetra_folder = rf"./eseas/data_for_testing/{fold}"
     java_folder = r"../jwsacruncher-2.2.4/bin"
     local_folder = r"./evdspyseas_output"
     create_dir(local_folder)

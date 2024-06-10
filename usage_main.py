@@ -1,5 +1,5 @@
-from evdspySeas import Seasonal
-from evdspySeas import SeasonalOptions
+from eseas import Seasonal
+from eseas import SeasonalOptions
 import time
 
 

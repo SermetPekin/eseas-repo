@@ -1,14 +1,14 @@
 import pandas as pd
 from evdspy.EVDSlocal.common.file_classes import mock_file_items
-from evdspySeas.core.seasonal_general import SeasonalADV
-from evdspySeas.core.seasonal_options import SeasonalOptions
-from evdspySeas.core.df_operations import make_df_float
-from evdspySeas.core.cruncher_classes import get_cruncher
-from evdspySeas.core.cruncher_classes import Cruncher
-from evdspySeas.core.demetra import get_demetra_files
-from evdspySeas.core.picker_classes import OutFilePicker
-from evdspySeas.core.seas_testing_utils import get_testing_utils
-from evdspySeas.core.seas_utils import filter_xls
+from eseas.core.seasonal_general import SeasonalADV
+from eseas.core.seasonal_options import SeasonalOptions
+from eseas.core.df_operations import make_df_float
+from eseas.core.cruncher_classes import get_cruncher
+from eseas.core.cruncher_classes import Cruncher
+from eseas.core.demetra import get_demetra_files
+from eseas.core.picker_classes import OutFilePicker
+from eseas.core.seas_testing_utils import get_testing_utils
+from eseas.core.seas_utils import filter_xls
 
 testing_utils = get_testing_utils()
 demetra_folder = testing_utils.demetra_folder

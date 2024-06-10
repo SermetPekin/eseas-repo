@@ -94,11 +94,11 @@ class ReproduceMevsimsel:
         date_str = datetime.now()
         template = f"""\n
 #====================================================================== 
-# This script was created by evdspySeas    {date_str}
+# This script was created by eseas    {date_str}
 #   In order to reproduce you may use this template 
 #====================================================================== 
-from evdspySeas import SeasonalOptions 
-from evdspySeas import SeasonalADV
+from eseas import SeasonalOptions 
+from eseas import SeasonalADV
 def main():
     {self.mevsimsel.options.__repr__()}
     m = SeasonalADV(options)
