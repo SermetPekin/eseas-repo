@@ -5,6 +5,8 @@ from evdspy.EVDSlocal.common.file_classes import file_items_update, FileItem
 from .df_operations import make_df_float
 from .seas_utils import get_xml_demetra, display
 
+from ._options import demetra_command_file_name
+
 
 def get_demetra_files(folder) -> list[FileItem]:
     xml_demetra = get_xml_demetra(folder)
@@ -52,7 +54,7 @@ def show_title(msg: str) -> None:
     print("=" * 50)
 
 
-def write_bat_file_demetra(xml_demetra, file_name="demetra_commands") -> None:
+def write_bat_file_demetra(xml_demetra, file_name=demetra_command_file_name) -> None:
     from .create_bat_command import (
         create_command,
         copy_xml_files_local,

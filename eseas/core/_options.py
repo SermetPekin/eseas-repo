@@ -8,3 +8,4 @@
 """
 
 middle_folder = "test_output"
+demetra_command_file_name = 'demetra_commands'

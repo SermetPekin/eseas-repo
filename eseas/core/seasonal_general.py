@@ -17,6 +17,9 @@ from .seasonal_adv_utils import (
     display,
 )
 
+from ._options import demetra_command_file_name 
+# demetra_command_file_name = 'demetra_commands'
+
 
 class SeasonalADV:
     def __init__(self, options):
@@ -37,7 +40,7 @@ class SeasonalADV:
         xml_demetra = get_demetra_files(self.options.demetra_folder)
         if self.options.test:
             xml_demetra = xml_demetra[0:20]
-        write_bat_file_demetra(xml_demetra, file_name="demetra_commands")
+        write_bat_file_demetra(xml_demetra, file_name=demetra_command_file_name)
         if not self.options.auto_approve and not get_input_from_user():
             view_display(
                 "demetra command did not run.\n You may type y next time if you like them to run."
