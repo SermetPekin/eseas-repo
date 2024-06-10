@@ -46,13 +46,13 @@ def convert_df_general(df: pd.DataFrame) -> pd.DataFrame:
     return df_new
 
 
-def show_title(msg: str):
+def show_title(msg: str) -> None:
     print("=" * 50)
     print(" " * 5, msg)
     print("=" * 50)
 
 
-def write_bat_file_demetra(xml_demetra, file_name="demetra_commands"):
+def write_bat_file_demetra(xml_demetra, file_name="demetra_commands") -> None:
     from .create_bat_command import (
         create_command,
         copy_xml_files_local,
@@ -65,7 +65,7 @@ def write_bat_file_demetra(xml_demetra, file_name="demetra_commands"):
     copy_folder_demetra(xml_demetra)
     text = "".join(cmds)
     show_title(f"Creating command file to call `jwsacruncher` : [{file_name}]")
-    time.sleep(2)
-    print(text)
-    time.sleep(3)
+    # time.sleep(2)
+    # print(text)
+    # time.sleep(3)
     write_bat_file(text, file_name)

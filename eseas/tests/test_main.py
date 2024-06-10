@@ -77,7 +77,6 @@ def test_filter_xls(capsys):
         print(a)
 
 
-
 def test_Cruncher():
     c1 = Cruncher()
     c1.crunch_folder = "abc"

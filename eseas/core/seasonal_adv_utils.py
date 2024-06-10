@@ -7,6 +7,10 @@ from .seas_utils import view_display
 
 
 def this_is_pytest() -> bool:
+    '''
+    Sometimes we need to check if it is pytest 
+    in order to avoid tests to break 
+    '''
     def check():
         path_ = Path(sys.argv[0])
         return "pytest" in str(path_.stem)
@@ -17,6 +21,10 @@ def this_is_pytest() -> bool:
 
 
 def get_input_both(msg="Your choice", default_answer="y") -> str:
+    '''
+    using input function causes pytest to raise error
+    we need to check if it is pytest 
+    '''
     view_display(msg)
     if this_is_pytest():
         return default_answer
@@ -77,15 +85,9 @@ def seasonal_results_msg(test):
     """
 
 
-def get_sonuc_template():
-    template = """
-    ==========================================================================
-            Files created 
-    ==========================================================================\n"""
-    return template
 
 
-def get_sonuclar_bilgi(adres):
+def get_results_info(adres):
     t = f""" 
     --------------------------
     {adres}

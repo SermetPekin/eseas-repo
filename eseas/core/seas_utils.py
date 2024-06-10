@@ -91,7 +91,7 @@ def get_absolute(folder: str):
     return Path(p.absolute())
 
 
-def file_name_temizle(file_name: str):
+def clean_file_name(file_name: str):
     file_name = file_name.replace("\n", " ")
     file_name = file_name.replace(":", " ")
     file_name = file_name.replace("'", " ")
@@ -177,10 +177,6 @@ def display_cache_warning(cache_name):
         f"Cache option is True therefore recent lookup will be used..{cache_name} \n If you added new files you may "
         "select cache_option=False "
     )
-    # time.sleep(4)
-
-
-current_dir = False
 
 
 class MaxFileNumberReached(BaseException): ...
@@ -241,11 +237,11 @@ def create_json_file_main(items: t.Tuple[FileItem]):
     for file_ in items:
         file_.column_names = (str(x) for x in file_.column_names)
         obj = {
-            "file_name": file_name_temizle(str(file_.file_name)),
-            "dir_path": file_name_temizle(str(file_.dir_path)),
-            "column_names": file_name_temizle(",SEP,".join(file_.column_names)),
-            "summary": file_name_temizle(file_.summary),
-            "sample": file_name_temizle(str(file_.sample_data)),
+            "file_name": clean_file_name(str(file_.file_name)),
+            "dir_path": clean_file_name(str(file_.dir_path)),
+            "column_names": clean_file_name(",SEP,".join(file_.column_names)),
+            "summary": clean_file_name(file_.summary),
+            "sample": clean_file_name(str(file_.sample_data)),
             "df_json": file_.df_json,
         }
         liste.append(obj)

@@ -2,13 +2,13 @@ import pandas as pd
 from pathlib import Path
 
 
-def get_rand_hash(num=5):
+def get_rand_hash(num=5) -> str:
     import secrets
 
     return secrets.token_urlsafe(nbytes=num)
 
 
-def try_to_write_excel(df: pd.DataFrame, file_name: Path):
+def try_to_write_excel(df: pd.DataFrame, file_name: Path) -> None:
     try:
         df.to_excel(file_name)
     except Exception:
@@ -19,14 +19,14 @@ def try_to_write_excel(df: pd.DataFrame, file_name: Path):
         df.to_excel(Path(pa) / file_name_new)
 
 
-def rreplace(st: str, e, y):
+def rreplace(st: str, e, y) -> str:
     if e not in st:
         return st
     st = st.replace(e, y)
     return rreplace(st, e, y)
 
 
-def sayi_donustur(pot_sayi: str):
+def sayi_donustur(pot_sayi: str) -> float:
     if not pot_sayi:
         return pot_sayi
     try:

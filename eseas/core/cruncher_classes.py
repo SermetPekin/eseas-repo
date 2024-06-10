@@ -1,17 +1,20 @@
 import traceback
 from pathlib import Path
 from rich import print
-from .seas_utils import view_display, get_absolute
+from .seas_utils import get_absolute
 from evdspy.EVDSlocal.common.file_classes import make_eng
 from evdspy.EVDSlocal.utils.utils_general import replace_recursive
+import time
+import tempfile
+import os
 
 
 class Cruncher:
     """cruncher"""
 
-    # instance = False
     crunch_folder = False
     local_work_space = "@wspace"
+    demetra_folder: str = "."
 
     def __new__(cls):
         if not hasattr(cls, "instance"):
@@ -88,7 +91,7 @@ class Cruncher:
 
 def kontrol(cls):
     global checked
-    if not kontrol_et_cruncher(cls):
+    if not check_cruncher(cls):
 
         def check(folder: str):
             if Path(folder).is_dir():
@@ -111,43 +114,46 @@ _______________________________________________________________
         checked = True
 
 
-def kontrol_et_cruncher(cls):
-    def yaz_kontrol(adres: Path):
-        success = True
-        try:
-            with open(adres / "test_evdspy_pro_chruncer.txt", mode="w+") as file_:
-                file_.write("test...")
-                success = True
-        except Exception as exc:
-            view_display(exc)
-            success = False
-        return success
+def check_write_permission(folder):
+    try:
+        testfile = tempfile.TemporaryFile(dir=folder)
+        testfile.close()
+        return True
+    except (OSError, IOError):
+        return False
 
-    print(cls.instance.crunch_folder)
-    assert isinstance(
-        cls.instance.crunch_folder,
-        (
-            str,
-            Path,
-        ),
-    )
-    assert isinstance(
-        cls.instance.local_work_space,
-        (
-            str,
-            Path,
-        ),
-    )
-    a1 = yaz_kontrol(Path(cls.instance.crunch_folder))
-    a2 = yaz_kontrol(Path(cls.instance.local_work_space))
-    a3 = yaz_kontrol(Path(cls.instance.demetra_folder))
-    return all(
+
+def check_read_permission(directory):
+    if not os.path.isdir(directory):
+        return False
+
+    return os.access(directory, os.R_OK)
+
+
+def check_cruncher(cls):
+    msg_if_error = """
+    Cruncher will need write permission to
+    write permission
+        - local workspace
+        - java_folder
+    read permission
+        - demetra folder
+    """
+
+    a1 = check_write_permission(Path(cls.instance.crunch_folder))
+    a2 = check_write_permission(Path(cls.instance.local_work_space))
+    a3 = check_read_permission(Path(cls.instance.demetra_folder))
+    ok = all(
         (
             a1,
             a2,
             a3,
         )
     )
+    if not ok:
+        print(msg_if_error)
+        time.sleep(5)
+    return ok
 
 
 class ChruncerNotSet(BaseException):

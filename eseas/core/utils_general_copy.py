@@ -43,7 +43,7 @@ def create_dir(folder: str):
     return os.makedirs(folder)
 
 
-def file_name_temizle(file_name: str):
+def clean_file_name(file_name: str):
     file_name = file_name.replace("\n", " ")
     file_name = file_name.replace(":", " ")
     file_name = file_name.replace("'", " ")

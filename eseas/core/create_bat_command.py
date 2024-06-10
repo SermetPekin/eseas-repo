@@ -9,60 +9,17 @@ from ._options import middle_folder
 if __name__ != "__main__":
     from ._general_params import _create_general_params
     from .cruncher_classes import get_cruncher
+    from .demetra_caller import (
+        DemetraCaller,
+        DemetraCallerLinux,
+        DemetraCallerMac,
+        DemetraCallerWindows,
+    )
+
 NEW_LINE = chr(10)
 
 
-@dataclass
-class DemetraCaller(ABC):
-    @abstractmethod
-    def cruncher_command(self):
-        return rf"start {get_cruncher().crunch_folder}/jwsacruncher.bat"
-
-    @abstractmethod
-    def demetra_command_file_name(self):
-        return rf"{get_cruncher().crunch_folder}/demetra_commands.bat"
-
-    @abstractmethod
-    def exec_file_name(self, file_name): ...
-class DemetraCallerWindows(DemetraCaller):
-    def cruncher_command(self):
-        return rf"start {get_cruncher().crunch_folder}/jwsacruncher.bat"
-
-    def demetra_command_file_name(self):
-        return rf"{get_cruncher().crunch_folder}/demetra_commands.bat"
-
-    def exec_file_name(self, file_name):
-        return rf"{get_cruncher().crunch_folder}/{file_name}.bat"
-
-
-@dataclass
-class DemetraCallerMac(DemetraCaller):
-    def cruncher_command(self):
-        return rf"{get_cruncher().crunch_folder}/jwsacruncher"
-
-    def demetra_command_file_name(self):
-        return rf"{get_cruncher().crunch_folder}/demetra_commands.sh"
-
-    def exec_file_name(self, file_name):
-        return rf"{get_cruncher().crunch_folder}/{file_name}.sh"
-
-
-@dataclass
-class DemetraCallerLinux(DemetraCaller):
-    def cruncher_command(self):
-        return rf"start {get_cruncher().crunch_folder}/jwsacruncher"
-
-    def demetra_command_file_name(self):
-        return rf"{get_cruncher().crunch_folder}/demetra_commands.sh"
-
-    def exec_file_name(self, file_name):
-        return rf"{get_cruncher().crunch_folder}/{file_name}.sh"
-
-
-def get_os():
-    import platform
-
-    return str(platform.system()).lower()
+from .utils_general_copy import get_os
 
 
 os_str = get_os()
@@ -179,12 +136,7 @@ def begin_content_MAC():
     # from datetime import date
     # today = date.today()
     template = """#!/bin/bash
-# Print a welcome message
 echo "Starting the script..."
-# Navigate to the home directory
-cd ~
-# List all files and directories in the home directory
-ls -la
 """
     return template
 
@@ -208,7 +160,6 @@ if os_str != "windows":
 
 def write_bat_file(content, file_name):
     content = begin_content() + content + end_content()
-    # print(content)
     with open(
         get_demetra_type().exec_file_name(file_name), mode="w+", encoding="utf-8"
     ) as file_:
@@ -224,14 +175,11 @@ def run_bat_commands():
 
 
 def run_bat_commands_mac():
-    # Make the shell script executable
     import os
 
     create_general_params()
     script_path = get_demetra_type().demetra_command_file_name()
-    # return
     os.chmod(script_path, 0o755)
-    # subprocess.run(["./" + script_path])
     subprocess.run([script_path])
 
 

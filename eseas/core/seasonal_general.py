@@ -13,7 +13,7 @@ from .seasonal_adv_utils import (
     get_input_from_user,
     common_space_msg,
     seasonal_results_msg,
-    get_sonuclar_bilgi,
+    get_results_info,
     display,
 )
 
@@ -50,7 +50,7 @@ class SeasonalADV:
         view_display(seasonal_results_msg(self.options.test))
         time.sleep(1)
         if self.options.replace_original_files:
-            t = get_sonuclar_bilgi(Cruncher().local_work_space)
+            t = get_results_info(Cruncher().local_work_space)
             print(t)
         xml_demetra = get_demetra_files(self.options.demetra_folder)
         if self.options.test:
