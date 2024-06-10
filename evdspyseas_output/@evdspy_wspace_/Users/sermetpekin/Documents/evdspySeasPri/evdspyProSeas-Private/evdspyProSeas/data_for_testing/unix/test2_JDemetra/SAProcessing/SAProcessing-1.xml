@@ -1,0 +1,530 @@
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<informationSet xmlns="ec/tss.core">
+    <item name="metadata">
+        <subset>
+            <item name="timestamp">
+                <string>08.Haz.2024 19:34:40</string>
+            </item>
+        </subset>
+    </item>
+    <item name="sa1">
+        <subset>
+            <item name="ts">
+                <ts name="Sheet1&#xA;TP_ODEMGZS_BDTTOPLAM">
+                    <freq>12</freq>
+                    <firstYear>2008</firstYear>
+                    <firstPeriod>1</firstPeriod>
+                    <data>177593.0 188167.0 208273.0 233578.0 551839.0 820662.0 844148.0 890591.0 800056.0 493976.0 256480.0 236768.0 178683.0 197944.0 195672.0 221271.0 529620.0 796997.0 816963.0 880547.0 758703.0 491920.0 229719.0 213837.0 151061.0 162838.0 193450.0 221586.0 592848.0 899688.0 919879.0 953655.0 839265.0 562819.0 263627.0 254229.0 214840.0 194914.0 242339.0 290746.0 701388.0 966298.0 993386.0 1026443.0 900859.0 582295.0 266418.0 246886.0 231379.0 203997.0 248354.0 310518.0 707217.0 973266.0 1061363.0 1133016.0 1069078.0 625356.0 335548.0 294027.0 263980.0 275150.0 312717.0 362552.0 916134.0 1151137.0 1197225.0 1323055.0 1243580.0 846516.0 372037.0 300871.0 276282.0 274102.0 328210.0 367882.0 994455.0 1250670.0 1369726.0 1422508.0 1157215.0 702660.0 353626.0 306568.0 279626.0 254803.0 303664.0 338016.0 787544.0 1099006.0 1251074.0 1316141.0 1065336.0 723109.0 380871.0 291290.0 239288.0 265433.0 304875.0 331268.0 452024.0 533616.0 619884.0 720280.0 714813.0 670231.0 390072.0 336385.0 308465.0 290940.0 374677.0 426894.0 1001699.0 1369528.0 1604824.0 1664907.0 1446106.0 1136219.0 468844.0 415278.0 371784.0 352211.0 418766.0 509969.0 1251818.0 1656704.0 1690514.0 1671048.0 1590190.0 1281550.0 549263.0 402848.0 387879.0 356871.0 450047.0 559830.0 1388953.0 1709196.0 1851133.0 1924894.0 1799469.0 1538235.0 671029.0 469075.0 467946.0 393983.0 250377.0 11841.0 13455.0 26765.0 159487.0 634903.0 983222.0 911212.0 323097.0 176572.0 196792.0 167553.0 308985.0 346819.0 287510.0 543310.0 1333156.0 1549389.0 1491691.0 1516465.0 573366.0 342128.0 366117.0 305782.0 358312.0 372488.0 672121.0 1074718.0 1298875.0 1432388.0 1361406.0 1225833.0 807015.0 611608.0 626605.0 549007.0 623074.0 654884.0 1026564.0 1380912.0 1568957.0 1643965.0 1421056.0 1275983.0 725881.0 593780.0 574720.0 520354.0 610042.0</data>
+                    <metaData>
+                        <property name="@timestamp" value="Sat Jun 08 18:11:01 EET 2024"/>
+                        <property name="@source" value="XCLPRVDR"/>
+                        <property name="@id" value="demetra://tsprovider/XCLPRVDR/20111201/SERIES?file=C%3A%5CUsers%5Cppdsppe%5Ctest_evds%5Codemgzs2.xlsx#seriesName=TP_ODEMGZS_BDTTOPLAM&amp;sheetName=Sheet1"/>
+                    </metaData>
+                </ts>
+            </item>
+            <item name="domainspec">
+                <string>spec1</string>
+            </item>
+            <item name="pointspec">
+                <subset>
+                    <item name="algorithm">
+                        <method version="0.1.0.0">
+                            <name>tramoseats</name>
+                            <family>Seasonal adjustment</family>
+                        </method>
+                    </item>
+                    <item name="tramo">
+                        <subset>
+                            <item name="algorithm">
+<method version="0.1.0.0">
+    <name>tramo</name>
+    <family>Modelling</family>
+</method>
+                            </item>
+                            <item name="arima">
+<subset>
+    <item name="phi">
+        <params>
+            <coef type="Estimated">
+                <value>-0.6515374401572367</value>
+                <stde>0.07364216253910116</stde>
+                <tstat>-8.847342577851313</tstat>
+            </coef>
+            <coef type="Estimated">
+                <value>0.23937435013039268</value>
+                <stde>0.07365835925225914</stde>
+                <tstat>3.249792047506827</tstat>
+            </coef>
+        </params>
+    </item>
+    <item name="btheta">
+        <params>
+            <coef type="Estimated">
+                <value>-0.419570654805494</value>
+                <stde>0.07141190132295706</stde>
+                <tstat>-5.875360367566813</tstat>
+            </coef>
+        </params>
+    </item>
+</subset>
+                            </item>
+                            <item name="automdl">
+<subset>
+    <item name="enabled">
+        <boolean>false</boolean>
+    </item>
+</subset>
+                            </item>
+                            <item name="regression">
+<subset>
+    <item name="outliers">
+        <strings>
+            <items>LS.2021-07-01 AO.2021-10-01 LS.2019-05-01 LS.2021-05-01 LS.2016-05-01</items>
+        </strings>
+    </item>
+    <item name="coefficients">
+        <subset>
+            <item name="LS (2021-07-01)">
+                <double>610866.877422124</double>
+            </item>
+            <item name="AO (2021-10-01)">
+                <double>274536.24912232446</double>
+            </item>
+            <item name="LS (2019-05-01)">
+                <double>339724.8389212633</double>
+            </item>
+            <item name="LS (2021-05-01)">
+                <double>-352678.69074812374</double>
+            </item>
+            <item name="LS (2016-05-01)">
+                <double>-287618.47150540043</double>
+            </item>
+        </subset>
+    </item>
+</subset>
+                            </item>
+                        </subset>
+                    </item>
+                    <item name="benchmarking">
+                        <subset/>
+                    </item>
+                </subset>
+            </item>
+            <item name="quality">
+                <string>Accepted</string>
+            </item>
+            <item name="policy">
+                <string>Complete</string>
+            </item>
+        </subset>
+    </item>
+    <item name="sa2">
+        <subset>
+            <item name="ts">
+                <ts name="Sheet1&#xA;TP_ODEMGZS_ABD">
+                    <freq>12</freq>
+                    <firstYear>2008</firstYear>
+                    <firstPeriod>1</firstPeriod>
+                    <data>22581.0 18562.0 29479.0 38922.0 80430.0 79917.0 88506.0 72971.0 81973.0 98928.0 56856.0 24074.0 23659.0 17053.0 28610.0 39812.0 60190.0 79762.0 84915.0 80790.0 76914.0 98392.0 60109.0 25360.0 20077.0 14169.0 25445.0 40104.0 73387.0 91550.0 83638.0 64696.0 77572.0 86098.0 47653.0 22470.0 22060.0 19824.0 32921.0 54292.0 82390.0 88955.0 95182.0 75776.0 96753.0 109190.0 61353.0 22853.0 24062.0 18022.0 30818.0 49543.0 92016.0 100365.0 105917.0 80481.0 86658.0 97536.0 64497.0 28006.0 29649.0 23448.0 37122.0 53007.0 84635.0 92415.0 101973.0 88635.0 95150.0 97015.0 57185.0 31243.0 28314.0 22032.0 35265.0 49884.0 86626.0 106369.0 99177.0 91726.0 91532.0 101583.0 45108.0 32853.0 31523.0 24488.0 39289.0 53986.0 78830.0 110586.0 102722.0 98976.0 98100.0 94943.0 44448.0 30118.0 31814.0 22210.0 35511.0 35363.0 56868.0 70207.0 48271.0 44400.0 40474.0 39803.0 23155.0 21889.0 22761.0 14207.0 20573.0 26782.0 28654.0 33103.0 46999.0 49788.0 40600.0 27781.0 13924.0 12863.0 20464.0 17103.0 25488.0 32102.0 35961.0 45363.0 57228.0 61493.0 51294.0 43106.0 30831.0 29465.0 30504.0 21937.0 36618.0 42745.0 45148.0 62241.0 77345.0 76831.0 63471.0 57220.0 34576.0 36667.0 34008.0 22779.0 15833.0 304.0 238.0 1451.0 4718.0 12630.0 16536.0 16973.0 14096.0 12230.0 11421.0 8275.0 11735.0 14130.0 14400.0 29750.0 52584.0 66673.0 45239.0 44334.0 39468.0 32790.0 33839.0 21539.0 37367.0 52430.0 89895.0 121289.0 136823.0 137958.0 121289.0 131787.0 83559.0 52836.0 55458.0 35723.0 63074.0 81746.0 132623.0 158753.0 170447.0 152497.0 152325.0 195833.0 96980.0 54417.0 57845.0 43730.0 70508.0</data>
+                    <metaData>
+                        <property name="@timestamp" value="Sat Jun 08 18:45:46 EET 2024"/>
+                        <property name="@source" value="XCLPRVDR"/>
+                        <property name="@id" value="demetra://tsprovider/XCLPRVDR/20111201/SERIES?file=C%3A%5CUsers%5Cppdsppe%5Ctest_evds%5Codemgzs2.xlsx#seriesName=TP_ODEMGZS_ABD&amp;sheetName=Sheet1"/>
+                    </metaData>
+                </ts>
+            </item>
+            <item name="domainspec">
+                <string>spec1</string>
+            </item>
+            <item name="pointspec">
+                <subset>
+                    <item name="algorithm">
+                        <method version="0.1.0.0">
+                            <name>tramoseats</name>
+                            <family>Seasonal adjustment</family>
+                        </method>
+                    </item>
+                    <item name="tramo">
+                        <subset>
+                            <item name="algorithm">
+<method version="0.1.0.0">
+    <name>tramo</name>
+    <family>Modelling</family>
+</method>
+                            </item>
+                            <item name="arima">
+<subset>
+    <item name="mu">
+        <param type="Estimated">
+            <value>67360.26790749199</value>
+        </param>
+    </item>
+    <item name="phi">
+        <params>
+            <coef type="Estimated">
+                <value>-0.8947884480763737</value>
+                <stde>0.030612361523095488</stde>
+                <tstat>-29.22964461272616</tstat>
+            </coef>
+        </params>
+    </item>
+    <item name="d">
+        <integer>0</integer>
+    </item>
+    <item name="bphi">
+        <params>
+            <coef type="Estimated">
+                <value>-0.8557559024143924</value>
+                <stde>0.039820987936668675</stde>
+                <tstat>-21.490072114116984</tstat>
+            </coef>
+        </params>
+    </item>
+    <item name="bd">
+        <integer>0</integer>
+    </item>
+</subset>
+                            </item>
+                            <item name="automdl">
+<subset>
+    <item name="enabled">
+        <boolean>false</boolean>
+    </item>
+</subset>
+                            </item>
+                            <item name="regression">
+<subset>
+    <item name="outliers">
+        <strings>
+            <items>AO.2023-10-01</items>
+        </strings>
+    </item>
+    <item name="coefficients">
+        <subset>
+            <item name="AO (2023-10-01)">
+                <double>46220.6815319671</double>
+            </item>
+        </subset>
+    </item>
+</subset>
+                            </item>
+                        </subset>
+                    </item>
+                    <item name="benchmarking">
+                        <subset/>
+                    </item>
+                </subset>
+            </item>
+            <item name="estimationspec">
+                <subset>
+                    <item name="algorithm">
+                        <method version="0.1.0.0">
+                            <name>tramoseats</name>
+                            <family>Seasonal adjustment</family>
+                        </method>
+                    </item>
+                    <item name="tramo">
+                        <subset>
+                            <item name="algorithm">
+<method version="0.1.0.0">
+    <name>tramo</name>
+    <family>Modelling</family>
+</method>
+                            </item>
+                            <item name="transform">
+<subset>
+    <item name="function">
+        <string>Auto</string>
+    </item>
+</subset>
+                            </item>
+                            <item name="arima">
+<subset>
+    <item name="mu">
+        <param/>
+    </item>
+    <item name="theta">
+        <params>
+            <coef/>
+        </params>
+    </item>
+    <item name="btheta">
+        <params>
+            <coef/>
+        </params>
+    </item>
+</subset>
+                            </item>
+                            <item name="automdl">
+<subset>
+    <item name="enabled">
+        <boolean>true</boolean>
+    </item>
+</subset>
+                            </item>
+                            <item name="outlier">
+<subset>
+    <item name="types">
+        <strings>
+            <items>AO TC LS</items>
+        </strings>
+    </item>
+</subset>
+                            </item>
+                            <item name="regression">
+<subset>
+    <item name="calendar">
+        <subset>
+            <item name="td">
+                <subset>
+                    <item name="mauto">
+                        <string>FTest</string>
+                    </item>
+                    <item name="option">
+                        <string>TradingDays</string>
+                    </item>
+                    <item name="leapyear">
+                        <boolean>true</boolean>
+                    </item>
+                    <item name="testtype">
+                        <string>Separate_T</string>
+                    </item>
+                </subset>
+            </item>
+            <item name="easter">
+                <subset>
+                    <item name="type">
+                        <string>IncludeEaster</string>
+                    </item>
+                    <item name="test">
+                        <boolean>true</boolean>
+                    </item>
+                </subset>
+            </item>
+        </subset>
+    </item>
+</subset>
+                            </item>
+                        </subset>
+                    </item>
+                    <item name="benchmarking">
+                        <subset/>
+                    </item>
+                </subset>
+            </item>
+            <item name="quality">
+                <string>Accepted</string>
+            </item>
+            <item name="policy">
+                <string>Complete</string>
+            </item>
+        </subset>
+    </item>
+    <item name="sa3">
+        <subset>
+            <item name="ts">
+                <ts name="Sheet1&#xA;TP_ODEMGZS_ARJANTIN">
+                    <freq>12</freq>
+                    <firstYear>2008</firstYear>
+                    <firstPeriod>1</firstPeriod>
+                    <data>662.0 612.0 789.0 916.0 2358.0 2363.0 1823.0 1733.0 3217.0 2718.0 923.0 349.0 811.0 575.0 631.0 1191.0 2332.0 2380.0 1803.0 2478.0 3290.0 3235.0 1103.0 721.0 768.0 683.0 673.0 1184.0 3202.0 2819.0 1992.0 1797.0 4329.0 3419.0 871.0 384.0 975.0 1022.0 1055.0 1587.0 3858.0 3425.0 2895.0 2181.0 4602.0 3685.0 1354.0 433.0 897.0 762.0 818.0 1998.0 3942.0 3974.0 3545.0 2568.0 4686.0 3352.0 1384.0 592.0 1641.0 1679.0 2479.0 3928.0 6094.0 6724.0 4930.0 3791.0 5673.0 6033.0 2353.0 1292.0 2336.0 2115.0 2215.0 3390.0 5848.0 4468.0 4304.0 4524.0 6166.0 4977.0 2667.0 1533.0 2582.0 2865.0 3558.0 4937.0 9774.0 10773.0 7869.0 7713.0 11273.0 10239.0 7827.0 3851.0 3647.0 3719.0 5913.0 6953.0 8356.0 8013.0 4739.0 3850.0 5443.0 5399.0 3744.0 2780.0 3193.0 2859.0 3449.0 3079.0 3518.0 4237.0 5408.0 6009.0 5994.0 6181.0 2536.0 1943.0 3888.0 3851.0 4548.0 5400.0 7955.0 7826.0 7983.0 6654.0 8090.0 7161.0 3086.0 2192.0 3780.0 3758.0 4407.0 5987.0 8687.0 7006.0 5394.0 5738.0 8626.0 6958.0 3024.0 1144.0 2446.0 2509.0 1431.0 3.0 10.0 10.0 50.0 151.0 157.0 164.0 231.0 250.0 272.0 235.0 280.0 468.0 408.0 384.0 371.0 545.0 664.0 1029.0 1172.0 1003.0 1100.0 1146.0 2376.0 2769.0 4398.0 4198.0 3527.0 4356.0 6069.0 5719.0 3987.0 1955.0 2329.0 1899.0 2166.0 3756.0 5892.0 5063.0 3824.0 3921.0 6658.0 7197.0 3917.0 1779.0 2392.0 2129.0 2723.0</data>
+                    <metaData>
+                        <property name="@timestamp" value="Sat Jun 08 18:11:01 EET 2024"/>
+                        <property name="@source" value="XCLPRVDR"/>
+                        <property name="@id" value="demetra://tsprovider/XCLPRVDR/20111201/SERIES?file=C%3A%5CUsers%5Cppdsppe%5Ctest_evds%5Codemgzs2.xlsx#seriesName=TP_ODEMGZS_ARJANTIN&amp;sheetName=Sheet1"/>
+                    </metaData>
+                </ts>
+            </item>
+            <item name="domainspec">
+                <string>spec1</string>
+            </item>
+            <item name="pointspec">
+                <subset>
+                    <item name="algorithm">
+                        <method version="0.1.0.0">
+                            <name>tramoseats</name>
+                            <family>Seasonal adjustment</family>
+                        </method>
+                    </item>
+                    <item name="tramo">
+                        <subset>
+                            <item name="algorithm">
+<method version="0.1.0.0">
+    <name>tramo</name>
+    <family>Modelling</family>
+</method>
+                            </item>
+                            <item name="arima">
+<subset>
+    <item name="phi">
+        <params>
+            <coef type="Estimated">
+                <value>-0.22352741585085106</value>
+                <stde>0.06983063643605694</stde>
+                <tstat>-3.200993536061101</tstat>
+            </coef>
+            <coef type="Estimated">
+                <value>0.3729726813445013</value>
+                <stde>0.07005621040417688</stde>
+                <tstat>5.323906034778381</tstat>
+            </coef>
+        </params>
+    </item>
+    <item name="btheta">
+        <params>
+            <coef type="Estimated">
+                <value>-0.999880095875647</value>
+                <stde>0.05125927098099142</stde>
+                <tstat>-19.50632688955788</tstat>
+            </coef>
+        </params>
+    </item>
+</subset>
+                            </item>
+                            <item name="automdl">
+<subset>
+    <item name="enabled">
+        <boolean>false</boolean>
+    </item>
+</subset>
+                            </item>
+                            <item name="regression">
+<subset>
+    <item name="outliers">
+        <strings>
+            <items>LS.2015-12-01 LS.2016-07-01 AO.2017-09-01</items>
+        </strings>
+    </item>
+    <item name="coefficients">
+        <subset>
+            <item name="LS (2015-12-01)">
+                <double>-2884.0159244327615</double>
+            </item>
+            <item name="LS (2016-07-01)">
+                <double>-2567.4036614760403</double>
+            </item>
+            <item name="AO (2017-09-01)">
+                <double>-1558.2186476397774</double>
+            </item>
+        </subset>
+    </item>
+</subset>
+                            </item>
+                        </subset>
+                    </item>
+                    <item name="benchmarking">
+                        <subset/>
+                    </item>
+                </subset>
+            </item>
+            <item name="quality">
+                <string>Accepted</string>
+            </item>
+            <item name="policy">
+                <string>Complete</string>
+            </item>
+        </subset>
+    </item>
+    <item name="domainspecs">
+        <subset>
+            <item name="spec1">
+                <subset>
+                    <item name="algorithm">
+                        <method version="0.1.0.0">
+                            <name>tramoseats</name>
+                            <family>Seasonal adjustment</family>
+                        </method>
+                    </item>
+                    <item name="tramo">
+                        <subset>
+                            <item name="algorithm">
+<method version="0.1.0.0">
+    <name>tramo</name>
+    <family>Modelling</family>
+</method>
+                            </item>
+                            <item name="transform">
+<subset>
+    <item name="function">
+        <string>Auto</string>
+    </item>
+</subset>
+                            </item>
+                            <item name="arima">
+<subset>
+    <item name="mu">
+        <param/>
+    </item>
+    <item name="theta">
+        <params>
+            <coef/>
+        </params>
+    </item>
+    <item name="btheta">
+        <params>
+            <coef/>
+        </params>
+    </item>
+</subset>
+                            </item>
+                            <item name="automdl">
+<subset>
+    <item name="enabled">
+        <boolean>true</boolean>
+    </item>
+</subset>
+                            </item>
+                            <item name="outlier">
+<subset>
+    <item name="types">
+        <strings>
+            <items>AO TC LS</items>
+        </strings>
+    </item>
+</subset>
+                            </item>
+                            <item name="regression">
+<subset>
+    <item name="calendar">
+        <subset>
+            <item name="td">
+                <subset>
+                    <item name="mauto">
+                        <string>FTest</string>
+                    </item>
+                    <item name="option">
+                        <string>TradingDays</string>
+                    </item>
+                    <item name="leapyear">
+                        <boolean>true</boolean>
+                    </item>
+                    <item name="testtype">
+                        <string>Separate_T</string>
+                    </item>
+                </subset>
+            </item>
+            <item name="easter">
+                <subset>
+                    <item name="type">
+                        <string>IncludeEaster</string>
+                    </item>
+                    <item name="test">
+                        <boolean>true</boolean>
+                    </item>
+                </subset>
+            </item>
+        </subset>
+    </item>
+</subset>
+                            </item>
+                        </subset>
+                    </item>
+                    <item name="benchmarking">
+                        <subset/>
+                    </item>
+                </subset>
+            </item>
+        </subset>
+    </item>
+</informationSet>
