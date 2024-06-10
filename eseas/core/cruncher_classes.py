@@ -9,6 +9,10 @@ import tempfile
 import os
 
 
+
+
+
+
 class Cruncher:
     """cruncher"""
 
@@ -71,7 +75,7 @@ class Cruncher:
             p = Path() / cls.instance.demetra_folder
             p = path_str(p)
             p = make_eng(p)
-            return f"@evdspy_wspace_{p}"
+            return f"@eseas_wspace_{p}"
 
         if cls.workspace_mode:
             new_folder_name = Path() / cls.instance.local_work_space / naming_format()

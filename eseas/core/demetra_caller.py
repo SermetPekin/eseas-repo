@@ -3,7 +3,7 @@ from ._general_params import _create_general_params
 from .cruncher_classes import get_cruncher
 
 from abc import ABC, abstractmethod
-from ._options import demetra_command_file_name 
+from ._options import demetra_command_file_name
 
 # demetra_command_file_name = 'demetra_commands'
 

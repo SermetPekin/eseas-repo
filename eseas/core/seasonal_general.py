@@ -17,7 +17,8 @@ from .seasonal_adv_utils import (
     display,
 )
 
-from ._options import demetra_command_file_name 
+from ._options import demetra_command_file_name
+
 # demetra_command_file_name = 'demetra_commands'
 
 

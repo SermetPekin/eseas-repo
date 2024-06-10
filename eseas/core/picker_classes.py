@@ -9,12 +9,13 @@ from .demetra import convert_df_general
 from .demetra_file_naming import get_meaning_demetra_file
 
 
-'''
+"""
     `FilePicker`s 
     These classes will harvest data after cruncher runs 
     will convert them to pandas dataframe 
     
-'''
+"""
+
 
 class FilePicker(ABC):
     def __init__(
@@ -44,7 +45,7 @@ class OutFilePicker(FilePicker):
         super().__init__(file_item, names)
         self.file_name_explanationOption = file_name_explanation
 
-    def process_file(self, file_name, name)->None :
+    def process_file(self, file_name, name) -> None:
         df = pd.read_csv(
             file_name,
             engine="python",
@@ -70,7 +71,7 @@ class OutFilePicker(FilePicker):
                 print(f"This type of output [{name}] was not found in JDemetra output!")
 
 
-def get_file_name_x(x: FileItem, name="sa")->Path :
+def get_file_name_x(x: FileItem, name="sa") -> Path:
     """while reading output files"""
     explanation = get_explanation_if_neces(name, False)
     # middle_folder: 'test_output'
@@ -84,7 +85,7 @@ def get_file_name_x(x: FileItem, name="sa")->Path :
     )
 
 
-def get_explanation_if_neces(name_type, get_explanation=False)->str :
+def get_explanation_if_neces(name_type, get_explanation=False) -> str:
     if not get_explanation:
         return ""
     name_exp = get_meaning_demetra_file(name_type)
@@ -96,7 +97,7 @@ def get_explanation_if_neces(name_type, get_explanation=False)->str :
     return name_exp
 
 
-def get_name_format(file_item: FileItem, name_type="sa", get_explanation=True)->Path :
+def get_name_format(file_item: FileItem, name_type="sa", get_explanation=True) -> Path:
     """While writing output files"""
     explanation = get_explanation_if_neces(name_type, get_explanation)
     if not isinstance(file_item, FileItem):

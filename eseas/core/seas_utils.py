@@ -55,31 +55,31 @@ class SingleOptions:
         cls.instance.options = options
 
 
-class CommonSpaceOptions(SingleOptions):
-    def set(self, input_folder):
-        self.input_folder = input_folder
+# class CommonSpaceOptions(SingleOptions):
+#     def set(self, input_folder):
+#         self.input_folder = input_folder
 
 
-class CommonSpaceOptionsNotSet(BaseException):
-    """CommonSpaceOptionsNotSet"""
+# class CommonSpaceOptionsNotSet(BaseException):
+#     """CommonSpaceOptionsNotSet"""
 
-    def __init__(self, *args, **kwargs):
-        self.msg = """ 
-        !=================================================================
-        First we need a common space [some_folder]
-        # Example  
-        cs_opts = CommonSpaceOptions()
-        cs_opts.set(cs_opts , r"./some_folder...")
-        !=================================================================
-        """
-        super().__init__(self.msg)
+#     def __init__(self, *args, **kwargs):
+#         self.msg = """ 
+#         !=================================================================
+#         First we need a common space [some_folder]
+#         # Example  
+#         cs_opts = CommonSpaceOptions()
+#         cs_opts.set(cs_opts , r"./some_folder...")
+#         !=================================================================
+#         """
+#         super().__init__(self.msg)
 
 
-def get_common_space_folder():
-    OA = CommonSpaceOptions()
-    if not hasattr(OA, "input_folder"):
-        raise CommonSpaceOptionsNotSet()
-    return OA.input_folder
+# def get_common_space_folder():
+#     OA = CommonSpaceOptions()
+#     if not hasattr(OA, "input_folder"):
+#         raise CommonSpaceOptionsNotSet()
+#     return OA.input_folder
 
 
 cache_option_global = False
@@ -224,33 +224,14 @@ def search_folders_general(
     filter_func: callable = filter_xml,
 ) -> list[FileItem]:
     if not root:
-        root = Path() / get_common_space_folder()
+        raise ValueError
     f = list_files_recursive(root)
     if not f:
         return f
-    xls_files = filter_func(f)
-    return xls_files
+    files_filtered  = filter_func(f)
+    return files_filtered 
 
 
-def create_json_file_main(items: t.Tuple[FileItem]):
-    liste = []
-    for file_ in items:
-        file_.column_names = (str(x) for x in file_.column_names)
-        obj = {
-            "file_name": clean_file_name(str(file_.file_name)),
-            "dir_path": clean_file_name(str(file_.dir_path)),
-            "column_names": clean_file_name(",SEP,".join(file_.column_names)),
-            "summary": clean_file_name(file_.summary),
-            "sample": clean_file_name(str(file_.sample_data)),
-            "df_json": file_.df_json,
-        }
-        liste.append(obj)
-    content = {"content": liste}
-    create_json_file(content)
-
-
-def get_file_name(folder: str):
-    return replace_strict(folder)
 
 
 def get_type_of_files_demetra(folder, filter_func=filter_xls) -> list[FileItem]:
@@ -263,12 +244,6 @@ def get_type_of_files(folder, filter_func=filter_xls):
     return files
 
 
-def get_excel_files():
-    return get_type_of_files(filter_xls)
-
-
-def get_xml_files():
-    return get_type_of_files(filter_xml)
 
 
 def get_xml_demetra(folder) -> list[FileItem]:

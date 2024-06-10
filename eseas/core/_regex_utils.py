@@ -122,30 +122,3 @@ def replace_light(string):
 def replace_medium(string):
     return base_replace(string, "medium")
 
-
-def test_w():
-    metin = replace_strict("sfdsaidfÅŸli?/%^%&^+%&")
-    # print(metin)
-    metinler = (
-        "sfdsaidfÅŸli?/%^%&^+%&",
-        r"ÄÅASDÅLÅWETLK4569034*603//\\\}6034560506?%+#^",
-        r"3456456434653456",
-        r"sfdsaidfÅŸli?/%^%&^+%&",
-        r"ÄÅASDÅLÅWETLK4569034*603//\\\}6034560506?%+#^",
-        r"3456456434653456",
-        r"sfdsaidfÅŸli?/%^%&^+%&",
-        r"ÄÅASDÅLÅWETLK4569034*603//\\\}6034560506?%+#^",
-        r"3456456434653456",
-        r"sfdsaidfÅŸli?/%^%&^+%&",
-        r"ÄÅASDÅLÅWETLK4569034*603//\\\}6034560506?%+#^",
-        r"3456456434653456",
-    )
-    funcs = (replace_strict, replace_light, replace_medium)
-    for metin in metinler:
-        # replace_strict("sfdsaidfÅŸli?/%^%&^+%&")
-        func = random.choice(funcs)
-        print(f"{metin}  === > {func.__name__} === >{func(metin)} ")
-
-
-if __name__ == "__main__":
-    test_w()
