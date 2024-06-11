@@ -16,7 +16,6 @@ eseas is a Python package that acts as a wrapper for the `jwsacruncher` Java pac
 
 ### eseas
 
-
 You can install the `eseas` package via pip:
 
 ```bash
