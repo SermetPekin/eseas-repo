@@ -36,6 +36,6 @@ if "__main__" == __name__:
 ```
 
 
-- [Demetra Components](../docs/demetra_components.md)
-- [Readme](../README.md)
+- [Demetra Components](https://github.com/SermetPekin/eseas-repo/docs/demetra_components.md)
+- [Readme](https://github.com/SermetPekin/eseas-repo/README.md)
   

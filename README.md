@@ -34,7 +34,7 @@ After downloading `jwsacruncher`, you need to specify its location when using th
 Here's an example of how to use the `eseas` package:
 
 ```python
-from eseas import SeasonalADV, SeasonalOptions
+from eseas import Seasonal, SeasonalOptions
 import time
 
 def main():
@@ -51,7 +51,7 @@ def main():
         workspace_mode=True,
         file_name_explanation=True,
     )
-    seas = SeasonalADV(options)
+    seas = Seasonal(options)
     
     seas.part1()
     time.sleep(10)
@@ -65,8 +65,8 @@ if __name__ == "__main__":
 
 For more detailed information, refer to the following guides:
 
-- [Demetra Components](./docs/demetra_components.md)
-- [Usage Guide](./docs/usage.md)
+- [Demetra Components](https://github.com/SermetPekin/eseas-repo/docs/demetra_components.md)
+- [Usage Guide](https://github.com/SermetPekin/eseas-repo/docs/usage.md)
 
 ## How it Works
 
@@ -81,4 +81,5 @@ For more detailed information, refer to the following guides:
 
 ## License
 
-This project is licensed under the EUPL-1.2 License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the EUPL-1.2 License - see the [LICENSE](https://github.com/SermetPekin/eseas-repo/LICENSE) file for details.
+
