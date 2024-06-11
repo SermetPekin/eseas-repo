@@ -98,9 +98,9 @@ def get_explanation_if_neces(name_type, get_explanation=False) -> str:
 
 def get_name_format(file_item: FileItem, name_type="sa", get_explanation=True) -> Path:
     """While writing output files
-    
+
     Naming these files is optional as they do not necessarily need to be read by the script again.
-     
+
     """
     explanation = get_explanation_if_neces(name_type, get_explanation)
     if not isinstance(file_item, FileItem):
