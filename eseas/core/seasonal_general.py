@@ -102,10 +102,10 @@ class ReproduceMevsimsel:
 #   In order to reproduce you may use this template 
 #====================================================================== 
 from eseas import SeasonalOptions 
-from eseas import SeasonalADV
+from eseas import Seasonal
 def main():
     {self.mevsimsel.options.__repr__()}
-    m = SeasonalADV(options)
+    m = Seasonal(options)
     m.part1()
     m.part2()
 main() 

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "eseas"
-version = "0.1.4"
+version = "0.1.5"
 description = """eseas is a Python package that acts as a wrapper for the `jwsacruncher` Java package. This tool allows users to process Demetra workspace XML files, create batch files, execute them, and collect the desired outputs into individual Excel files."""
 authors = ["Sermet Pekin <Sermet.Pekin@gmail.com>"]
 license = "EUPL-1.2"
@@ -10,7 +10,7 @@ repository = "https://github.com/SermetPekin/eseas-repo"
 documentation = "https://github.com/SermetPekin/eseas-repo#readme"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.9"
 evdspy = ">=1.1.25"
 
 [tool.poetry.extras]

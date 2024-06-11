@@ -18,7 +18,7 @@ def check_folder(folder):
     assert Path(folder).is_dir()
 
 
-def get_testing_utils():
+def get_testing_utils(check=False):
     """
     jdemetra/jswacruncher
     https://github.com/jdemetra/jwsacruncher/releases/tag/v2.2.4
@@ -31,10 +31,10 @@ def get_testing_utils():
 
     demetra_folder = rf"./eseas/data_for_testing/{fold}"
     # java_folder = r"../jwsacruncher-2.2.4/bin"
-    java_folder = Path(r"../../Downloads/jwsacruncher-2.2.4/bin")
+    java_folder = Path(r"../../../Downloads/jwsacruncher-2.2.4/bin")
     local_folder = r"./eseas_output"
     create_dir(local_folder)
-
-    _ = tuple(map(check_folder, (demetra_folder, java_folder, local_folder)))
+    if check:
+        _ = tuple(map(check_folder, (demetra_folder, java_folder, local_folder)))
 
     return TestingUtils(demetra_folder, java_folder, local_folder)

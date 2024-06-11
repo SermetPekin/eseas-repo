@@ -10,10 +10,10 @@ from .demetra_file_naming import get_meaning_demetra_file
 
 
 """
-    `FilePicker`s 
-    These classes will harvest seasonal output data from csv files 
-    that cruncher creates and will convert them to pandas dataframe 
-    
+FilePicker classes are designed to harvest 
+seasonal output data from CSV files created by the cruncher 
+and convert them into Pandas DataFrames.
+
 """
 
 
@@ -97,10 +97,14 @@ def get_explanation_if_neces(name_type, get_explanation=False) -> str:
 
 
 def get_name_format(file_item: FileItem, name_type="sa", get_explanation=True) -> Path:
-    """While writing output files"""
+    """While writing output files
+    
+    Naming these files is optional as they do not necessarily need to be read by the script again.
+     
+    """
     explanation = get_explanation_if_neces(name_type, get_explanation)
     if not isinstance(file_item, FileItem):
         return Path("None.xlsx")
     return Path(get_cruncher().local_work_space) / str(
-        file_item.short_name + f"_{name_type}{explanation}_evdspy_" + ".xlsx"
+        file_item.short_name + f"_{name_type}{explanation}_eseas_" + ".xlsx"
     )

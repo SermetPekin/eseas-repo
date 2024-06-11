@@ -4,7 +4,7 @@ import time
 
 
 def main(part=1):
-    java_folder = r"../jwsacruncher-2.2.4/bin"
+    java_folder = r"../Downloads/jwsacruncher-2.2.4/bin"
     demetra_source_folder = r"./demetra_source_folder"
     local_folder = r"./test_out"
 
