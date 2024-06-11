@@ -59,10 +59,7 @@ def seasonal_main(options, part=1):
 
 def m1(part=1):
     """1"""
-    # demetra_source_folder = r"C:\Users\ppdsppe\PycharmProjects\testevds\some_demetra_folder" # TESTING_FOLDER  # r"../test_evds\source"
-    demetra_source_folder = (
-        r"C:\Users\ppdsppe\PycharmProjects\testevds\demetra_folder_source"
-    )
+    demetra_source_folder = r"./demetra_folder"
     local_folder = r"../testevds/test_out"
     options = Options(java_folder, local_folder, demetra_source_folder)
     seasonal_main(options, part=part)
@@ -75,7 +72,6 @@ def m2(part=1):
     check_folder(java_folder)
     check_folder(demetra_source_folder)
     check_folder(local_folder)
-    # local_folder = r'/Users/sermetpekin/Documents/eseasPri/testevds/test_out'
     options = Options(java_folder, local_folder, demetra_source_folder)
     seasonal_main(options, part=part)
 

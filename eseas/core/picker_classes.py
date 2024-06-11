@@ -11,8 +11,8 @@ from .demetra_file_naming import get_meaning_demetra_file
 
 """
     `FilePicker`s 
-    These classes will harvest data after cruncher runs 
-    will convert them to pandas dataframe 
+    These classes will harvest seasonal output data from csv files 
+    that cruncher creates and will convert them to pandas dataframe 
     
 """
 
@@ -92,8 +92,7 @@ def get_explanation_if_neces(name_type, get_explanation=False) -> str:
     if not name_exp:
         name_exp = "explanation_na"
     name_exp = "_{" + name_exp + "}"
-    if not get_explanation:
-        name_exp = ""
+
     return name_exp
 
 

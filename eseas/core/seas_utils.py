@@ -9,8 +9,9 @@ from evdspy.EVDSlocal.common.colors import (
     print_with_updating_style,
     print_with_success_style,
 )
-from ._regex_utils import replace_strict
-from .json_ops import create_json_file
+
+from ._options import max_num
+
 
 color_funcs = (
     print_excel_created_style,
@@ -53,37 +54,6 @@ class SingleOptions:
 
     def set_items(cls, options):
         cls.instance.options = options
-
-
-# class CommonSpaceOptions(SingleOptions):
-#     def set(self, input_folder):
-#         self.input_folder = input_folder
-
-
-# class CommonSpaceOptionsNotSet(BaseException):
-#     """CommonSpaceOptionsNotSet"""
-
-#     def __init__(self, *args, **kwargs):
-#         self.msg = """
-#         !=================================================================
-#         First we need a common space [some_folder]
-#         # Example
-#         cs_opts = CommonSpaceOptions()
-#         cs_opts.set(cs_opts , r"./some_folder...")
-#         !=================================================================
-#         """
-#         super().__init__(self.msg)
-
-
-# def get_common_space_folder():
-#     OA = CommonSpaceOptions()
-#     if not hasattr(OA, "input_folder"):
-#         raise CommonSpaceOptionsNotSet()
-#     return OA.input_folder
-
-
-cache_option_global = False
-max_num = 500_000
 
 
 def get_absolute(folder: str):

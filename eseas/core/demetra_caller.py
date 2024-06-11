@@ -11,16 +11,17 @@ from ._options import demetra_command_file_name
 @dataclass
 class DemetraCaller(ABC):
     @abstractmethod
-    def cruncher_command(self):
-        return rf"start {get_cruncher().crunch_folder}/jwsacruncher.bat"
+    def cruncher_command(self): ...
 
     @abstractmethod
-    def demetra_command_file_name(self):
-        return rf"{get_cruncher().crunch_folder}/{demetra_command_file_name}.bat"
+    def demetra_command_file_name(self): ...
 
     @abstractmethod
     def exec_file_name(self, file_name): ...
+
+
 class DemetraCallerWindows(DemetraCaller):
+
     def cruncher_command(self):
         return rf"start {get_cruncher().crunch_folder}/jwsacruncher.bat"
 
@@ -32,7 +33,8 @@ class DemetraCallerWindows(DemetraCaller):
 
 
 @dataclass
-class DemetraCallerMac(DemetraCaller):
+class DemetraCallerLinux(DemetraCaller):
+
     def cruncher_command(self):
         return rf"{get_cruncher().crunch_folder}/jwsacruncher"
 
@@ -44,12 +46,4 @@ class DemetraCallerMac(DemetraCaller):
 
 
 @dataclass
-class DemetraCallerLinux(DemetraCaller):
-    def cruncher_command(self):
-        return rf"{get_cruncher().crunch_folder}/jwsacruncher"
-
-    def demetra_command_file_name(self):
-        return rf"{get_cruncher().crunch_folder}/{demetra_command_file_name}.sh"
-
-    def exec_file_name(self, file_name):
-        return rf"{get_cruncher().crunch_folder}/{file_name}.sh"
+class DemetraCallerMac(DemetraCallerLinux): ...
