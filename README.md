@@ -1,4 +1,5 @@
-[![Python package](https://github.com/SermetPekin/eseas-repo/actions/workflows/python-package.yml/badge.svg)](https://github.com/SermetPekin/eseas-repo/actions/workflows/python-package.yml)
+[![Python package](https://github.com/SermetPekin/eseas-repo/actions/workflows/python-package.yml/badge.svg?branch=main)](https://github.com/SermetPekin/eseas-repo/actions/workflows/python-package.yml)
+
 
 [![PyPI](https://img.shields.io/pypi/v/eseas)](https://img.shields.io/pypi/v/eseas) 
 [![Supported Python Versions](https://img.shields.io/pypi/pyversions/eseas)](https://pypi.org/project/eseas/) 
