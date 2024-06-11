@@ -1,14 +1,14 @@
 from eseas import Seasonal
-from eseas import SeasonalOptions
+from eseas import Options
 import time
 
 
-def main(part=1):
+def main():
     java_folder = r"../Downloads/jwsacruncher-2.2.4/bin"
     demetra_source_folder = r"./demetra_source_folder"
     local_folder = r"./test_out"
 
-    options = SeasonalOptions(
+    options = Options(
         demetra_source_folder,
         java_folder,
         local_folder,

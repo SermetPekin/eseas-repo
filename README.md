@@ -45,7 +45,7 @@ After downloading `jwsacruncher`, you need to specify its location when using th
 Here's an example of how to use the `eseas` package:
 
 ```python
-from eseas import Seasonal, SeasonalOptions
+from eseas import Seasonal, Options
 import time
 
 def main():
@@ -54,7 +54,7 @@ def main():
     demetra_source_folder = r"./demetra_source_folder"
     local_folder = r"./test_out"
 
-    options = SeasonalOptions(
+    options = Options(
         demetra_source_folder,
         java_folder,
         local_folder,
