@@ -1,6 +1,7 @@
 certifi==2024.6.2
 charset-normalizer==3.3.2
 commonmark==0.9.1
+-e git+https://github.com/SermetPekin/eseas-repo.git@51f5872ab152aaca97da9ddd59e45ac1173b5740#egg=eseas
 et-xmlfile==1.1.0
 evdspy==1.1.25
 idna==3.7
