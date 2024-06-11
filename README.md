@@ -7,8 +7,6 @@
 [![Downloads](https://pepy.tech/badge/eseas/week)](https://pepy.tech/project/eseas)
 
 
-[![Python package](https://github.com/SermetPekin/eseas-repo/actions/workflows/python-package.yml/badge.svg)](https://github.com/SermetPekin/eseas-repo/actions/workflows/python-package.yml)
-
 
 # eseas
 
