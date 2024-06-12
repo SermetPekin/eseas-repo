@@ -34,7 +34,7 @@ class Cruncher:
         cls.instance.crunch_folder = get_absolute(crunch_folder)
         cls.instance.local_work_space = get_absolute(local_work_space)
         cls.demetra_folder = get_absolute(demetra_folder)
-        kontrol(cls)
+        control(cls)
         cls.workspace_mode = workspace_mode
         cls.file_name_explanation = file_name_explanation
         cls.check_workspace_mode()
@@ -46,7 +46,7 @@ class Cruncher:
         cls.instance.crunch_folder = obj.crunch_folder
         cls.instance.local_work_space = obj.local_work_space
         cls.demetra_folder = obj.demetra_folder
-        kontrol(cls)
+        control(cls)
         cls.workspace_mode = workspace_mode
         cls.file_name_explanation = file_name_explanation
         cls.check_workspace_mode()
@@ -90,7 +90,7 @@ class Cruncher:
             exit()
 
 
-def kontrol(cls):
+def control(cls):
     global checked
     if not check_cruncher(cls):
 
@@ -158,6 +158,7 @@ def check_cruncher(cls):
     if not ok:
         print(msg_if_error)
         time.sleep(5)
+        raise ChruncerNotSet()
     return ok
 
 
@@ -167,7 +168,7 @@ class ChruncerNotSet(BaseException):
 
 def get_cruncher():
     c = Cruncher()
-    kontrol(c)
+    control(c)
     assert (
         c.crunch_folder is not None and c.local_work_space is not None
     ), "Chruncer not set!"

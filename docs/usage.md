@@ -3,7 +3,7 @@
 ```python
 
 from eseas import Seasonal
-from eseas import SeasonalOptions
+from eseas import Options
 import time 
 
 
@@ -12,7 +12,7 @@ def main(part=1):
     demetra_source_folder = r"./demetra_source_folder"
     local_folder = r"./test_out"
 
-    options = SeasonalOptions(
+    options = Options(
              demetra_source_folder,
              java_folder,
              local_folder,

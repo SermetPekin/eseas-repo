@@ -38,7 +38,7 @@ The `jwsacruncher` tool is required for this package to function. You can downlo
 cd jdemetra/jswacruncher
 ```
 
-After downloading `jwsacruncher`, you need to specify its location when using the `SeasonalOptions` function from the `eseas` package.
+After downloading `jwsacruncher`, you need to specify its location when using the `Options` function from the `eseas` package.
 
 ## Usage
 
@@ -85,6 +85,10 @@ For more detailed information, refer to the following guides:
 2. **Batch File Creation**: The package creates batch files for all XML files in the specified directory.
 3. **Execution**: It runs the batch files using the `jwsacruncher` tool.
 4. **Output Collection**: The specified outputs are collected and compiled into individual Excel files for each XML file processed.
+
+## Acknowledgments
+
+Special thanks to the creators of the `jwsacruncher` Java package, which is integral to the functionality of `eseas`. For more information, visit the [jwsacruncher GitHub repository](https://github.com/jdemetra/jwsacruncher).
 
 ## About jwsacruncher
 
