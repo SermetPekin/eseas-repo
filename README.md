@@ -58,7 +58,7 @@ def main():
         demetra_source_folder,
         java_folder,
         local_folder,
-        result_file_names=("sa", "s_f", "cal"),
+        result_file_names=("sa", "s_f", "cal"),  # see full list of result types from Demetra Components below
         workspace_mode=True,
         file_name_explanation=True,
     )
