@@ -3,9 +3,9 @@
 
 [![PyPI](https://img.shields.io/pypi/v/eseas)](https://img.shields.io/pypi/v/eseas) 
 [![Supported Python Versions](https://img.shields.io/pypi/pyversions/eseas)](https://pypi.org/project/eseas/) 
-[![Downloads](https://static.pepy.tech/badge/eseas)](https://pepy.tech/project/eseas?1) 
-[![Downloads](https://static.pepy.tech/badge/eseas/month)](https://pepy.tech/project/eseas?1) 
-[![Downloads](https://pepy.tech/badge/eseas/week)](https://pepy.tech/project/eseas?1)
+[![Downloads](https://static.pepy.tech/badge/eseas?1)](https://pepy.tech/project/eseas?1) 
+[![Downloads](https://static.pepy.tech/badge/eseas/month?1)](https://pepy.tech/project/eseas?1) 
+[![Downloads](https://pepy.tech/badge/eseas/week?1)](https://pepy.tech/project/eseas?1)
 
 
 
