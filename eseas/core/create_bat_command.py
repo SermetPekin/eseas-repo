@@ -10,7 +10,6 @@ if __name__ != "__main__":
     from ._general_params import _create_general_params
     from .cruncher_classes import get_cruncher
     from .demetra_caller import (
-
         DemetraCallerLinux,
         DemetraCallerMac,
         DemetraCallerWindows,
