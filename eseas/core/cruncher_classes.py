@@ -41,14 +41,13 @@ class Cruncher:
 
     def set_itemsObj(cls, obj):
         """Set Items Cruncher"""
-        workspace_mode = (False,)
-        file_name_explanation = True
-        cls.instance.crunch_folder = obj.crunch_folder
-        cls.instance.local_work_space = obj.local_work_space
-        cls.demetra_folder = obj.demetra_folder
+
+        cls.instance.crunch_folder = get_absolute(obj.crunch_folder)
+        cls.instance.local_work_space = get_absolute(obj.local_work_space)
+        cls.demetra_folder = get_absolute(obj.demetra_folder)
         control(cls)
-        cls.workspace_mode = workspace_mode
-        cls.file_name_explanation = file_name_explanation
+        cls.workspace_mode = obj.workspace_mode
+        cls.file_name_explanation = obj.file_name_explanation
         cls.check_workspace_mode()
 
     def create_workspace(cls):

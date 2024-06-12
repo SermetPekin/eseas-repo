@@ -1,10 +1,9 @@
-from eseas import Seasonal
-from eseas import Options
+from eseas import Seasonal, Options
 import time
 
-
 def main():
-    java_folder = r"../Downloads/jwsacruncher-2.2.4/bin"
+    # Specify the path to the jwsacruncher bin directory
+    java_folder = r'../jwsacruncher-2.2.4/bin'
     demetra_source_folder = r"./demetra_source_folder"
     local_folder = r"./test_out"
 
@@ -12,20 +11,19 @@ def main():
         demetra_source_folder,
         java_folder,
         local_folder,
-        result_file_names=(
-            "sa",
-            "s_f",
-            "cal",
-        ),
-        workspace_mode=True,  # True creates a workspace folder and copies all demetra files
-        file_name_explanation=True,  # True adds explanations to output file names
+        result_file_names=("sa", "s_f", "cal"), # *1 
+         
+        workspace_mode=True,
+        file_name_explanation=True,
     )
-    seas = Seasonal(options)
+    # Note (1)
+    # result_file_names see full list of result types from Demetra Components below
 
+    seas = Seasonal(options)
+    
     seas.part1()
     time.sleep(10)
     seas.part2()
 
-
-if "__main__" == __name__:
+if __name__ == "__main__":
     main()

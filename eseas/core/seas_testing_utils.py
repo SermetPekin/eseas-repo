@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 from pathlib import Path
 
-from eseas.core.utils_general_copy import create_dir
+from eseas.core.utils_general2 import create_dir
 
-from .utils_general_copy import get_os
+from .utils_general2 import get_os
 
 
 @dataclass

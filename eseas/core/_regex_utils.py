@@ -1,7 +1,7 @@
 import functools
 import random
 import re
-from .utils_general_copy import list_apply, tuple_apply, dict_apply
+from .utils_general2 import list_apply, tuple_apply, dict_apply
 
 strategies = {"strict": r"\W+", "light": r"^[a-zA-Z0-9_ ]", "medium": r"\W+ "}
 valid_chars_JSON = (

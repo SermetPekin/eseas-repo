@@ -10,7 +10,7 @@ if __name__ != "__main__":
     from ._general_params import _create_general_params
     from .cruncher_classes import get_cruncher
     from .demetra_caller import (
-        DemetraCaller,
+
         DemetraCallerLinux,
         DemetraCallerMac,
         DemetraCallerWindows,
@@ -19,7 +19,7 @@ if __name__ != "__main__":
 NEW_LINE = chr(10)
 
 
-from .utils_general_copy import get_os
+from .utils_general2 import get_os
 
 
 os_str = get_os()
