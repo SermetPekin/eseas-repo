@@ -1,7 +1,7 @@
 [![Python package](https://github.com/SermetPekin/eseas-repo/actions/workflows/python-package.yml/badge.svg?branch=main)](https://github.com/SermetPekin/eseas-repo/actions/workflows/python-package.yml)
 
 
-[![PyPI](https://img.shields.io/pypi/v/eseas)](https://img.shields.io/pypi/v/eseas) 
+[![PyPI](https://img.shields.io/pypi/v/eseas?1)](https://img.shields.io/pypi/v/eseas?1) 
 [![Supported Python Versions](https://img.shields.io/pypi/pyversions/eseas)](https://pypi.org/project/eseas/) 
 [![Downloads](https://static.pepy.tech/badge/eseas?1)](https://pepy.tech/project/eseas?1) 
 [![Downloads](https://static.pepy.tech/badge/eseas/month?1)](https://pepy.tech/project/eseas?1) 
