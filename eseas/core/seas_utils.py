@@ -94,8 +94,8 @@ def filter_xml(items: t.List[FileItem]):
 
 def list_of_folders(folder: str):
     import os
+    return [d for d in os.listdir(folder) if os.path.isdir(os.path.join(folder, d))]
 
-    return [x for x in os.listdir(folder) if Path(x).is_dir()]
 
 
 def filter_xml_demetra(items: t.List[FileItem]):
