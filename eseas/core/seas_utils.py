@@ -2,6 +2,7 @@ import typing as t
 from pathlib import Path
 import os
 import random
+from typing import Union
 from evdspy.EVDSlocal.common.file_classes import FileItem
 from evdspy.EVDSlocal.common.colors import (
     print_excel_created_style,
@@ -92,10 +93,9 @@ def filter_xml(items: t.List[FileItem]):
     return tuple(x for x in items if str(x.full_name).endswith("xml"))
 
 
-def list_of_folders(folder: str):
+def list_of_folders(folder: Union[str, Path]) -> list[str]:
     import os
     return [d for d in os.listdir(folder) if os.path.isdir(os.path.join(folder, d))]
-
 
 
 def filter_xml_demetra(items: t.List[FileItem]):
