@@ -7,6 +7,14 @@ from .json_ops import remove_json_bad_chars
 from evdspy.EVDSlocal.utils.utils_general import replace_recursive
 
 
+def walk(items: t.Union[list, tuple], fnc: t.Callable) -> tuple:
+    return tuple(map(fnc, items))
+
+
+def walk2(items: t.Union[list, tuple], fnc: t.Callable) -> None:
+    _ = tuple(map(fnc, items))
+
+
 def bound(f, *args):
     return update_wrapper(functools.partial(f, *args), f)
 
