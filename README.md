@@ -1,10 +1,10 @@
 [![Python package](https://github.com/SermetPekin/eseas-repo/actions/workflows/python-package.yml/badge.svg?branch=main)](https://github.com/SermetPekin/eseas-repo/actions/workflows/python-package.yml)
 
 
-[![PyPI](https://img.shields.io/pypi/v/eseas?1)](https://img.shields.io/pypi/v/eseas?1) 
-[![Supported Python Versions](https://img.shields.io/pypi/pyversions/eseas)](https://pypi.org/project/eseas/) 
-[![Downloads](https://static.pepy.tech/badge/eseas?1)](https://pepy.tech/project/eseas?1) 
-[![Downloads](https://static.pepy.tech/badge/eseas/month?1)](https://pepy.tech/project/eseas?1) 
+[![PyPI](https://img.shields.io/pypi/v/eseas?1)](https://img.shields.io/pypi/v/eseas?1)
+[![Supported Python Versions](https://img.shields.io/pypi/pyversions/eseas)](https://pypi.org/project/eseas/)
+[![Downloads](https://static.pepy.tech/badge/eseas?1)](https://pepy.tech/project/eseas?1)
+[![Downloads](https://static.pepy.tech/badge/eseas/month?1)](https://pepy.tech/project/eseas?1)
 [![Downloads](https://pepy.tech/badge/eseas/week?1)](https://pepy.tech/project/eseas?1)
 
 
@@ -58,8 +58,8 @@ def main():
         demetra_source_folder,
         java_folder,
         local_folder,
-        result_file_names=("sa", "s_f", "cal"), # *1 
-         
+        result_file_names=("sa", "s_f", "cal"), # *1
+
         workspace_mode=True,
         file_name_explanation=True,
     )
@@ -67,7 +67,7 @@ def main():
     # result_file_names see full list of result types from Demetra Components below
 
     seas = Seasonal(options)
-    
+
     seas.part1()
     time.sleep(10)
     seas.part2()
@@ -101,4 +101,3 @@ Special thanks to the creators of the `jwsacruncher` Java package, which is inte
 ## License
 
 This project is licensed under the EUPL-1.2 License - see the [LICENSE](https://github.com/SermetPekin/eseas-repo/LICENSE) file for details.
-

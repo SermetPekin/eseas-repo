@@ -2,7 +2,9 @@ import typing as t
 from pathlib import Path
 import os
 import random
-from typing import Union
+from typing import Union, Iterable
+
+
 from evdspy.EVDSlocal.common.file_classes import FileItem
 from evdspy.EVDSlocal.common.colors import (
     print_excel_created_style,
@@ -95,7 +97,11 @@ def filter_xml(items: t.List[FileItem]):
 
 def list_of_folders(folder: Union[str, Path]) -> list[str]:
     import os
-    return [d for d in os.listdir(folder) if os.path.isdir(os.path.join(folder, d))]
+
+    def check(d):
+        return os.path.isdir(os.path.join(folder, d))
+
+    return [d for d in os.listdir(folder) if check(d)]
 
 
 def filter_xml_demetra(items: t.List[FileItem]):
@@ -141,15 +147,8 @@ def filter_xml_demetra(items: t.List[FileItem]):
     return list(x for x in items if check_demetra(x))
 
 
-def display_cache_warning(cache_name):
-    view_display("WARNING .... ")
-    view_display(
-        f"Cache option is True therefore recent lookup will be used..{cache_name} \n If you added new files you may "
-        "select cache_option=False "
-    )
-
-
-class MaxFileNumberReached(BaseException): ...
+class MaxFileNumberReached(BaseException):
+    ...
 
 
 def list_files_recursive(folder: t.Union[str, Path]) -> list[FileItem]:
@@ -166,16 +165,18 @@ def list_files_recursive(folder: t.Union[str, Path]) -> list[FileItem]:
                 file_item = FileItem(dir_path, file_name)
                 if max_num < len(file_item.created_items):
                     view_display(
-                        "limit max number reached  you may change it from search_main.py file "
+                        "limit max number reached  you "
+                        " may change it from search_main.py file "
                     )
-                    raise MaxFileNumberReached(f"Max{len(file_item.created_items)}")
+                    n = len(file_item.created_items)
+                    raise MaxFileNumberReached(f"Max{n}")
                 res.append(file_item)
     except MaxFileNumberReached:
         print("max number reached... returning limit number of files...")
     return res
 
 
-def display(some_files: t.Union[t.List[FileItem], t.Tuple[FileItem]], max_num=10):
+def display(some_files: Iterable[FileItem], max_num=10):
     template = ""
     msg = f"""
 =====================================================
@@ -202,7 +203,7 @@ def search_folders_general(
     return files_filtered
 
 
-def get_type_of_files_demetra(folder, filter_func=filter_xls) -> list[FileItem]:
+def get_type_of_files_demetra(folder, filter_func=filter_xls):
     files = search_folders_general(folder, filter_func)
     return files
 

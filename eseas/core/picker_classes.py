@@ -10,8 +10,8 @@ from .demetra_file_naming import get_meaning_demetra_file
 
 
 """
-FilePicker classes are designed to harvest 
-seasonal output data from CSV files created by the cruncher 
+FilePicker classes are designed to harvest
+seasonal output data from CSV files created by the cruncher
 and convert them into Pandas DataFrames.
 
 """
@@ -56,11 +56,9 @@ class OutFilePicker(FilePicker):
         )
         df = df.T
         df = convert_df_general(df)
-        df.to_excel(
-            get_name_format(
-                self.file_item, name, get_explanation=self.file_name_explanationOption
-            )
-        )
+        e = self.file_name_explanationOption
+        fname = get_name_format(self.file_item, name, get_explanation=e)
+        df.to_excel(fname)
 
     def pick_files(self):
         for name in self.names:
@@ -68,7 +66,8 @@ class OutFilePicker(FilePicker):
                 self.process_file(get_file_name_x(self.file_item, name), name)
             except Exception:
                 traceback.print_exc()
-                print(f"This type of output [{name}] was not found in JDemetra output!")
+                msg = f"output [{name}] not found in JDemetra output!"
+                print(msg)
 
 
 def get_file_name_x(x: FileItem, name="sa") -> Path:
@@ -96,10 +95,11 @@ def get_explanation_if_neces(name_type, get_explanation=False) -> str:
     return name_exp
 
 
-def get_name_format(file_item: FileItem, name_type="sa", get_explanation=True) -> Path:
+def get_name_format(file_item: FileItem, name_type="sa", get_explanation=True):
     """While writing output files
 
-    Naming these files is optional as they do not necessarily need to be read by the script again.
+    Naming these files is optional as they do not
+    necessarily need to be read by the script again.
 
     """
     explanation = get_explanation_if_neces(name_type, get_explanation)

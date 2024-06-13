@@ -1,17 +1,21 @@
+from typing import Iterable
 import functools
 import traceback
 import typing as t
 from functools import update_wrapper
 from pathlib import Path
-from .json_ops import remove_json_bad_chars
+from typing import Callable
+
 from evdspy.EVDSlocal.utils.utils_general import replace_recursive
 
+from .json_ops import remove_json_bad_chars
 
-def walk(items: t.Union[list, tuple], fnc: t.Callable) -> tuple:
+
+def walk(items: t.Iterable[t.Any], fnc: t.Callable) -> tuple:
     return tuple(map(fnc, items))
 
 
-def walk2(items: t.Union[list, tuple], fnc: t.Callable) -> None:
+def walk2(items: t.Iterable[t.Any], fnc: t.Callable) -> None:
     _ = tuple(map(fnc, items))
 
 
@@ -30,11 +34,11 @@ def dict_apply(dict_: dict, func: t.Callable, args=None):
     return new_dict_
 
 
-def list_apply(list_: list, func: t.Callable = remove_json_bad_chars, args=None):
+def list_apply(list_: Iterable, func: Callable, args=None):
     return list(func(x) for x in list_)
 
 
-def tuple_apply(tuple_: tuple, func: t.Callable = remove_json_bad_chars, args=None):
+def tuple_apply(tuple_: tuple, func: Callable, args=None):
     return tuple(func(x) for x in tuple_)
 
 

@@ -74,9 +74,10 @@ class Cruncher:
             return f"@eseas_wspace_{p}"
 
         if cls.workspace_mode:
-            new_folder_name = Path() / cls.instance.local_work_space / naming_format()
-            if create_directory(new_folder_name):
-                cls.instance.local_work_space = new_folder_name
+            ws = cls.instance.local_work_space
+            n_fname = Path() / ws / naming_format()
+            if create_directory(n_fname):
+                cls.instance.local_work_space = n_fname
 
     def check_workspace_mode(cls):
         # Cruncher
@@ -99,15 +100,15 @@ def control(cls):
             return "does not exist!"
 
         msg = f"""\n\n
-_______________________________________________________________       
-Could not find some folders.  
 _______________________________________________________________
-    java_folder     : [{check(cls.instance.crunch_folder)}] 
-                      {cls.instance.crunch_folder}   
-    local_workspace : [{check(cls.instance.local_work_space)}] 
-                      {cls.instance.local_work_space}  
-    demetra_folder  : [{check(cls.instance.demetra_folder)}] 
-                      {cls.instance.demetra_folder} 
+Could not find some folders.
+_______________________________________________________________
+    java_folder     : [{check(cls.instance.crunch_folder)}]
+                      {cls.instance.crunch_folder}
+    local_workspace : [{check(cls.instance.local_work_space)}]
+                      {cls.instance.local_work_space}
+    demetra_folder  : [{check(cls.instance.demetra_folder)}]
+                      {cls.instance.demetra_folder}
 """
         raise ChruncerNotSet(msg)
     else:

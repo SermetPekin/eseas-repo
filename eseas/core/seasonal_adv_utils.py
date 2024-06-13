@@ -36,9 +36,9 @@ def get_input_from_user() -> bool:
     msg = """
 ==========================================================================
     Confirm running `jwsacruncher` for seasonal adjusment ?
-           ( if you prefer running manually instead, you may do so by calling 
-             batch file that was created by this script )  
-            
+           ( if you prefer running manually instead, you may do so by calling
+             batch file that was created by this script )
+
 ==========================================================================
 ?(y/N)
     """
@@ -69,7 +69,7 @@ file_name : {item.file_name}
 def common_space_msg(test, demetra_folder):
     return f"""
 ========================================================================
-        common_space_check has run 
+        common_space_check has run
 test : {test}
 folder to check demetra files : {demetra_folder}
 ========================================================================
@@ -82,12 +82,12 @@ def seasonal_results_msg(test):
         seasonal_results function is running.
         test : {test}
         Collecting results
-========================================================================    
+========================================================================
     """
 
 
 def get_results_info(adres):
-    t = f""" 
+    t = f"""
     --------------------------
     {adres}
     """

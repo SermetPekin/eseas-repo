@@ -1,10 +1,12 @@
 import subprocess
 from pathlib import Path
 import shutil
-from dataclasses import dataclass
-from abc import ABC, abstractmethod
+from typing import Iterable
+
+
 from evdspy.EVDSlocal.common.file_classes import FileItem
 from ._options import middle_folder
+from .utils_general2 import get_os
 
 if __name__ != "__main__":
     from ._general_params import _create_general_params
@@ -16,9 +18,6 @@ if __name__ != "__main__":
     )
 
 NEW_LINE = chr(10)
-
-
-from .utils_general2 import get_os
 
 
 os_str = get_os()
@@ -44,12 +43,15 @@ def general_params():
 
 
 def create_general_params():
-    return _create_general_params(get_cruncher().crunch_folder, "general.params")
+    folder = get_cruncher().crunch_folder
+
+    return _create_general_params(folder, "general.params")
 
 
-def copy_folder_demetra(files: list[FileItem]):
+def copy_folder_demetra(files: Iterable[FileItem]):
     """
-    this will copy demetra files from source directory to workspace
+    this will copy demetra files from source
+    directory to workspace
     :param files:
     :return:
     """
@@ -84,23 +86,26 @@ def copy_xml_files_local(files: list[FileItem]):
     return list(map(copy_xml_file, files))
 
 
-def get_line(file_item: FileItem):
-    dest = Path(get_cruncher().local_work_space) / str(file_item.encoded_name + ".xml")
+def get_line_win(file_item: FileItem):
+    fname = str(file_item.encoded_name + ".xml")
+    ws = Path(get_cruncher().local_work_space)
+    dest = ws / fname
     line_info = f"rem {file_item.short_name}\nrem " + "-" * 50 + "\n"
     cmd1 = rf'{line_info}{get_demetra_type().cruncher_command()} "{dest}"'
     cmd2 = rf'-x "{general_params()}"'
-    cmd3 = rf'-d "{get_cruncher().local_work_space}/{middle_folder}/{file_item.short_name}"{NEW_LINE}'
+    cmd3 = rf'-d "{ws}/{middle_folder}/{file_item.short_name}"{NEW_LINE}'
     command = f"{cmd1} {cmd2} {cmd3}"
     # print(command)
     return command
 
 
 def get_line_MAC(file_item: FileItem):
-    dest = Path(get_cruncher().local_work_space) / str(file_item.encoded_name + ".xml")
+    ws = Path(get_cruncher().local_work_space)
+    dest = ws / str(file_item.encoded_name + ".xml")
     line_info = f"# {file_item.short_name}\n# " + "-" * 50 + "\n"
     cmd1 = f'{line_info}\n{get_demetra_type().cruncher_command()} "{dest}"'
     cmd2 = f'-x "{general_params()}"'
-    cmd3 = f'-d "{get_cruncher().local_work_space}/{middle_folder}/{file_item.short_name}"{NEW_LINE}'
+    cmd3 = f'-d "{ws}/{middle_folder}/{file_item.short_name}"{NEW_LINE}'
     command = f"{cmd1} {cmd2} {cmd3}"
     # print(command)
     return command
@@ -116,12 +121,12 @@ def patch_template_for_os(template):
     return template
 
 
-def begin_content():
+def begin_content_win():
     from datetime import date
 
     today = date.today()
     template = f"""rem ==============================================================
-rem         evdspy 
+rem         evdspy
 rem         @2022 evdspy ==> JDemetra caller
 rem         searched space  : {get_cruncher().demetra_folder}
 rem         date creted : {today}
@@ -140,9 +145,9 @@ echo "Starting the script..."
     return template
 
 
-def end_content() -> str:
+def end_content_win() -> str:
     template = """
-rem pause 
+rem pause
     """
     return template
 
@@ -155,18 +160,21 @@ if os_str != "windows":
     get_line = get_line_MAC
     begin_content = begin_content_MAC
     end_content = end_content_MAC
+else:
+    get_line = get_line_win
+    begin_content = begin_content_win
+    end_content = end_content_win
 
 
 def write_bat_file(content, file_name):
     content = begin_content() + content + end_content()
-    with open(
-        get_demetra_type().exec_file_name(file_name), mode="w+", encoding="utf-8"
-    ) as file_:
+    fname = get_demetra_type().exec_file_name(file_name)
+    with open(fname, mode="w+", encoding="utf-8") as file_:
         file_.write(content)
 
 
-def run_bat_commands():
-    """run_bat_commands"""
+def run_bat_commands_win():
+    """run_bat_commands_win"""
     create_general_params()
     name = get_demetra_type().demetra_command_file_name()
     f = subprocess.Popen(name, shell=True).wait()
@@ -174,6 +182,7 @@ def run_bat_commands():
 
 
 def run_bat_commands_mac():
+    """run_bat_commands_mac"""
     import os
 
     create_general_params()
@@ -184,3 +193,5 @@ def run_bat_commands_mac():
 
 if os_str != "windows":
     run_bat_commands = run_bat_commands_mac
+else:
+    run_bat_commands = run_bat_commands_win

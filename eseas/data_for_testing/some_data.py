@@ -10,8 +10,6 @@ else:
     from .csv_content import template_csv, air_passenger
 
 
-
-
 @dataclass
 class eseas_DataFrame:
     name: str

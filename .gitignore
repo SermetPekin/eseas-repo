@@ -1,12 +1,13 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 
-.venv/ 
+.venv/
 .pytest_cache/
-eseas_output/ 
+eseas_output/
 
 --*/
 *scratch*/
+.venv/
 
 
 *.py[cod]

@@ -41,10 +41,12 @@ class SeasonalADV:
         xml_demetra = get_demetra_files(self.options.demetra_folder)
         if self.options.test:
             xml_demetra = xml_demetra[0:20]
-        write_bat_file_demetra(xml_demetra, file_name=demetra_command_file_name)
+        fn = demetra_command_file_name
+        write_bat_file_demetra(xml_demetra, file_name=fn)
         if not self.options.auto_approve and not get_input_from_user():
             view_display(
-                "demetra command did not run.\n You may type y next time if you like them to run."
+                "demetra command did not run.\n"
+                "You may type y next time if you like them to run."
             )
             return
         run_bat_commands()
@@ -97,18 +99,18 @@ class ReproduceMevsimsel:
 
         date_str = datetime.now()
         template = f"""\n
-#====================================================================== 
+#======================================================================
 # This script was created by eseas    {date_str}
-#   In order to reproduce you may use this template 
-#====================================================================== 
-from eseas import SeasonalOptions 
+#   In order to reproduce you may use this template
+#======================================================================
+from eseas import SeasonalOptions
 from eseas import Seasonal
 def main():
     {self.mevsimsel.options.__repr__()}
     m = Seasonal(options)
     m.part1()
     m.part2()
-main() 
+main()
         """
         return template
 
