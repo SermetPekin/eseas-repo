@@ -1,5 +1,4 @@
 import functools
-import random
 import re
 from .utils_general2 import list_apply, tuple_apply, dict_apply
 

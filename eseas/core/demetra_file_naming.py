@@ -1,4 +1,5 @@
 """Demetra output types """
+
 from typing import Dict, Optional
 
 full_content_dem = """
