@@ -13,7 +13,7 @@ from typing import Union
 class Cruncher:
     """cruncher"""
 
-    crunch_folder = False
+    crunch_folder = "."
     local_work_space = "@wspace"
     demetra_folder: str = "."
 

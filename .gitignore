@@ -8,6 +8,12 @@ eseas_output/
 --*/
 *scratch*/
 .venv/
+*.txt
+*.pdf
+*.xls*
+*.csv
+mtest*.py
+
 
 
 *.py[cod]

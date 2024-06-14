@@ -50,7 +50,8 @@ def process_bal(df: pd.DataFrame) -> pd.DataFrame:
 def process_air(df: pd.DataFrame) -> pd.DataFrame:
     df["date"] = pd.to_datetime(df["Month"], format="%Y-%m")
     df.drop(["Month"], axis=1, inplace=True)
-    df.columns = ["date", "#Passengers"]
+    df = df[["date", "#Passengers"]]
+
     return df
 
 

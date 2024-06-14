@@ -168,6 +168,7 @@ else:
 
 def write_bat_file(content, file_name):
     content = begin_content() + content + end_content()
+    print("WRITING", content)
     fname = get_demetra_type().exec_file_name(file_name)
     with open(fname, mode="w+", encoding="utf-8") as file_:
         file_.write(content)
@@ -191,7 +192,7 @@ def run_bat_commands_mac():
     subprocess.run([script_path])
 
 
-if os_str != "windows":
-    run_bat_commands = run_bat_commands_mac
-else:
+if os_str == "windows":
     run_bat_commands = run_bat_commands_win
+else:
+    run_bat_commands = run_bat_commands_mac

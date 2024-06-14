@@ -1,13 +1,19 @@
 from dataclasses import dataclass
+
 from .cruncher_classes import get_cruncher
 
 from abc import ABC, abstractmethod
 from ._options import demetra_command_file_name
 
 
+# get_cruncher()
+
+
 @dataclass
 class DemetraCaller(ABC):
-    cf = get_cruncher().crunch_folder
+    @property
+    def cf(self):
+        return get_cruncher().crunch_folder
 
     @abstractmethod
     def cruncher_command(self):

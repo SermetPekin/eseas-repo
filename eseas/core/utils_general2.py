@@ -12,10 +12,15 @@ from .json_ops import remove_json_bad_chars
 
 
 def walk(items: t.Iterable[t.Any], fnc: t.Callable) -> tuple:
+    if callable(items):
+        items, fnc = fnc, items
+
     return tuple(map(fnc, items))
 
 
 def walk2(items: t.Iterable[t.Any], fnc: t.Callable) -> None:
+    if callable(items):
+        items, fnc = fnc, items
     _ = tuple(map(fnc, items))
 
 

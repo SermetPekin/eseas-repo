@@ -108,8 +108,6 @@ def filter_xml_demetra(items: t.List[FileItem]):
     def stem(file_item: FileItem):
         return str(file_item.full_name.stem)
 
-    # def full_name(file_item: FileItem):
-    #     return str(file_item.full_name)
     def check_demetra(file_item: FileItem):
         """
         SomeFolder_JDemtra.xml
@@ -120,8 +118,14 @@ def filter_xml_demetra(items: t.List[FileItem]):
 
         def check_if_folder_exists() -> bool:
             folders = list_of_folders(file_item.dir_path)
+            fname = file_item.full_name
             if not hasattr(file_item, "short_name"):
-                return False
+                if str(fname).endswith(".xml"):
+                    file_item.short_name = fname.stem
+                else:
+
+                    return False
+
             return file_item.short_name in folders
 
         def check_all_parts(part_func: t.Callable):
@@ -144,6 +148,7 @@ def filter_xml_demetra(items: t.List[FileItem]):
         return any(map(check_all_parts, (stem,))) or check_if_folder_exists()
 
     items = filter_xml(items)
+
     return list(x for x in items if check_demetra(x))
 
 
@@ -192,13 +197,14 @@ def display(some_files: Iterable[FileItem], max_num=10):
 
 def search_folders_general(
     root: t.Union[str, Path] = None,
-    filter_func: callable = filter_xml,
+    filter_func: callable = None,
 ) -> list[FileItem]:
     if not root:
         raise ValueError
     f = list_files_recursive(root)
-    if not f:
+    if not f or not callable(filter_func):
         return f
+
     files_filtered = filter_func(f)
     return files_filtered
 
