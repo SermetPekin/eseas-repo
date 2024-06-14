@@ -1,6 +1,3 @@
-# This workflow installs Python dependencies, runs tests, and lints with various Python versions.
-# For more information, see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
-
 name: Python Package
 
 on:
@@ -32,17 +29,23 @@ jobs:
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - name: Lint with flake8
-      run: |
-        # Stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Cache jwsacruncher
+      id: cache-jwsacruncher
+      uses: actions/cache@v3
+      with:
+        path: jwsacruncher
+        key: jwsacruncher-v2.2.4
 
-    - name: Download jwsacruncher
+    - name: Download jwsacruncher if not cached
+      if: steps.cache-jwsacruncher.outputs.cache-hit != 'true'
       run: |
         wget https://github.com/jdemetra/jwsacruncher/releases/download/v2.2.4/jwsacruncher-2.2.4-bin.zip
         unzip jwsacruncher-2.2.4-bin.zip -d jwsacruncher
+
+    - name: Lint with flake8
+      run: |
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
     - name: Run tests
       env:
