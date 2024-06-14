@@ -28,15 +28,18 @@ Alternatively, you can install it from a local wheel file:
 ```bash
 pip install ./eseas-0.1.0-py3-none-any.whl
 ```
+## Prerequisites
 
 ### jwsacruncher
 
-The `jwsacruncher` tool is required for this package to function. You can download the latest release of `jwsacruncher` from the [jdemetra releases](https://github.com/jdemetra/jwsacruncher/releases/tag/v2.2.4).
+`eseas` requires the `jwsacruncher` Java package. You can download it
+from the [jwsacruncher GitHub releases page](https://github.com/jdemetra/jwsacruncher/releases).
 
-```bash
-# Download jwsacruncher
-cd jdemetra/jswacruncher
-```
+### Setup Instructions
+
+1. Download the latest release of `jwsacruncher` from the [releases page](https://github.com/jdemetra/jwsacruncher/releases).
+2. Unzip the downloaded file.
+3. Note the path to the `bin` directory inside the unzipped folder.
 
 After downloading `jwsacruncher`, you need to specify its location when using the `Options` function from the `eseas` package.
 
@@ -50,7 +53,7 @@ import time
 
 def main():
     # Specify the path to the jwsacruncher bin directory
-    java_folder = r'../jwsacruncher-2.2.4/bin'
+    java_folder = r'../../Downloads/jwsacruncher-2.2.4/bin'
     demetra_source_folder = r"./demetra_source_folder"
     local_folder = r"./test_out"
 
