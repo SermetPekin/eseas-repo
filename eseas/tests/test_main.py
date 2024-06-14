@@ -1,6 +1,6 @@
 import pandas as pd
-from eseas.core.seasonal_general import SeasonalADV
-from eseas.core.seasonal_options import SeasonalOptions
+from eseas import Seasonal
+from eseas import Options
 from eseas.core.df_operations import make_df_float
 from eseas.core.cruncher_classes import get_cruncher
 from eseas.core.cruncher_classes import Cruncher
@@ -10,7 +10,7 @@ from eseas.core.seas_testing_utils import get_testing_utils
 from eseas.core.seas_utils import filter_xls
 from eseas.core.df_operations import get_rand_hash
 
-from .test_utils import skip_if_github
+# from .test_utils import skip_if_github
 
 import random
 from evdspy.EVDSlocal.common.file_classes import FileItem
@@ -36,18 +36,18 @@ local_folder = testing_utils.local_folder
 
 # @skip_if_github
 def test_mevsimsel_general_basic():
-    options = SeasonalOptions(
+    options = Options(
         demetra_folder,
         java_folder,
         local_folder,
     )
-    m = SeasonalADV(options)
+    m = Seasonal(options)
     m.part1()
     m.part2()
 
 
 # @skip_if_github
-def test_a1():
+def test_c1():
     c = Cruncher()
     c.set_items(java_folder, local_folder, demetra_folder)
     dem_files = get_demetra_files(demetra_folder)
@@ -58,7 +58,7 @@ def test_a1():
 
 # @skip_if_github
 def test_mevsimsel_general():
-    options = SeasonalOptions(
+    options = Options(
         demetra_folder,
         java_folder,
         local_folder,
@@ -73,7 +73,7 @@ def test_mevsimsel_general():
         ),
         workspace_mode=True,
     )
-    m = SeasonalADV(options)
+    m = Seasonal(options)
     m.part1()
     m.part2()
 
@@ -104,13 +104,3 @@ def test_Cruncher():
     c2 = Cruncher()
     c2.crunch_folder = "abcdefg"
     assert c1.crunch_folder == c2.crunch_folder
-
-
-@skip_if_github
-def test_c1():
-    c = Cruncher()
-    c.set_items(java_folder, local_folder, demetra_folder)
-    dem_files = get_demetra_files(demetra_folder)
-    for f in dem_files:
-        of_picker = OutFilePicker(f)
-        of_picker.pick_files()
