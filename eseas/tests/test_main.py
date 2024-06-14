@@ -46,7 +46,7 @@ def test_mevsimsel_general_basic():
     m.part2()
 
 
-@skip_if_github
+# @skip_if_github
 def test_a1():
     c = Cruncher()
     c.set_items(java_folder, local_folder, demetra_folder)
@@ -56,7 +56,7 @@ def test_a1():
         of_picker.pick_files()
 
 
-@skip_if_github
+# @skip_if_github
 def test_mevsimsel_general():
     options = SeasonalOptions(
         demetra_folder,
