@@ -1,5 +1,4 @@
 import pandas as pd
-from evdspy.EVDSlocal.common.file_classes import mock_file_items
 from eseas.core.seasonal_general import SeasonalADV
 from eseas.core.seasonal_options import SeasonalOptions
 from eseas.core.df_operations import make_df_float
@@ -9,8 +8,24 @@ from eseas.core.demetra import get_demetra_files
 from eseas.core.picker_classes import OutFilePicker
 from eseas.core.seas_testing_utils import get_testing_utils
 from eseas.core.seas_utils import filter_xls
+from eseas.core.df_operations import get_rand_hash
 
 from .test_utils import skip_if_github
+
+import random
+from evdspy.EVDSlocal.common.file_classes import FileItem
+
+
+def mock_file_items():
+    items = []
+    random.seed(954)
+    exts = ("xlsx", "mat", "m", "xml")
+    folders = (".", "A", "B", "C")
+    for item in range(5):
+        name = get_rand_hash(5)
+        f = FileItem(random.choice(folders), name + "." + random.choice(exts))
+        items.append(f)
+    return items
 
 
 testing_utils = get_testing_utils()
