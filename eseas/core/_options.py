@@ -24,4 +24,5 @@ demetra_command_file_name = "demetra_commands"
       this number will be maximum number of xml files that can be picked
       while searching for demetra xml files.
 """
+
 max_num = 5_000

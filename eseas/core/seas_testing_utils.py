@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 from pathlib import Path
-
+import os
 from eseas.core.utils_general2 import create_dir
-
 from .utils_general2 import get_os
+from eseas.core.github_actions import GithubActions
 
 
 @dataclass
@@ -30,8 +30,11 @@ def get_testing_utils(check=False):
         fold = "unix"
 
     demetra_folder = rf"./eseas/data_for_testing/{fold}"
-    # java_folder = r"../jwsacruncher-2.2.4/bin"
     java_folder = Path(r"../../../Downloads/jwsacruncher-2.2.4/bin")
+
+    if GithubActions().is_testing():
+        java_folder = os.environ["JAVA_CRUNCHER_BIN"]
+
     local_folder = r"./eseas_output"
     create_dir(local_folder)
     if check:

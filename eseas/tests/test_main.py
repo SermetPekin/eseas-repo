@@ -34,7 +34,7 @@ java_folder = testing_utils.java_folder
 local_folder = testing_utils.local_folder
 
 
-@skip_if_github
+# @skip_if_github
 def test_mevsimsel_general_basic():
     options = SeasonalOptions(
         demetra_folder,
