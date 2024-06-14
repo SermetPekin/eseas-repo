@@ -6,9 +6,6 @@ from abc import ABC, abstractmethod
 from ._options import demetra_command_file_name
 
 
-# get_cruncher()
-
-
 @dataclass
 class DemetraCaller(ABC):
     @property

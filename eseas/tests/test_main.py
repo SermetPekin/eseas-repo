@@ -10,12 +10,16 @@ from eseas.core.picker_classes import OutFilePicker
 from eseas.core.seas_testing_utils import get_testing_utils
 from eseas.core.seas_utils import filter_xls
 
+from .test_utils import skip_if_github
+
+
 testing_utils = get_testing_utils()
 demetra_folder = testing_utils.demetra_folder
 java_folder = testing_utils.java_folder
 local_folder = testing_utils.local_folder
 
 
+@skip_if_github
 def test_mevsimsel_general_basic():
     options = SeasonalOptions(
         demetra_folder,
@@ -36,6 +40,7 @@ def test_a1():
         of_picker.pick_files()
 
 
+@skip_if_github
 def test_mevsimsel_general():
     options = SeasonalOptions(
         demetra_folder,
@@ -85,15 +90,8 @@ def test_Cruncher():
     assert c1.crunch_folder == c2.crunch_folder
 
 
-def test_Cruncher():
-    c1 = Cruncher()
-    c1.crunch_folder = "abc"
-    c2 = Cruncher()
-    c2.crunch_folder = "abcdefg"
-    assert c1.crunch_folder == c2.crunch_folder
-
-
-def test_a1():
+@skip_if_github
+def test_c1():
     c = Cruncher()
     c.set_items(java_folder, local_folder, demetra_folder)
     dem_files = get_demetra_files(demetra_folder)

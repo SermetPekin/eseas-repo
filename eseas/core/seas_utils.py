@@ -195,7 +195,7 @@ def display(some_files: Iterable[FileItem], max_num=10):
     view_display(template)
 
 
-def search_folders_general(
+def search_demetra_folder(
     root: t.Union[str, Path] = None,
     filter_func: callable = None,
 ) -> list[FileItem]:
@@ -210,12 +210,12 @@ def search_folders_general(
 
 
 def get_type_of_files_demetra(folder, filter_func=filter_xls):
-    files = search_folders_general(folder, filter_func)
+    files = search_demetra_folder(folder, filter_func)
     return files
 
 
 def get_type_of_files(folder, filter_func=filter_xls):
-    files = search_folders_general(folder, filter_func)  # search_folders()
+    files = search_demetra_folder(folder, filter_func)  # search_folders()
     return files
 
 
