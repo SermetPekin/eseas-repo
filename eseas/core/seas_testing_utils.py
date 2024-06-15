@@ -3,7 +3,8 @@ from pathlib import Path
 import os
 from eseas.core.utils_general2 import create_dir
 from .utils_general2 import get_os
-from eseas.core.github_actions import GithubActions
+
+# from eseas.core.github_actions import GithubActions
 
 
 @dataclass
@@ -16,6 +17,10 @@ class TestingUtils:
 def check_folder(folder):
     print(Path(folder).absolute())
     assert Path(folder).is_dir()
+
+
+def get_env_java_folder():
+    return os.environ.get("JAVA_CRUNCHER_BIN")
 
 
 def get_testing_utils(check=False):
@@ -32,9 +37,11 @@ def get_testing_utils(check=False):
     demetra_folder = rf"./eseas/data_for_testing/{fold}"
     java_folder = Path(r"../../../Downloads/jwsacruncher-2.2.4/bin")
 
-    if GithubActions().is_testing():
-        """For github actions testing"""
-        java_folder = os.environ["JAVA_CRUNCHER_BIN"]
+    if get_env_java_folder():
+        java_folder = get_env_java_folder()
+
+    # if GithubActions().is_testing():
+    #     java_folder = os.environ["JAVA_CRUNCHER_BIN"]
 
     local_folder = r"./eseas_output"
     create_dir(local_folder)

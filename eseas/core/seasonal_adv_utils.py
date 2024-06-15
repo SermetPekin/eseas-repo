@@ -2,7 +2,7 @@ import sys
 from pathlib import Path
 
 from evdspy.EVDSlocal.common.file_classes import FileItem
-
+from .seas_testing_utils import get_env_java_folder
 from .seas_utils import view_display
 
 
@@ -27,7 +27,9 @@ def get_input_both(msg="Your choice", default_answer="y") -> str:
     we need to check if it is pytest
     """
     view_display(msg)
-    if this_is_pytest():
+    if this_is_pytest():  # pytest
+        return default_answer
+    if get_env_java_folder():  # Probably Docker
         return default_answer
     return input()
 
