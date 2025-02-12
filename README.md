@@ -20,14 +20,10 @@ eseas is a Python package that acts as a wrapper for the `jwsacruncher` Java pac
 You can install the `eseas` package via pip:
 
 ```bash
-pip install eseas
+pip install eseas -U
 ```
 
-Alternatively, you can install it from a local wheel file:
-
-```bash
-pip install ./eseas-0.1.0-py3-none-any.whl
-```
+ 
 ## Prerequisites
 
 ### jwsacruncher
@@ -62,7 +58,6 @@ def main():
         java_folder,
         local_folder,
         result_file_names=("sa", "s_f", "cal"), # *1
-
         workspace_mode=True,
         file_name_explanation=True,
     )

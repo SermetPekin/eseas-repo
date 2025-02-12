@@ -1,22 +1,35 @@
-[tool.poetry]
+[project]
 name = "eseas"
-version = "0.1.9"
-description = """eseas is a Python package that acts as a wrapper for the `jwsacruncher` Java package. This tool allows users to process Demetra workspace XML files, create batch files, execute them, and collect the desired outputs into individual Excel files."""
-authors = ["Sermet Pekin <Sermet.Pekin@gmail.com>"]
-license = "EUPL-1.2"
+version = "0.1.10"
+description = """ESEAS is a Python package that serves as a wrapper for the jwsacruncher Java package.
+This tool allows users to process Demetra workspace XML files, create batch files, execute them,
+and collect the desired outputs into individual Excel files."""
+authors = [{ name = "Sermet Pekin", email = "Sermet.Pekin@gmail.com" }]
+license = { text = "EUPL-1.2" }
 readme = "README.md"
 keywords = ["seasonal adjustment", "data processing", "jwsacruncher", "Demetra"]
+requires-python = ">=3.9"
+dependencies = [
+    "evdspy>=1.1.41",
+]
+
+[project.urls]
 repository = "https://github.com/SermetPekin/eseas-repo"
 documentation = "https://github.com/SermetPekin/eseas-repo#readme"
 
-[tool.poetry.dependencies]
-python = "^3.9"
-evdspy = ">=1.1.25"
+[dependency-groups]
+dev = [
+    "pytest>=8.3.4",
+    "ruff>=0.9.6",
+    "tox>=4.24.1",
+]
 
-[tool.poetry.extras]
-docs = ["sphinx"]
-testing = ["pytest", "pytest-cov"]
+
+[tool.setuptools.packages]
+find = { where = ["."] }
+
+
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
