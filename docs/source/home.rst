@@ -1,8 +1,9 @@
-eseas: python Wrapper for Demetra (jwsacruncher)
-=============================================
-
+eseas
+===========
 **eseas** is a Python package that acts as a wrapper for the `jwsacruncher` Java package.
 It enables users to process **Demetra workspace XML files**, create batch files, execute them, and collect the desired outputs into individual **Excel files**.
+
+
 
 Features
 --------
