@@ -1,11 +1,11 @@
-[![Python package](https://github.com/SermetPekin/eseas-repo/actions/workflows/python-package.yml/badge.svg?branch=main&1)](https://github.com/SermetPekin/eseas-repo/actions/workflows/python-package.yml)
 
 
-[![PyPI](https://img.shields.io/pypi/v/eseas?1)](https://img.shields.io/pypi/v/eseas?1)
-[![Supported Python Versions](https://img.shields.io/pypi/pyversions/eseas)](https://pypi.org/project/eseas/)
-[![Downloads](https://static.pepy.tech/badge/eseas?1)](https://pepy.tech/project/eseas?1)
-[![Downloads](https://static.pepy.tech/badge/eseas/month?1)](https://pepy.tech/project/eseas?1)
-[![Downloads](https://pepy.tech/badge/eseas/week?1)](https://pepy.tech/project/eseas?1)
+[![Python Package](https://github.com/SermetPekin/eseas-repo/actions/workflows/python-package.yml/badge.svg?2)](https://github.com/SermetPekin/eseas-repo/actions/workflows/python-package.yml)
+[![PyPI](https://img.shields.io/pypi/v/eseas)](https://img.shields.io/pypi/v/eseas) ![PyPI Downloads](https://static.pepy.tech/badge/eseas?2)![t](https://img.shields.io/badge/status-maintained-yellow.svg) [![](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/) 
+
+
+
+ 
 
 
 
