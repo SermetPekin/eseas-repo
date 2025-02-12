@@ -78,8 +78,7 @@ if __name__ == "__main__":
 
 For more detailed information, refer to the following guides:
 
-- [Demetra Components](https://github.com/SermetPekin/eseas-repo/blob/main/docs_other/demetra_components.md)
-- [Usage Guide](https://github.com/SermetPekin/eseas-repo/blob/main/docs_other/usage.md)
+[Documentation](https://eseas-repo.readthedocs.io/en/latest/home.html)
 
 ## How it Works
 
