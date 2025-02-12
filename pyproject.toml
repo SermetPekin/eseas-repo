@@ -11,6 +11,7 @@ keywords = ["seasonal adjustment", "data processing", "jwsacruncher", "Demetra"]
 requires-python = ">=3.9"
 dependencies = [
     "evdspy>=1.1.41",
+    "urllib3>=2.3.0",
 ]
 
 [project.urls]
