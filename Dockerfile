@@ -28,3 +28,6 @@ ENV PYTHONUNBUFFERED=1
 ENV JAVA_CRUNCHER_BIN='/usr/src/app/jwsacruncher-2.2.4/bin'
 RUN mkdir test_out
 RUN python3 ./main2.py
+
+# docker build -t eseas .
+# docker run --rm eseas
