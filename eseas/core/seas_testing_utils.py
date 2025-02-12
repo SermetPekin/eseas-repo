@@ -4,8 +4,6 @@ import os
 from eseas.core.utils_general2 import create_dir
 from .utils_general2 import get_os
 
-# from eseas.core.github_actions import GithubActions
-
 
 @dataclass
 class TestingUtils:
@@ -35,7 +33,8 @@ def get_testing_utils(check=False):
         fold = "unix"
 
     demetra_folder = rf"./eseas/data_for_testing/{fold}"
-    java_folder = Path(r"../../../Downloads/jwsacruncher-2.2.4/bin")
+    # /Users/sermetpekin/Downloads/jwsacruncher-2.2.5 3
+    java_folder = Path(r"../../../Downloads/jwsacruncher-2.2.5 3/bin")
 
     if get_env_java_folder():
         java_folder = get_env_java_folder()

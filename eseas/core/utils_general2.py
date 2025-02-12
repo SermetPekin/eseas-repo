@@ -113,18 +113,18 @@ def create_directory(address: Path):
 def make_eng(text: str) -> str:
     # return text
     dict_ = {
-        "ÅŸ": "s",
-        "Ã§": "c",
-        "Ä±": "i",
-        "Ã¼": "u",
-        "Ã¶": "o",
-        "ÄŸ": "g",
-        "Ä°": "I",
-        "Å": "S",
-        "Ä": "G",
-        "Ã‡": "C",
-        "Ãœ": "U",
-        "Ã–": "O",
+        "s": "s",
+        "ç": "c",
+        "ı": "i",
+        "ü": "u",
+        "ö": "o",
+        "ğ": "g",
+        "İ°": "I",
+        "Ş": "S",
+        "Ğ": "G",
+        "Ç": "C",
+        "Ü": "U",
+        "Ö": "O",
     }
     return text.translate(text.maketrans(dict_))
 
