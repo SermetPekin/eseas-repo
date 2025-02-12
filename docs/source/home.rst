@@ -70,8 +70,3 @@ License
 This project is licensed under the **European Union Public License (EUPL) v1.2**.
 See the full license in the `LICENSE` file.
 
-
-Author
-------
-Developed by **Sermet Pekin**.
-
