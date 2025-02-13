@@ -2,6 +2,7 @@
 __pycache__/
 *.txt
 #!requirements.txt
+ABC/
 
 .venv/
 .pytest_cache/

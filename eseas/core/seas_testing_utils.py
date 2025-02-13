@@ -33,7 +33,7 @@ def get_testing_utils(check=False):
         fold = "unix"
 
     demetra_folder = rf"./eseas/data_for_testing/{fold}"
-    # /Users/sermetpekin/Downloads/jwsacruncher-2.2.5 3
+    # /Users/XABC/Downloads/jwsacruncher-2.2.5 3
     java_folder = Path(r"../../../Downloads/jwsacruncher-2.2.5 3/bin")
 
     if get_env_java_folder():

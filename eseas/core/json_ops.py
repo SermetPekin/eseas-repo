@@ -20,9 +20,6 @@ def remove_json_bad_chars(json_object_str):
     if isinstance(json_object_str, (dict)):
         return dict_apply(json_object_str, remove_json_bad_chars)
     bad_chars = ("$", "%", "&", "?", "Ä", "ÄŸ")
-    # ('%', '&', '?', 'Ä', 'ÄŸ')
-    # ('&', '*', '>', '?', '\xa0', 'Ã ', 'Ã¢', 'Ä', 'ÄŸ', 'â€™')
-    #  ("'", ":", '$')
     replace_chars = ("USD", "PERCENT", "AMPERSTAND", "QUESTIONMARK", "G", "g")
     for index, bad_char in enumerate(bad_chars):
         new_char = replace_chars[index]

@@ -56,8 +56,7 @@ def create_dir(folder: str):
     if folder.is_dir():
         return
     import os
-
-    return os.makedirs(folder)
+    return os.makedirs(folder, exist_ok=True)
 
 
 def clean_file_name(file_name: str):
@@ -74,11 +73,11 @@ def deep_temizle_list(content: list) -> tuple:
 
 def deep_temizle(content: str) -> t.Union[str, tuple, list, dict]:
     if isinstance(
-        content,
-        (
-            list,
-            tuple,
-        ),
+            content,
+            (
+                    list,
+                    tuple,
+            ),
     ):
         return deep_temizle_list(content)
     if isinstance(content, (dict)):

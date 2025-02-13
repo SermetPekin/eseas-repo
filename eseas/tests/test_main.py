@@ -36,6 +36,17 @@ java_folder = testing_utils.java_folder
 local_folder = testing_utils.local_folder
 
 
+def test_setup():
+    options = Options(
+        demetra_folder,
+        java_folder,
+        'ABC/A/B', # it is ok if it does not exist
+    )
+    m = Seasonal(options)
+    m.part1()
+    m.part2()
+
+
 # @skip_if_github
 def test_mevsimsel_general_basic():
     options = Options(

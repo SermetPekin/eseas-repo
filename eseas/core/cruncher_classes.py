@@ -9,6 +9,10 @@ import tempfile
 import os
 from typing import Union
 
+from .utils_general2 import create_dir
+
+import os
+
 
 class Cruncher:
     """cruncher"""
@@ -23,34 +27,36 @@ class Cruncher:
         return cls.instance
 
     def set_items(
-        cls,
-        crunch_folder,
-        local_work_space,
-        demetra_folder,
-        workspace_mode=False,
-        file_name_explanation=True,
+            self,
+            crunch_folder,
+            local_work_space,
+            demetra_folder,
+            workspace_mode=False,
+            file_name_explanation=True,
     ):
         """Set Items Cruncher"""
-        cls.instance.crunch_folder = get_absolute(crunch_folder)
-        cls.instance.local_work_space = get_absolute(local_work_space)
-        cls.demetra_folder = get_absolute(demetra_folder)
-        control(cls)
-        cls.workspace_mode = workspace_mode
-        cls.file_name_explanation = file_name_explanation
-        cls.check_workspace_mode()
+        self.instance.crunch_folder = get_absolute(crunch_folder)
+        self.instance.local_work_space = get_absolute(local_work_space)
+        self.demetra_folder = get_absolute(demetra_folder)
 
-    def set_itemsObj(cls, obj):
+        control(self)  # it will raise if any of the folders does not exist except local workspace folder
+
+        self.workspace_mode = workspace_mode
+        self.file_name_explanation = file_name_explanation
+        self.check_workspace_mode()
+
+    def set_itemsObj(self, obj):
         """Set Items Cruncher"""
 
-        cls.instance.crunch_folder = get_absolute(obj.crunch_folder)
-        cls.instance.local_work_space = get_absolute(obj.local_work_space)
-        cls.demetra_folder = get_absolute(obj.demetra_folder)
-        control(cls)
-        cls.workspace_mode = obj.workspace_mode
-        cls.file_name_explanation = obj.file_name_explanation
-        cls.check_workspace_mode()
+        self.instance.crunch_folder = get_absolute(obj.crunch_folder)
+        self.instance.local_work_space = get_absolute(obj.local_work_space)
+        self.demetra_folder = get_absolute(obj.demetra_folder)
+        control(self)
+        self.workspace_mode = obj.workspace_mode
+        self.file_name_explanation = obj.file_name_explanation
+        self.check_workspace_mode()
 
-    def create_workspace(cls):
+    def create_workspace(self):
         def create_directory(address: Path):
             import os
 
@@ -68,16 +74,16 @@ class Cruncher:
             return r
 
         def naming_format():
-            p = Path() / cls.instance.demetra_folder
+            p = Path() / self.instance.demetra_folder
             p = path_str(p)
             p = make_eng(p)
             return f"@eseas_wspace_{p}"
 
-        if cls.workspace_mode:
-            ws = cls.instance.local_work_space
+        if self.workspace_mode:
+            ws = self.instance.local_work_space
             n_fname = Path() / ws / naming_format()
             if create_directory(n_fname):
-                cls.instance.local_work_space = n_fname
+                self.instance.local_work_space = n_fname
 
     def check_workspace_mode(self):
         # Cruncher
@@ -90,35 +96,35 @@ class Cruncher:
             exit()
 
 
+def show_cruncher_details_raise(cls):
+    def check(folder: str):
+        if Path(folder).is_dir():
+            return "exists"
+        return "does not exist!"
+
+    msg = f"""\n\n
+    _______________________________________________________________
+    Could not find some folders.
+    _______________________________________________________________
+        java_folder     : [{check(cls.instance.crunch_folder)}]
+                          {cls.instance.crunch_folder}
+        local_workspace : [{check(cls.instance.local_work_space)}]
+                          {cls.instance.local_work_space}
+        demetra_folder  : [{check(cls.instance.demetra_folder)}]
+                          {cls.instance.demetra_folder}
+    """
+    raise CruncherNotSet(msg)
+
+
 def control(cls):
-    global checked
     if not check_cruncher(cls):
-
-        def check(folder: str):
-            if Path(folder).is_dir():
-                return "exists"
-            return "does not exist!"
-
-        msg = f"""\n\n
-_______________________________________________________________
-Could not find some folders.
-_______________________________________________________________
-    java_folder     : [{check(cls.instance.crunch_folder)}]
-                      {cls.instance.crunch_folder}
-    local_workspace : [{check(cls.instance.local_work_space)}]
-                      {cls.instance.local_work_space}
-    demetra_folder  : [{check(cls.instance.demetra_folder)}]
-                      {cls.instance.demetra_folder}
-"""
-        raise ChruncerNotSet(msg)
-    else:
-        checked = True
+        show_cruncher_details_raise(cls)  # raise
 
 
 def check_write_permission(folder: Union[str, Path]) -> bool:
     if not os.path.isdir(folder):
         raise NotADirectoryError(folder)
-        return False
+        # return False
 
     try:
         testfile = tempfile.TemporaryFile(dir=folder)
@@ -135,7 +141,13 @@ def check_read_permission(folder: Union[str, Path]) -> bool:
     return os.access(folder, os.R_OK)
 
 
-def check_cruncher(cls):
+def check_write_permission_create(folder):
+    if not os.path.isdir(folder):
+        create_dir(folder)
+    return check_write_permission(folder)
+
+
+def check_cruncher(cls) -> bool:
     msg_if_error = """
     Cruncher will need write permission to
     write permission
@@ -146,8 +158,12 @@ def check_cruncher(cls):
     """
 
     a1 = check_write_permission(Path(cls.instance.crunch_folder))
-    a2 = check_write_permission(Path(cls.instance.local_work_space))
+
+    a2 = check_write_permission_create(Path(cls.instance.local_work_space))
+    # this is for outputs therefore it will be created if it does not exist
+
     a3 = check_read_permission(Path(cls.instance.demetra_folder))
+
     ok = all(
         (
             a1,
@@ -157,12 +173,13 @@ def check_cruncher(cls):
     )
     if not ok:
         print(msg_if_error)
-        time.sleep(5)
-        raise ChruncerNotSet()
+        time.sleep(3)
+        return False
+        # raise CruncherNotSet()
     return ok
 
 
-class ChruncerNotSet(BaseException):
+class CruncherNotSet(BaseException):
     pass
 
 
@@ -170,8 +187,8 @@ def get_cruncher():
     c = Cruncher()
     control(c)
     assert (
-        c.crunch_folder is not None and c.local_work_space is not None
-    ), "Chruncer not set!"
+            c.crunch_folder is not None and c.local_work_space is not None
+    ), "Cruncher not set!"
     return c
 
 
