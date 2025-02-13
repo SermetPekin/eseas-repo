@@ -1,3 +1,5 @@
+from typing import Tuple, Optional
+
 import pandas as pd
 from pathlib import Path
 
@@ -44,7 +46,7 @@ def sayi_donustur(pot_sayi: str) -> float:
         return pot_sayi
 
 
-def convert_df_number(df: pd.DataFrame, except_columns=()):
+def convert_df_number(df: pd.DataFrame, except_columns: Tuple[str] = ()):
     def convert_number_item(item):
         try:
             new_number = sayi_donustur(item)  # float(str(item).replace(",", "."))
@@ -52,34 +54,25 @@ def convert_df_number(df: pd.DataFrame, except_columns=()):
             print(item)
             print(exc)
             new_number = 0
-            # new_number = -987654321.0123
-            # raise exc
+
         return new_number
 
     def convert_numbers(numbers):
         return tuple(map(convert_number_item, numbers))
 
-    for column in list(df.columns):
-        if column not in except_columns:
-            df[column] = convert_numbers(list(df[column]))
-        else:
-            ...
-            # print("passing...", column)
+    if except_columns is None:
+        except_columns = tuple()
+    for column in df.columns:
+        if column in except_columns:
+            continue
+        df[column] = convert_numbers(list(df[column]))
+
+
     return df
 
 
-def make_df_float(df):
-    except_columns = ("donem",)
+def make_df_float(df: pd.DataFrame, except_columns: Optional[Tuple[str]] = None):
+    if except_columns is None:
+        except_columns = ("donem",)
     df = convert_df_number(df, except_columns)
     return df
-
-
-def test_make_float():
-    data_dict = {
-        "donem": ["200201", "200202"],
-        "kolon1": ["60,8456", "66,12656"],
-        "kolon2": ["60,8456", "66,12656"],
-    }
-    df = pd.DataFrame.from_records(data_dict)
-    new_df = make_df_float(df)
-    print(new_df.head())

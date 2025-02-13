@@ -66,7 +66,5 @@ def write_bat_file_demetra(xml_demetra, file_name=demetra_command_file_name) -> 
     copy_folder_demetra(xml_demetra)
     text = "".join(cmds)
     show_title(f"Creating command file to call `jwsacruncher` : [{file_name}]")
-    # time.sleep(2)
-    # print(text)
-    # time.sleep(3)
+
     write_bat_file(text, file_name)

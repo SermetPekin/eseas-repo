@@ -1,3 +1,5 @@
+from typing import Any
+
 import pandas as pd
 from eseas import Seasonal
 from eseas import Options
@@ -104,3 +106,46 @@ def test_Cruncher():
     c2 = Cruncher()
     c2.crunch_folder = "abcdefg"
     assert c1.crunch_folder == c2.crunch_folder
+
+
+def test_make_float(capsys):
+    data_dictA = {
+
+        "s1": ["60,8456", "66,12656"],
+        "s2": ["60,8456", "66,12656"],
+    }
+    data_dictB = {
+
+        "s1": [60.8456, 66.12656],
+        "s2": [60.8456, 66.12656],
+    }
+    data_dict = {
+        # "donem": ["200201", "200202"],
+        "donem": pd.Series([200201, 200202], dtype="int64"),
+        "s1": ["60,8456", "66,12656"],
+        "s2": ["60,8456", "66,12656"],
+    }
+    data_dict_target = {
+        "donem": pd.Series([200201, 200202], dtype="int64"),
+        "s1": [60.8456, 66.12656],
+        "s2": [60.8456, 66.12656],
+    }
+
+    def func(_data_dict: dict[str, Any], _data_dict_target: dict[str, Any], except_columns=(), result=True):
+        _df = pd.DataFrame.from_records(_data_dict)
+        _df_target = pd.DataFrame.from_records(_data_dict_target)
+        _new_df = make_df_float(_df, except_columns=except_columns)
+        if result:
+            assert _new_df.equals(_df_target)
+        else:
+            print(_new_df)
+            print(_df_target)
+            assert not _new_df.equals(_df_target)
+
+    with capsys.disabled():
+
+        func(data_dict, data_dict_target, except_columns=('donem',))
+        func(data_dict, data_dict_target, except_columns=('BB',), result=False)
+
+        func(data_dictA, data_dictB, except_columns=('AA',))
+        func(data_dictA, data_dict_target, except_columns=('BB',), result=False)

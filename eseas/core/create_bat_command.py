@@ -34,8 +34,6 @@ def get_demetra_type():
     raise NotImplementedError("Computer OS not found.")
 
 
-if os_str == "windows":
-    assert isinstance(get_demetra_type(), DemetraCallerWindows)
 
 
 def general_params():
@@ -129,7 +127,7 @@ def begin_content_win():
 rem         evdspy
 rem         @2022 evdspy ==> JDemetra caller
 rem         searched space  : {get_cruncher().demetra_folder}
-rem         date creted : {today}
+rem         date created : {today}
 rem ==============================================================
 echo on
 """

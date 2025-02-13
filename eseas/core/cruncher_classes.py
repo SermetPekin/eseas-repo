@@ -79,12 +79,12 @@ class Cruncher:
             if create_directory(n_fname):
                 cls.instance.local_work_space = n_fname
 
-    def check_workspace_mode(cls):
+    def check_workspace_mode(self):
         # Cruncher
         # TODO SingleOptions().workspace_mode
         try:
-            if cls.workspace_mode:
-                cls.create_workspace()
+            if self.workspace_mode:
+                self.create_workspace()
         except Exception as exc:
             print(exc)
             exit()
