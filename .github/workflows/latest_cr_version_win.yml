@@ -54,7 +54,7 @@ jobs:
       env:
         JAVA_CRUNCHER_BIN: ${{ github.workspace }}/jwsacruncher/jwsacruncher-2.2.5/bin
       run: |
-        export PATH=$JAVA_CRUNCHER_BIN:$PATH
+        set PATH=$JAVA_CRUNCHER_BIN;$PATH
         pytest -v
         python -c 'import os;print(os.environ["JAVA_CRUNCHER_BIN"])'
 
