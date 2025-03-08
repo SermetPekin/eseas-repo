@@ -46,7 +46,7 @@ jobs:
     - name: Download jwsacruncher if not cached (Windows)
       shell: pwsh
       run: |
-        Invoke-WebRequest -Uri "https://github.com/jdemetra/jwsacruncher/releases/download/v2.2.5/jwsacruncher-2.2.5-bin.zip" -OutFile "jwsacruncher-2.2.5-bin.zip"
+        Invoke-WebRequest -Uri "https://github.com/jdemetra/jwsacruncher/releases/download/v2.2.5/jwsacruncher-2.2.5-bin.zip" -OutFile "jwsacruncher-2.2.5-bin.zip" -Force 
         Expand-Archive -Path "jwsacruncher-2.2.5-bin.zip" -DestinationPath "jwsacruncher"  
 
 
