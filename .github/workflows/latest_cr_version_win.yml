@@ -42,11 +42,13 @@ jobs:
         path: jwsacruncher
         key: jwsacruncher-v2.2.5
 
-    - name: Download jwsacruncher if not cached
-      if: steps.cache-jwsacruncher.outputs.cache-hit != 'true'
+   
+    - name: Download jwsacruncher if not cached (Windows)
+      shell: pwsh
       run: |
-        wget https://github.com/jdemetra/jwsacruncher/releases/download/v2.2.5/jwsacruncher-2.2.5-bin.zip
-        unzip jwsacruncher-2.2.5-bin.zip -d jwsacruncher
+        Invoke-WebRequest -Uri "https://github.com/jdemetra/jwsacruncher/releases/download/v2.2.5/jwsacruncher-2.2.5-bin.zip" -OutFile "jwsacruncher-2.2.5-bin.zip"
+        Expand-Archive -Path "jwsacruncher-2.2.5-bin.zip" -DestinationPath "jwsacruncher"  
+
 
     - name: Run tests
       env:
