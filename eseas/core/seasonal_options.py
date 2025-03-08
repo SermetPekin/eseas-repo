@@ -30,7 +30,9 @@ class SeasonalOptions:
         ),
         workspace_mode=True,
         file_name_explanation=True,
+        java_bin = None 
     ):
+
         self.demetra_folder = demetra_folder
         self.java_folder = java_folder
         self.local_folder = local_folder
@@ -41,6 +43,7 @@ class SeasonalOptions:
         self.result_file_names = result_file_names
         self.workspace_mode = workspace_mode
         self.file_name_explanation = file_name_explanation
+        self.java_bin = java_bin
         self.set_options(workspace_mode)
         so = SingleOptions()
         so.set_items(self)
@@ -57,6 +60,7 @@ class SeasonalOptions:
             auto_approve={self.auto_approve},
             result_file_names={self.result_file_names},
             workspace_mode={self.workspace_mode},
+            java_bin = {self.java_bin}
     )
         """
         return template
@@ -69,4 +73,5 @@ class SeasonalOptions:
             demetra_folder=self.demetra_folder,
             workspace_mode=workspace_mode,
             file_name_explanation=self.file_name_explanation,
+            java_bin = self.java_bin 
         )

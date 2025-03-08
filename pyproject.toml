@@ -27,6 +27,13 @@ license-files = ["LICENSE"]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[dependency-groups]
+dev = [
+    "black>=25.1.0",
+    "pytest>=8.3.4",
+    "ruff>=0.9.6",
+]
+
 [tool.hatch.metadata]
 allow-direct-references = true
 
