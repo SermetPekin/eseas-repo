@@ -1,5 +1,7 @@
 scr*.py
 
+new_folder/
+test_out/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

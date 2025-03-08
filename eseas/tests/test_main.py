@@ -40,7 +40,7 @@ def test_setup():
     options = Options(
         demetra_folder,
         java_folder,
-        'ABC/A/B', # it is ok if it does not exist
+        "ABC/A/B",  # it is ok if it does not exist
     )
     m = Seasonal(options)
     m.part1()
@@ -91,6 +91,97 @@ def test_mevsimsel_general():
     m.part2()
 
 
+def test_mevsimsel_general_javabin_none():
+    options = Options(
+        demetra_folder,
+        java_folder,
+        local_folder,
+        test=False,
+        verbose=False,
+        replace_original_files=False,
+        auto_approve=False,
+        result_file_names=(
+            "sa",
+            "s",
+            "cal",
+        ),
+        workspace_mode=True,
+        java_bin=None,
+    )
+    m = Seasonal(options)
+    m.part1()
+    m.part2()
+
+
+def test_mevsimsel_general_javabin_none_new_folder():
+    options = Options(
+        demetra_folder,
+        java_folder,
+        'new_folder',
+        test=False,
+        verbose=False,
+        replace_original_files=False,
+        auto_approve=False,
+        result_file_names=(
+            "sa",
+            "s",
+            "cal",
+        ),
+        workspace_mode=True,
+        java_bin=None,
+    )
+    m = Seasonal(options)
+    m.part1()
+    m.part2()
+
+def test_mevsimsel_general_with_javabin():
+    options = Options(
+        demetra_folder,
+        java_folder,
+        local_folder,
+        test=False,
+        verbose=False,
+        replace_original_files=False,
+        auto_approve=False,
+        result_file_names=(
+            "sa",
+            "s",
+            "cal",
+        ),
+        workspace_mode=True,
+        java_bin="/usr/bin",
+    )
+    m = Seasonal(options)
+    m.part1()
+    m.part2()
+
+
+import pytest
+
+
+def test_mevsimsel_general_with_wrong_javabin():
+    with pytest.raises(ValueError):
+        options = Options(
+            demetra_folder,
+            java_folder,
+            local_folder,
+            test=False,
+            verbose=False,
+            replace_original_files=False,
+            auto_approve=False,
+            result_file_names=(
+                "sa",
+                "s",
+                "cal",
+            ),
+            workspace_mode=True,
+            java_bin="/usr/something",
+        )
+        m = Seasonal(options)
+        m.part1()
+        m.part2()
+
+
 def test_get_cruncher():
     c = Cruncher()
     c.set_items("", "", "")
@@ -121,12 +212,10 @@ def test_Cruncher():
 
 def test_make_float(capsys):
     data_dictA = {
-
         "s1": ["60,8456", "66,12656"],
         "s2": ["60,8456", "66,12656"],
     }
     data_dictB = {
-
         "s1": [60.8456, 66.12656],
         "s2": [60.8456, 66.12656],
     }
@@ -142,7 +231,12 @@ def test_make_float(capsys):
         "s2": [60.8456, 66.12656],
     }
 
-    def func(_data_dict: dict[str, Any], _data_dict_target: dict[str, Any], except_columns=(), result=True):
+    def func(
+        _data_dict: dict[str, Any],
+        _data_dict_target: dict[str, Any],
+        except_columns=(),
+        result=True,
+    ):
         _df = pd.DataFrame.from_records(_data_dict)
         _df_target = pd.DataFrame.from_records(_data_dict_target)
         _new_df = make_df_float(_df, except_columns=except_columns)
@@ -155,8 +249,8 @@ def test_make_float(capsys):
 
     with capsys.disabled():
 
-        func(data_dict, data_dict_target, except_columns=('donem',))
-        func(data_dict, data_dict_target, except_columns=('BB',), result=False)
+        func(data_dict, data_dict_target, except_columns=("donem",))
+        func(data_dict, data_dict_target, except_columns=("BB",), result=False)
 
-        func(data_dictA, data_dictB, except_columns=('AA',))
-        func(data_dictA, data_dict_target, except_columns=('BB',), result=False)
+        func(data_dictA, data_dictB, except_columns=("AA",))
+        func(data_dictA, data_dict_target, except_columns=("BB",), result=False)

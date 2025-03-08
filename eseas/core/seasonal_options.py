@@ -1,4 +1,17 @@
+# ====================================================================
+#
+# eseas
+#
 from .cruncher_classes import Cruncher
+from .folder_class import (
+    FolderClass,
+    DemetraFolder,
+    JavaBinFolder,
+    WorkspaceFolder,
+    CruncherFolder,
+)
+
+# ====================================================================
 
 
 class SingleOptions:
@@ -30,12 +43,19 @@ class SeasonalOptions:
         ),
         workspace_mode=True,
         file_name_explanation=True,
-        java_bin = None 
+        java_bin=None,
     ):
 
-        self.demetra_folder = demetra_folder
-        self.java_folder = java_folder
-        self.local_folder = local_folder
+        self.demetra_folder = DemetraFolder(demetra_folder)
+        self.java_folder = CruncherFolder(java_folder)
+        self.local_folder = WorkspaceFolder(local_folder)
+        self.java_bin = JavaBinFolder(java_bin)
+
+        self.demetra_folder = str(self.demetra_folder)
+        self.java_folder = str(self.java_folder)
+        self.local_folder = str(self.local_folder)
+        self.java_bin = java_bin if java_bin else None
+
         self.test = test
         self.verbose = verbose
         self.replace_original_files = replace_original_files
@@ -43,7 +63,7 @@ class SeasonalOptions:
         self.result_file_names = result_file_names
         self.workspace_mode = workspace_mode
         self.file_name_explanation = file_name_explanation
-        self.java_bin = java_bin
+
         self.set_options(workspace_mode)
         so = SingleOptions()
         so.set_items(self)
@@ -73,5 +93,5 @@ class SeasonalOptions:
             demetra_folder=self.demetra_folder,
             workspace_mode=workspace_mode,
             file_name_explanation=self.file_name_explanation,
-            java_bin = self.java_bin 
+            java_bin=self.java_bin,
         )

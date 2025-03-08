@@ -1,17 +1,27 @@
+# ====================================================================
+#
+# eseas
+#
+from .utils_general2 import create_dir
+from .folder_class import (
+    FolderClass,
+    DemetraFolder,
+    JavaBinFolder,
+    WorkspaceFolder,
+    CruncherFolder,
+)
+from .seas_utils import get_absolute
+
+# ====================================================================
 import traceback
 from pathlib import Path
 from rich import print
-from .seas_utils import get_absolute
 from evdspy.EVDSlocal.common.file_classes import make_eng
 from evdspy.EVDSlocal.utils.utils_general import replace_recursive
 import time
 import tempfile
 import os
 from typing import Union
-
-from .utils_general2 import create_dir
-
-import os
 
 
 class Cruncher:
@@ -27,34 +37,41 @@ class Cruncher:
         return cls.instance
 
     def set_items(
-            self,
-            crunch_folder,
-            local_work_space,
-            demetra_folder,
-            workspace_mode=False,
-            file_name_explanation=True,
-            java_bin = None 
+        self,
+        crunch_folder,
+        local_work_space,
+        demetra_folder,
+        workspace_mode=False,
+        file_name_explanation=True,
+        java_bin=None,
     ):
         """Set Items Cruncher"""
+
+        crunch_folder = str(crunch_folder)
+        local_work_space = str(local_work_space)
+        demetra_folder = str(demetra_folder)
+
         self.instance.crunch_folder = get_absolute(crunch_folder)
         self.instance.local_work_space = get_absolute(local_work_space)
         self.demetra_folder = get_absolute(demetra_folder)
 
-        control(self)  # it will raise if any of the folders does not exist except local workspace folder
+        control(
+            self
+        )  # it will raise if any of the folders does not exist except local workspace folder
 
         self.workspace_mode = workspace_mode
         self.file_name_explanation = file_name_explanation
-        if java_bin :
-            java_bin = Path(java_bin)
+        if java_bin:
+            java_bin = Path(str(java_bin))
         self.java_bin = java_bin
 
         self.check_workspace_mode()
         self.set_environ_java(self.java_bin)
-    def set_environ_java(self , java_bin : Path  ):
-        from .java_environ import JavaEnviron 
-        e = JavaEnviron(java_bin )
 
+    def set_environ_java(self, java_bin: Path):
+        from .java_environ import JavaEnviron
 
+        e = JavaEnviron(java_bin)
 
     def set_itemsObj(self, obj):
         """Set Items Cruncher"""
@@ -62,7 +79,7 @@ class Cruncher:
         self.instance.crunch_folder = get_absolute(obj.crunch_folder)
         self.instance.local_work_space = get_absolute(obj.local_work_space)
         self.demetra_folder = get_absolute(obj.demetra_folder)
-        self.java_bin =  get_absolute(obj.java_bin)
+        self.java_bin = get_absolute(obj.java_bin)
         control(self)
         self.workspace_mode = obj.workspace_mode
         self.file_name_explanation = obj.file_name_explanation
@@ -199,7 +216,7 @@ def get_cruncher():
     c = Cruncher()
     control(c)
     assert (
-            c.crunch_folder is not None and c.local_work_space is not None
+        c.crunch_folder is not None and c.local_work_space is not None
     ), "Cruncher not set!"
     return c
 

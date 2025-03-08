@@ -19,7 +19,7 @@ def main():
         ),
         workspace_mode=True,  # True creates a workspace folder and copies all demetra files
         file_name_explanation=True,  # True adds explanations to output file names 
-        java_bin = '/usr/bin2' , 
+        java_bin = '/usr/bin' , 
     )
     seas = Seasonal(options)
 
