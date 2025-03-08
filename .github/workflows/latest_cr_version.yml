@@ -1,5 +1,5 @@
 
-name: Ubuntu
+name: Ubuntu / MacOS
 
 on:
   push:
