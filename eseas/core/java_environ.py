@@ -170,6 +170,8 @@ class JavaEnviron:
 
         items2 = [(check(x), x) for x in folders2]
         self.show_folders(items2)
+        os.environ["PATH"] = self.separator.join(folders2)
+        
         print(f"[Done] {self.java_bin} was set as java folder")
         self.sleep(2)
 
