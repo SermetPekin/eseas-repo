@@ -33,6 +33,7 @@ class Cruncher:
             demetra_folder,
             workspace_mode=False,
             file_name_explanation=True,
+            java_bin = None 
     ):
         """Set Items Cruncher"""
         self.instance.crunch_folder = get_absolute(crunch_folder)
@@ -43,7 +44,17 @@ class Cruncher:
 
         self.workspace_mode = workspace_mode
         self.file_name_explanation = file_name_explanation
+        if java_bin :
+            java_bin = Path(java_bin)
+        self.java_bin = java_bin
+
         self.check_workspace_mode()
+        self.set_environ_java(self.java_bin)
+    def set_environ_java(self , java_bin : Path  ):
+        from .java_environ import JavaEnviron 
+        e = JavaEnviron(java_bin )
+
+
 
     def set_itemsObj(self, obj):
         """Set Items Cruncher"""
@@ -51,6 +62,7 @@ class Cruncher:
         self.instance.crunch_folder = get_absolute(obj.crunch_folder)
         self.instance.local_work_space = get_absolute(obj.local_work_space)
         self.demetra_folder = get_absolute(obj.demetra_folder)
+        self.java_bin =  get_absolute(obj.java_bin)
         control(self)
         self.workspace_mode = obj.workspace_mode
         self.file_name_explanation = obj.file_name_explanation

@@ -11,6 +11,7 @@ keywords = ["seasonal adjustment", "data processing", "jwsacruncher", "Demetra"]
 requires-python = ">=3.9"
 dependencies = [
     "evdspy>=1.1.41",
+    "python-dotenv>=1.0.1",
 ]
 
 [project.urls]
@@ -26,6 +27,13 @@ license-files = ["LICENSE"]
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "black>=25.1.0",
+    "pytest>=8.3.4",
+    "ruff>=0.9.6",
+]
 
 [tool.hatch.metadata]
 allow-direct-references = true

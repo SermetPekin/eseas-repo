@@ -4,7 +4,7 @@ import time
 
 
 def main():
-    java_folder = r"/usr/src/app/jwsacruncher-2.2.4/bin"
+    java_folder = r"/Users/guest/app/jwsacruncher-2.2.6/bin"
     demetra_source_folder = r"./eseas/data_for_testing/unix"
     local_folder = r"./test_out"
 
@@ -18,7 +18,8 @@ def main():
             "cal",
         ),
         workspace_mode=True,  # True creates a workspace folder and copies all demetra files
-        file_name_explanation=True,  # True adds explanations to output file names
+        file_name_explanation=True,  # True adds explanations to output file names 
+        java_bin = '/usr/bin2' , 
     )
     seas = Seasonal(options)
 
