@@ -1,4 +1,4 @@
-name: Python Package
+name: Pypi Ubuntu Server
 
 on:
   push:
