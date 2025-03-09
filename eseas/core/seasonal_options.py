@@ -29,9 +29,9 @@ class SingleOptions:
 class SeasonalOptions:
     def __init__(
         self,
-        demetra_folder,
-        java_folder,
-        local_folder,
+        demetra_folder=None,
+        java_folder=None,
+        local_folder=None,
         test=False,
         verbose=False,
         replace_original_files=False,

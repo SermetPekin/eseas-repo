@@ -41,7 +41,7 @@ class Cruncher:
         crunch_folder,
         local_work_space,
         demetra_folder,
-        workspace_mode=False,
+        workspace_mode=True ,
         file_name_explanation=True,
         java_bin=None,
     ):
@@ -50,10 +50,23 @@ class Cruncher:
         crunch_folder = str(crunch_folder)
         local_work_space = str(local_work_space)
         demetra_folder = str(demetra_folder)
+        
+        if java_bin:
+           java_bin = Path(str(java_bin))
+        self.java_bin = java_bin
 
-        self.instance.crunch_folder = get_absolute(crunch_folder)
-        self.instance.local_work_space = get_absolute(local_work_space)
-        self.demetra_folder = get_absolute(demetra_folder)
+        self.instance.crunch_folder = crunch_folder 
+        self.instance.local_work_space = local_work_space 
+        self.demetra_folder = demetra_folder
+
+        print("crunch_folder : ", crunch_folder)
+        print("local_work_space : ", local_work_space)
+        print("demetra_folder :", demetra_folder)
+
+        #exit()
+        #self.instance.crunch_folder = get_absolute(crunch_folder)
+        #self.instance.local_work_space = get_absolute(local_work_space)
+        #self.demetra_folder = get_absolute(demetra_folder)
 
         control(
             self
@@ -61,9 +74,7 @@ class Cruncher:
 
         self.workspace_mode = workspace_mode
         self.file_name_explanation = file_name_explanation
-        if java_bin:
-            java_bin = Path(str(java_bin))
-        self.java_bin = java_bin
+
 
         self.check_workspace_mode()
         self.set_environ_java(self.java_bin)

@@ -144,14 +144,32 @@ class DemetraFolder(FolderClass):
 class JavaBinFolder(FolderClass):
     type_ = "java_bin"
 
+    def java_available(self ):
+        from eseas.core.java_environ import JavaEnviron
+        print("Checking if java is available")
+        j = JavaEnviron()
+        p = j.check_java_folders() 
+        return bool(p)
+    
     def check(self):
         self.check_env_file()
 
         if self.value is None:
-            return
+            self.get_from_env() # env is secondary
+
+
+            if self.value is None:
+                if self.java_available() : 
+                    print("""Java binary not given from the function or from env file but Java is available in the system.""")
+                    self.sleep(4)
+                    return
+                else :
+                    self.warn_stop(f"Java binary folder does not exist {self.value}")
+
         if not self.exists():
             self.warn_stop(f"Java binary folder does not exist {self.value}")
 
+        
 
 class CruncherFolder(FolderClass):
     type_ = "java_folder"

@@ -76,3 +76,17 @@ def test_seasonal_environment_file2():
     m = Seasonal(options)
     m.part1()
     m.part2()
+
+
+def test_with_empty_options():
+    from eseas import Seasonal, Options
+    import time
+
+    # Load options from the `.env` file
+    options = Options()
+
+    # Initialize and execute the seasonal adjustment process
+    m = Seasonal(options)
+    m.part1()
+    time.sleep(2)  # Pause before running part2
+    m.part2()

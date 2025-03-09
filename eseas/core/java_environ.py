@@ -102,18 +102,27 @@ class JavaEnviron:
         active = False
         suffix = "/java.exe" if self.windows() else "/java"
         active_java_folder = "None"
+        potential_java_folders = []
         for path in java_executables:
             p = str(path).removesuffix(suffix)
-            if p in folders and active is False:
-                active = True
-                active_java_folder = p
+            if p in folders :
+                if active is False:
+                    active = True
+                    active_java_folder = p
+                    potential_java_folders.append((True, p))
+                else:
+                    potential_java_folders.append((False, p))
+                    
         folders = self.split()
         liste = []
         for p in folders:
             bool_ = active_java_folder == p
             liste.append((bool_, p))
-        self.show_folders(liste, "Current Folders in environment [Path variable]")
+            
+        self.show_folders(potential_java_folders, "Current Folders in environment [Path variable]")
+
         self.sleep(2)
+        return potential_java_folders
 
     def show_cmd(self):
         cmd = """
