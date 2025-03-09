@@ -14,12 +14,18 @@ from eseas.core.df_operations import get_rand_hash
 
 
 def create_env_file():
-    template = """
-java_bin22 = /usr/bin
-java_folder22 = /Users/guest/app/jwsacruncher-2.2.6/bin
-demetra_source_folder = ./eseas/data_for_testing/unix
-local_folder = ./test_out
-TestFolderInstance= ./test_out
+    testing_utils = get_testing_utils()
+    demetra_folder = testing_utils.demetra_folder
+    java_folder = testing_utils.java_folder
+    local_folder = testing_utils.local_folder
+
+
+    template = f"""
+java_bin = /usr/bin
+java_folder = {java_folder}
+demetra_source_folder = {demetra_folder}
+local_folder = {local_folder}
+
 """
     with open(".env", "w") as f:
         f.write(template)
