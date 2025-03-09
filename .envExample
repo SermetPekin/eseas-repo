@@ -1,8 +1,9 @@
 
-# Required if not given from function
+# Required if not given from Options function
 java_folder = /Users/guest/app/jwsacruncher-2.2.6/bin
 demetra_source_folder = ./eseas/data_for_testing/unix
 local_folder = ./test_out
 
 #Optional
 java_bin = /usr/bin
+

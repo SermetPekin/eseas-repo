@@ -21,7 +21,7 @@ demetra_source_folder = ./eseas/data_for_testing/unix
 local_folder = ./test_out
 TestFolderInstance= ./test_out
 """
-    with open(".env2", "w") as f:
+    with open(".env", "w") as f:
         f.write(template)
 
 
