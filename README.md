@@ -89,6 +89,62 @@ Here's an example of how to use the `eseas` package:
 
 ```
 
+### Defining some parameters from .env file  (NEW in version 1.0.0 )
+
+You can define key parameters in an `.env` file located in the current directory where you run the script.
+
+The function first checks whether the parameters are explicitly provided.
+If a parameter is not given in the function, it will automatically use the value from the `.env` file.
+
+
+```plaintext
+# `.env` file content (Example)
+
+# Required if not given from function
+java_folder = /Users/guest/app/jwsacruncher-2.2.6/bin
+demetra_source_folder = ./eseas/data_for_testing/unix
+local_folder = ./test_out
+
+#Optional
+java_bin = /usr/bin
+```
+
+### Usage: Running the Script When a `.env` File Exists
+
+```python
+from eseas import Seasonal, Options
+import time
+
+# Load options from the `.env` file
+options = Options()
+
+# Initialize and execute the seasonal adjustment process
+m = Seasonal(options)
+m.part1()
+time.sleep(10)  # Pause before running part2
+m.part2()
+
+
+```
+### Usage: Overwriting demetra_folder from Function Call When `.env` File Exists
+If a .env file is present, you can override the demetra_folder value by passing it directly in the function call.
+```python
+from eseas import Seasonal, Options
+import time
+
+# Override `demetra_folder` from function call, ignoring the value in `.env`
+options = Options(demetra_folder="SomeDemetraFolder")
+
+# Initialize and execute the seasonal adjustment process
+m = Seasonal(options)
+m.part1()
+time.sleep(10)  # Pause before running part2
+m.part2()
+
+
+```
+
+
 ## Documentation
 
 For more detailed information, refer to the following guides:

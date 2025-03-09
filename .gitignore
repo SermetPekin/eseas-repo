@@ -3,6 +3,8 @@ scr*.py
 new_folder/
 test_out/
 
+!.envExample
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.txt

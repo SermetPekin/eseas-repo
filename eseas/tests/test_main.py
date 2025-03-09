@@ -70,7 +70,7 @@ def test_c1():
 
 
 # @skip_if_github
-def test_mevsimsel_general():
+def test_seasonal_general():
     options = Options(
         demetra_folder,
         java_folder,
@@ -91,7 +91,7 @@ def test_mevsimsel_general():
     m.part2()
 
 
-def test_mevsimsel_general_javabin_none():
+def test_seasonal_general_javabin_none():
     options = Options(
         demetra_folder,
         java_folder,
@@ -113,7 +113,7 @@ def test_mevsimsel_general_javabin_none():
     m.part2()
 
 
-def test_mevsimsel_general_javabin_none_new_folder():
+def test_seasonal_general_javabin_none_new_folder():
     options = Options(
         demetra_folder,
         java_folder,
@@ -134,7 +134,7 @@ def test_mevsimsel_general_javabin_none_new_folder():
     m.part1()
     m.part2()
 
-def test_mevsimsel_general_with_javabin():
+def test_seasonal_general_with_javabin():
     options = Options(
         demetra_folder,
         java_folder,
@@ -159,7 +159,7 @@ def test_mevsimsel_general_with_javabin():
 import pytest
 
 
-def test_mevsimsel_general_with_wrong_javabin():
+def test_seasonal_general_with_wrong_javabin():
     with pytest.raises(ValueError):
         options = Options(
             demetra_folder,
