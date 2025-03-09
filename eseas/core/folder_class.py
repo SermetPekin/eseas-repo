@@ -118,10 +118,7 @@ class FolderClass:
         if len(k) == 0:
             print(f"no keys found in {env_file}")
             return
-        print( f""" keys from `{env_file}` file was loaded to current environment. 
-              
-              {k} 
-        """ ) 
+
     def env_file_exists(self, env_file: str = ".env"):
         return Path(env_file).exists
 
