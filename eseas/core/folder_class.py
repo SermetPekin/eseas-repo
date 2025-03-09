@@ -160,11 +160,8 @@ class CruncherFolder(FolderClass):
 class WorkspaceFolder(FolderClass):
     type_ = "local_folder"
 
-
-
     def check(self):
         self.check_env_file()
-
 
         if not self.exists():
             self.warn(f"Creating folder for workspace since it does not exist yet.")
