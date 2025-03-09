@@ -18,6 +18,10 @@ eseas_output/
 --*/
 *scratch*/
 .venv/
+venv/
+venv2/
+venv*/
+
 *.txt
 *.pdf
 *.xls*
