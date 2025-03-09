@@ -39,6 +39,7 @@ jobs:
           path: jwsacruncher
           key: jwsacruncher-v2.2.5
 
+
       - name: Download jwsacruncher if not cached (Windows)
         shell: pwsh
         run: |
@@ -52,3 +53,25 @@ jobs:
           set PATH=$JAVA_CRUNCHER_BIN;$PATH
           pytest -v
           python -c 'import os;print(os.environ["JAVA_CRUNCHER_BIN"])'
+
+      - name: Cache jwsacruncher226
+        id: cache-jwsacruncher226
+        uses: actions/cache@v3
+        with:
+          path: jwsacruncher
+          key: jwsacruncher-v2.2.6
+
+      - name: Download jwsacruncher if not cached (Windows) 2 
+        shell: pwsh
+        run: |
+            Invoke-WebRequest -Uri "https://github.com/jdemetra/jwsacruncher/releases/download/v2.2.6/jwsacruncher-2.2.6-bin.zip" -OutFile "jwsacruncher-2.2.6-bin.zip"
+            Expand-Archive -Path "jwsacruncher-2.2.6-bin.zip" -DestinationPath "jwsacruncher" -Force 
+  
+      - name: Run tests 2 
+        env:
+            JAVA_CRUNCHER_BIN: ${{ github.workspace }}/jwsacruncher/jwsacruncher-2.2.6/bin
+        run: |
+            set PATH=$JAVA_CRUNCHER_BIN;$PATH
+            pytest -v
+            python -c 'import os;print(os.environ["JAVA_CRUNCHER_BIN"])'
+  
