@@ -60,8 +60,10 @@ class JavaEnviron:
         return get_os() == "windows"
 
     def find_java_paths(self) -> list[str]:
-        cmd_where_which = "where" if self.windows() else "which"
-        result = self.run_process([cmd_where_which, "-a", "java"])
+        # cmd_where_which = "where" if self.windows() else "which"
+        # result = self.run_process([cmd_where_which, "-a", "java"])
+        cmd_list = ["where" , "java"] if self.windows() else ["which" , "-a" , "java" ] 
+        result = self.run_process( cmd_list )
         java_paths = result.stdout.strip().split("\n")
         return java_paths if java_paths[0] else []
 
