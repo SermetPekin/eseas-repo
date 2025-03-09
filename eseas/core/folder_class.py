@@ -148,7 +148,7 @@ class JavaBinFolder(FolderClass):
         from eseas.core.java_environ import JavaEnviron
         print("Checking if java is available")
         j = JavaEnviron()
-        p = j.check_java_folders() 
+        p = j.find_java_paths() 
         return bool(p)
     
     def check(self):
