@@ -12,6 +12,7 @@ Welcome to perse's documentation!
 
    home
    example
+   example_env
    components
 
 Indices and tables

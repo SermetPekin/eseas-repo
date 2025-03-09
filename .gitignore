@@ -100,7 +100,6 @@ dev/
 setup_config.py
 
 p/
-tox.ini
 
 *proxy*/
 
