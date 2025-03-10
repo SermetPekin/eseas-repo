@@ -1,5 +1,5 @@
 # This file is part of the eseas project
-# Copyright (C) 2024 Sermet Pekin 
+# Copyright (C) 2024 Sermet Pekin
 #
 # This source code is free software; you can redistribute it and/or
 # modify it under the terms of the European Union Public License
@@ -47,11 +47,21 @@ class SeasonalADV:
         self.options = options
         self.code_reproduce()
 
+    def sleep(self, seconds: int = 2):
+        print(f"Sleeping for {seconds} seconds.")
+        time.sleep(seconds)
+
     def part1(self):
         self.common_space_check()
 
     def part2(self):
         self.seasonal_results_advanced()
+
+    def run(self, seconds : int = 10 ):
+        """Run part1 and part2 with a sleep in between"""
+        self.part1()
+        self.sleep(seconds)
+        self.part2()
 
     def common_space_check(self):
         """common_space_check"""

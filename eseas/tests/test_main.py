@@ -133,6 +133,28 @@ def test_seasonal_general_javabin_none():
     m.part2()
 
 
+def test_seasonal_general_run():
+    options = Options(
+        demetra_folder,
+        java_folder,
+        local_folder,
+        test=False,
+        verbose=False,
+        replace_original_files=False,
+        auto_approve=False,
+        result_file_names=(
+            "sa",
+            "s",
+            "cal",
+        ),
+        workspace_mode=True,
+        java_bin=None,
+    )
+    m = Seasonal(options)
+    m.run(5)
+
+
+
 def test_seasonal_general_javabin_none_new_folder():
     options = Options(
         demetra_folder,

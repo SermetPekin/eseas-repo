@@ -1,5 +1,5 @@
 # This file is part of the eseas project
-# Copyright (C) 2024 Sermet Pekin 
+# Copyright (C) 2024 Sermet Pekin
 #
 # This source code is free software; you can redistribute it and/or
 # modify it under the terms of the European Union Public License
@@ -25,10 +25,16 @@ import typing as t
 from functools import update_wrapper
 from pathlib import Path
 from typing import Callable
+import time
 
 from evdspy.EVDSlocal.utils.utils_general import replace_recursive
 
 from .json_ops import remove_json_bad_chars
+
+
+def sleep(seconds: int = 2):
+    print(f"sleeping for {seconds} seconds")
+    time.sleep(seconds)
 
 
 def walk(items: t.Iterable[t.Any], fnc: t.Callable) -> tuple:
@@ -76,6 +82,7 @@ def create_dir(folder: str):
     if folder.is_dir():
         return
     import os
+
     return os.makedirs(folder, exist_ok=True)
 
 
@@ -93,11 +100,11 @@ def deep_temizle_list(content: list) -> tuple:
 
 def deep_temizle(content: str) -> t.Union[str, tuple, list, dict]:
     if isinstance(
-            content,
-            (
-                    list,
-                    tuple,
-            ),
+        content,
+        (
+            list,
+            tuple,
+        ),
     ):
         return deep_temizle_list(content)
     if isinstance(content, (dict)):

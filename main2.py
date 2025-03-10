@@ -1,6 +1,5 @@
 from eseas import Seasonal
 from eseas import Options
-import time
 
 
 def main():
@@ -23,10 +22,10 @@ def main():
     )
     seas = Seasonal(options)
 
-    seas.part1()
-    time.sleep(10)
-    seas.part2()
 
+    seas.run(seconds = 10) 
+
+    
 
 if "__main__" == __name__:
     main()
