@@ -1,7 +1,22 @@
-# ====================================================================
+# This file is part of the eseas project
+# Copyright (C) 2024 Sermet Pekin 
 #
-# eseas
+# This source code is free software; you can redistribute it and/or
+# modify it under the terms of the European Union Public License
+# (EUPL), Version 1.2, as published by the European Commission.
 #
+# You should have received a copy of the EUPL version 1.2 along with this
+# program. If not, you can obtain it at:
+# <https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12>.
+#
+# This source code is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# European Union Public License for more details.
+#
+# Alternatively, if agreed upon, you may use this code under any later
+# version of the EUPL published by the European Commission.
+
 from .utils_general2 import create_dir
 from .folder_class import (
     FolderClass,
@@ -55,18 +70,18 @@ class Cruncher:
            java_bin = Path(str(java_bin))
         self.java_bin = java_bin
 
-        self.instance.crunch_folder = crunch_folder 
-        self.instance.local_work_space = local_work_space 
-        self.demetra_folder = demetra_folder
-
+        
+        self.instance.crunch_folder = get_absolute(crunch_folder)
+        self.instance.local_work_space = get_absolute(local_work_space)
+        self.demetra_folder = get_absolute(demetra_folder)
+        print("Options\n" , '_'*50 ,  "\n")
         print("crunch_folder : ", crunch_folder)
         print("local_work_space : ", local_work_space)
         print("demetra_folder :", demetra_folder)
+        print("\n" , '_'*50 ,  "\n")
 
         #exit()
-        #self.instance.crunch_folder = get_absolute(crunch_folder)
-        #self.instance.local_work_space = get_absolute(local_work_space)
-        #self.demetra_folder = get_absolute(demetra_folder)
+
 
         control(
             self
