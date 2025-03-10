@@ -18,7 +18,7 @@ You can install **eseas** using pip:
 
 .. code-block:: bash
 
-    pip install eseas
+    pip install eseas -U
 
 Usage
 -----
