@@ -147,8 +147,9 @@ class Cruncher:
             if self.workspace_mode:
                 self.create_workspace()
         except Exception as exc:
-            print(exc)
-            exit()
+            import traceback 
+            traceback.print_exc()
+            raise exc
 
 
 def show_cruncher_details_raise(cls):
