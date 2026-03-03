@@ -1,5 +1,5 @@
 # This file is part of the eseas project
-# Copyright (C) 2024 Sermet Pekin 
+# Copyright (C) 2024 Sermet Pekin
 #
 # This source code is free software; you can redistribute it and/or
 # modify it under the terms of the European Union Public License
@@ -24,8 +24,9 @@ from eseas.core.seasonal_options import SeasonalOptions as Options
 from eseas.core.seasonal_options import SeasonalOptions
 from eseas.core.cruncher_classes import Cruncher
 from eseas.data_for_testing.some_data import get_sample_data
-from eseas.core.utils_general2 import walk, walk2 , sleep
+from eseas.core.utils_general2 import walk, walk2, sleep
 
+from eseas.core.refresh_excel import refresh, Path
 
 __all__ = [
     "Cruncher",
@@ -36,4 +37,8 @@ __all__ = [
     "get_sample_data",
     "walk",
     "walk2",
+    "Path" ,
+    "refresh",
+    "sleep"
+    
 ]

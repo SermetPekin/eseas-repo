@@ -1,5 +1,5 @@
 # This file is part of the eseas project
-# Copyright (C) 2024 Sermet Pekin 
+# Copyright (C) 2024 Sermet Pekin
 #
 # This source code is free software; you can redistribute it and/or
 # modify it under the terms of the European Union Public License
@@ -22,7 +22,6 @@ import pandas as pd
 from io import StringIO
 from typing import Tuple, Callable
 from dataclasses import dataclass
-
 
 if "main_" in __name__:
     from csv_content import template_csv, air_passenger

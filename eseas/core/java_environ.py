@@ -1,5 +1,5 @@
 # This file is part of the eseas project
-# Copyright (C) 2024 Sermet Pekin 
+# Copyright (C) 2024 Sermet Pekin
 #
 # This source code is free software; you can redistribute it and/or
 # modify it under the terms of the European Union Public License
@@ -21,6 +21,9 @@
 import os
 import platform
 from dataclasses import dataclass
+import subprocess
+from pathlib import Path
+
 
 
 def check_java_version():
@@ -32,15 +35,12 @@ def get_os():
     return str(platform.system()).lower()
 
 
-import subprocess
-from pathlib import Path
-
 
 @dataclass
 class JavaEnviron:
 
     def __init__(self, java_bin: str = None, quick=None):
-        self.java_bin = None if java_bin is None else   str(java_bin)
+        self.java_bin = None if java_bin is None else str(java_bin)
         self.check_exists()
 
         self.separator = ";" if self.windows() else ":"
@@ -51,8 +51,8 @@ class JavaEnviron:
         self.process()
 
     def check_exists(self):
-        if self.java_bin is None :
-            return 
+        if self.java_bin is None:
+            return
         p = Path(self.java_bin)
         if p.exists():
             return
@@ -82,8 +82,8 @@ class JavaEnviron:
     def find_java_paths(self) -> list[str]:
         # cmd_where_which = "where" if self.windows() else "which"
         # result = self.run_process([cmd_where_which, "-a", "java"])
-        cmd_list = ["where" , "java"] if self.windows() else ["which" , "-a" , "java" ] 
-        result = self.run_process( cmd_list )
+        cmd_list = ["where", "java"] if self.windows() else ["which", "-a", "java"]
+        result = self.run_process(cmd_list)
         java_paths = result.stdout.strip().split("\n")
         return java_paths if java_paths[0] else []
 
@@ -95,7 +95,7 @@ class JavaEnviron:
         result = Result()
         try:
             result = subprocess.run(cmds, capture_output=True, text=True)
-        except Exception as exc:
+        except Exception:
             import traceback
 
             traceback.print_exc()
@@ -127,21 +127,23 @@ class JavaEnviron:
         potential_java_folders = []
         for path in java_executables:
             p = str(path).removesuffix(suffix)
-            if p in folders :
+            if p in folders:
                 if active is False:
                     active = True
                     active_java_folder = p
                     potential_java_folders.append((True, p))
                 else:
                     potential_java_folders.append((False, p))
-                    
+
         folders = self.split()
         liste = []
         for p in folders:
             bool_ = active_java_folder == p
             liste.append((bool_, p))
-            
-        self.show_folders(potential_java_folders, "Current Folders in environment [Path variable]")
+
+        self.show_folders(
+            potential_java_folders, "Current Folders in environment [Path variable]"
+        )
 
         self.sleep(2)
         return potential_java_folders
@@ -202,7 +204,7 @@ class JavaEnviron:
         items2 = [(check(x), x) for x in folders2]
         self.show_folders(items2)
         os.environ["PATH"] = self.separator.join(folders2)
-        
+
         print(f"[Done] {self.java_bin} was set as java folder")
         self.sleep(2)
 

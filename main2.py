@@ -17,15 +17,13 @@ def main():
             "cal",
         ),
         workspace_mode=True,  # True creates a workspace folder and copies all demetra files
-        file_name_explanation=True,  # True adds explanations to output file names 
-        java_bin = '/usr/bin' , 
+        file_name_explanation=True,  # True adds explanations to output file names
+        java_bin="/usr/bin",
     )
     seas = Seasonal(options)
 
+    seas.run(seconds=10)
 
-    seas.run(seconds = 10) 
-
-    
 
 if "__main__" == __name__:
     main()

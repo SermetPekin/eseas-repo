@@ -1,5 +1,5 @@
 # This file is part of the eseas project
-# Copyright (C) 2024 Sermet Pekin 
+# Copyright (C) 2024 Sermet Pekin
 #
 # This source code is free software; you can redistribute it and/or
 # modify it under the terms of the European Union Public License
@@ -34,7 +34,6 @@ from evdspy.EVDSlocal.common.colors import (
 )
 
 from ._options import max_num
-
 
 color_funcs = (
     print_excel_created_style,
@@ -172,8 +171,7 @@ def filter_xml_demetra(items: t.List[FileItem]):
     return list(x for x in items if check_demetra(x))
 
 
-class MaxFileNumberReached(BaseException):
-    ...
+class MaxFileNumberReached(BaseException): ...
 
 
 def list_files_recursive(folder: t.Union[str, Path]) -> list[FileItem]:

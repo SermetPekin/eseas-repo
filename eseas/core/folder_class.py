@@ -1,5 +1,5 @@
 # This file is part of the eseas project
-# Copyright (C) 2024 Sermet Pekin 
+# Copyright (C) 2024 Sermet Pekin
 #
 # This source code is free software; you can redistribute it and/or
 # modify it under the terms of the European Union Public License
@@ -20,7 +20,7 @@
 
 from pathlib import Path
 from collections import OrderedDict
-from typing import Union, Optional
+from typing import Optional
 import os
 
 
@@ -203,6 +203,6 @@ class WorkspaceFolder(FolderClass):
         self.check_env_file()
 
         if not self.exists():
-            self.warn(f"Creating folder for workspace since it does not exist yet.")
+            self.warn("Creating folder for workspace since it does not exist yet.")
             if not self.create():
                 self.warn_stop(f"Error creating folder {self.value}")

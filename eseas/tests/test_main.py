@@ -1,5 +1,5 @@
 # This file is part of the eseas project
-# Copyright (C) 2024 Sermet Pekin 
+# Copyright (C) 2024 Sermet Pekin
 #
 # This source code is free software; you can redistribute it and/or
 # modify it under the terms of the European Union Public License
@@ -19,6 +19,7 @@
 
 
 from typing import Any
+import pytest
 
 import pandas as pd
 from eseas import Seasonal
@@ -154,12 +155,11 @@ def test_seasonal_general_run():
     m.run(5)
 
 
-
 def test_seasonal_general_javabin_none_new_folder():
     options = Options(
         demetra_folder,
         java_folder,
-        'new_folder',
+        "new_folder",
         test=False,
         verbose=False,
         replace_original_files=False,
@@ -175,6 +175,7 @@ def test_seasonal_general_javabin_none_new_folder():
     m = Seasonal(options)
     m.part1()
     m.part2()
+
 
 def test_seasonal_general_with_javabin():
     options = Options(
@@ -198,7 +199,6 @@ def test_seasonal_general_with_javabin():
     m.part2()
 
 
-import pytest
 
 
 def test_seasonal_general_with_wrong_javabin():
