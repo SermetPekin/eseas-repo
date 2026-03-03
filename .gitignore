@@ -4,6 +4,12 @@ new_folder/
 test_out/
 jwsacruncher/
 
+ignore*.*
+ignore*/
+excel_files/
+
+jwsacruncher/
+
 !.envExample
 
 # Byte-compiled / optimized / DLL files

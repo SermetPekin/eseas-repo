@@ -1,5 +1,5 @@
 # This file is part of the eseas project
-# Copyright (C) 2024 Sermet Pekin 
+# Copyright (C) 2024 Sermet Pekin
 #
 # This source code is free software; you can redistribute it and/or
 # modify it under the terms of the European Union Public License
@@ -18,13 +18,6 @@
 # version of the EUPL published by the European Commission.
 
 from .utils_general2 import create_dir
-from .folder_class import (
-    FolderClass,
-    DemetraFolder,
-    JavaBinFolder,
-    WorkspaceFolder,
-    CruncherFolder,
-)
 from .seas_utils import get_absolute
 
 # ====================================================================
@@ -56,7 +49,7 @@ class Cruncher:
         crunch_folder,
         local_work_space,
         demetra_folder,
-        workspace_mode=True ,
+        workspace_mode=True,
         file_name_explanation=True,
         java_bin=None,
     ):
@@ -65,23 +58,21 @@ class Cruncher:
         crunch_folder = str(crunch_folder)
         local_work_space = str(local_work_space)
         demetra_folder = str(demetra_folder)
-        
+
         if java_bin:
-           java_bin = Path(str(java_bin))
+            java_bin = Path(str(java_bin))
         self.java_bin = java_bin
 
-        
         self.instance.crunch_folder = get_absolute(crunch_folder)
         self.instance.local_work_space = get_absolute(local_work_space)
         self.demetra_folder = get_absolute(demetra_folder)
-        print("Options\n" , '_'*50 ,  "\n")
+        print("Options\n", "_" * 50, "\n")
         print("crunch_folder : ", crunch_folder)
         print("local_work_space : ", local_work_space)
         print("demetra_folder :", demetra_folder)
-        print("\n" , '_'*50 ,  "\n")
+        print("\n", "_" * 50, "\n")
 
-        #exit()
-
+        # exit()
 
         control(
             self
@@ -90,14 +81,13 @@ class Cruncher:
         self.workspace_mode = workspace_mode
         self.file_name_explanation = file_name_explanation
 
-
         self.check_workspace_mode()
         self.set_environ_java(self.java_bin)
 
     def set_environ_java(self, java_bin: Path):
         from .java_environ import JavaEnviron
 
-        e = JavaEnviron(java_bin)
+        _e = JavaEnviron(java_bin)
 
     def set_itemsObj(self, obj):
         """Set Items Cruncher"""
@@ -147,7 +137,8 @@ class Cruncher:
             if self.workspace_mode:
                 self.create_workspace()
         except Exception as exc:
-            import traceback 
+            import traceback
+
             traceback.print_exc()
             raise exc
 

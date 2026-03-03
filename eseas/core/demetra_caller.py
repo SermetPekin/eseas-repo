@@ -1,5 +1,5 @@
 # This file is part of the eseas project
-# Copyright (C) 2024 Sermet Pekin 
+# Copyright (C) 2024 Sermet Pekin
 #
 # This source code is free software; you can redistribute it and/or
 # modify it under the terms of the European Union Public License
@@ -32,16 +32,13 @@ class DemetraCaller(ABC):
         return get_cruncher().crunch_folder
 
     @abstractmethod
-    def cruncher_command(self):
-        ...
+    def cruncher_command(self): ...
 
     @abstractmethod
-    def demetra_command_file_name(self):
-        ...
+    def demetra_command_file_name(self): ...
 
     @abstractmethod
-    def exec_file_name(self, file_name):
-        ...
+    def exec_file_name(self, file_name): ...
 
 
 class DemetraCallerWindows(DemetraCaller):
@@ -68,5 +65,4 @@ class DemetraCallerLinux(DemetraCaller):
 
 
 @dataclass
-class DemetraCallerMac(DemetraCallerLinux):
-    ...
+class DemetraCallerMac(DemetraCallerLinux): ...

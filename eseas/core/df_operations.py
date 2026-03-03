@@ -1,5 +1,5 @@
 # This file is part of the eseas project
-# Copyright (C) 2024 Sermet Pekin 
+# Copyright (C) 2024 Sermet Pekin
 #
 # This source code is free software; you can redistribute it and/or
 # modify it under the terms of the European Union Public License
@@ -86,7 +86,6 @@ def convert_df_number(df: pd.DataFrame, except_columns: Tuple[str] = ()):
         if column in except_columns:
             continue
         df[column] = convert_numbers(list(df[column]))
-
 
     return df
 

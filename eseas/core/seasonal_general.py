@@ -57,7 +57,7 @@ class SeasonalADV:
     def part2(self):
         self.seasonal_results_advanced()
 
-    def run(self, seconds : int = 10 ):
+    def run(self, seconds: int = 10):
         """Run part1 and part2 with a sleep in between"""
         self.part1()
         self.sleep(seconds)

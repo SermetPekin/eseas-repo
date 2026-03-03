@@ -1,5 +1,5 @@
 # This file is part of the eseas project
-# Copyright (C) 2024 Sermet Pekin 
+# Copyright (C) 2024 Sermet Pekin
 #
 # This source code is free software; you can redistribute it and/or
 # modify it under the terms of the European Union Public License
@@ -27,7 +27,6 @@ from ._options import middle_folder
 from .cruncher_classes import get_cruncher
 from .demetra import convert_df_general
 from .demetra_file_naming import get_meaning_demetra_file
-
 
 """
 FilePicker classes are designed to harvest

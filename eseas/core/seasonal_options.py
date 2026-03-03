@@ -1,5 +1,5 @@
 # This file is part of the eseas project
-# Copyright (C) 2024 Sermet Pekin 
+# Copyright (C) 2024 Sermet Pekin
 #
 # This source code is free software; you can redistribute it and/or
 # modify it under the terms of the European Union Public License
@@ -24,7 +24,6 @@
 #
 from .cruncher_classes import Cruncher
 from .folder_class import (
-    FolderClass,
     DemetraFolder,
     JavaBinFolder,
     WorkspaceFolder,

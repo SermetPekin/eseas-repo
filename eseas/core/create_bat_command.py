@@ -1,5 +1,5 @@
 # This file is part of the eseas project
-# Copyright (C) 2024 Sermet Pekin 
+# Copyright (C) 2024 Sermet Pekin
 #
 # This source code is free software; you can redistribute it and/or
 # modify it under the terms of the European Union Public License
@@ -51,8 +51,6 @@ def get_demetra_type():
         return DemetraCallerMac()
     # from .seasonal_adv_utils import this_is_pytest
     raise NotImplementedError("Computer OS not found.")
-
-
 
 
 def general_params():
@@ -183,15 +181,12 @@ else:
     end_content = end_content_win
 
 
-
-
 def write_bat_file(content, file_name):
     content = begin_content() + content + end_content()
     print("WRITING", content)
     fname = get_demetra_type().exec_file_name(file_name)
     with open(fname, mode="w+", encoding="utf-8") as file_:
         file_.write(content)
-
 
 
 def run_bat_commands_win():
