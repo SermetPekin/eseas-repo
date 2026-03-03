@@ -3,6 +3,11 @@ scr*.py
 new_folder/
 test_out/
 
+ignore*.*
+ignore*/
+excel_files/
+
+
 !.envExample
 
 # Byte-compiled / optimized / DLL files
