@@ -2,6 +2,7 @@ scr*.py
 !tox.ini
 new_folder/
 test_out/
+jwsacruncher/
 
 !.envExample
 
