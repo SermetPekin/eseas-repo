@@ -22,6 +22,7 @@
 from eseas import Seasonal
 from eseas import Options
 from eseas.core.seas_testing_utils import get_testing_utils
+from eseas.tests.test_utils import skip_if_no_cruncher
 
 
 def create_env_file():
@@ -44,6 +45,7 @@ local_folder = {local_folder}
 create_env_file()
 
 
+@skip_if_no_cruncher
 def test_seasonal_environment_file():
     options = Options(
         None,
@@ -66,6 +68,7 @@ def test_seasonal_environment_file():
     m.part2()
 
 
+@skip_if_no_cruncher
 def test_seasonal_environment_file2():
     options = Options(
         demetra_folder=None,
@@ -88,6 +91,7 @@ def test_seasonal_environment_file2():
     m.part2()
 
 
+@skip_if_no_cruncher
 def test_with_empty_options():
     from eseas import Seasonal, Options
     import time

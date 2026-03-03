@@ -25,8 +25,13 @@ from eseas.core.seasonal_options import SeasonalOptions
 from eseas.core.cruncher_classes import Cruncher
 from eseas.data_for_testing.some_data import get_sample_data
 from eseas.core.utils_general2 import walk, walk2, sleep
+from pathlib import Path
+import sys
 
-from eseas.core.refresh_excel import refresh, Path
+if sys.platform == "win32":
+    from eseas.core.refresh_excel import refresh
+else:
+    refresh = None
 
 __all__ = [
     "Cruncher",

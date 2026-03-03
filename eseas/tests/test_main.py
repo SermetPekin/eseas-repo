@@ -32,6 +32,7 @@ from eseas.core.picker_classes import OutFilePicker
 from eseas.core.seas_testing_utils import get_testing_utils
 from eseas.core.seas_utils import filter_xls
 from eseas.core.df_operations import get_rand_hash
+from eseas.tests.test_utils import skip_if_no_cruncher
 
 # from .test_utils import skip_if_github
 
@@ -57,6 +58,7 @@ java_folder = testing_utils.java_folder
 local_folder = testing_utils.local_folder
 
 
+@skip_if_no_cruncher
 def test_setup():
     options = Options(
         demetra_folder,
@@ -69,6 +71,7 @@ def test_setup():
 
 
 # @skip_if_github
+@skip_if_no_cruncher
 def test_mevsimsel_general_basic():
     options = Options(
         demetra_folder,
@@ -81,6 +84,7 @@ def test_mevsimsel_general_basic():
 
 
 # @skip_if_github
+@skip_if_no_cruncher
 def test_c1():
     c = Cruncher()
     c.set_items(java_folder, local_folder, demetra_folder)
@@ -91,6 +95,7 @@ def test_c1():
 
 
 # @skip_if_github
+@skip_if_no_cruncher
 def test_seasonal_general():
     options = Options(
         demetra_folder,
@@ -112,6 +117,7 @@ def test_seasonal_general():
     m.part2()
 
 
+@skip_if_no_cruncher
 def test_seasonal_general_javabin_none():
     options = Options(
         demetra_folder,
@@ -134,6 +140,7 @@ def test_seasonal_general_javabin_none():
     m.part2()
 
 
+@skip_if_no_cruncher
 def test_seasonal_general_run():
     options = Options(
         demetra_folder,
@@ -155,6 +162,7 @@ def test_seasonal_general_run():
     m.run(5)
 
 
+@skip_if_no_cruncher
 def test_seasonal_general_javabin_none_new_folder():
     options = Options(
         demetra_folder,
@@ -177,6 +185,7 @@ def test_seasonal_general_javabin_none_new_folder():
     m.part2()
 
 
+@skip_if_no_cruncher
 def test_seasonal_general_with_javabin():
     options = Options(
         demetra_folder,
@@ -200,7 +209,7 @@ def test_seasonal_general_with_javabin():
 
 
 
-
+@skip_if_no_cruncher
 def test_seasonal_general_with_wrong_javabin():
     with pytest.raises(ValueError):
         options = Options(

@@ -1,6 +1,6 @@
 [project]
 name = "eseas"
-version = "1.0.6"
+version = "1.0.5"
 description = """eseas is a Python package that serves as a wrapper for the jwsacruncher Java package.
 This tool allows users to process Demetra workspace XML files, create batch files, execute them,
 and collect the desired outputs into individual Excel files."""
@@ -12,8 +12,16 @@ requires-python = ">=3.9"
 dependencies = [
     "evdspy>=1.1.41",
     "psutil>=7.2.2",
-    "pywin32>=311",
+    "pywin32>=311; sys_platform == 'win32'",
     "requests>=2.32.4",
+]
+
+[project.optional-dependencies]
+dev = [
+    "black>=25.1.0",
+    "pytest>=8.3.4",
+    "ruff>=0.9.6",
+    "tox>=4.24.2",
 ]
 
 [project.urls]

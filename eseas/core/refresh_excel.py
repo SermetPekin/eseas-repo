@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+import sys
 import time
-import pythoncom
-import win32com.client
 from pathlib import Path
 import psutil
 import subprocess
+
+if sys.platform == "win32":
+    import pythoncom
+    import win32com.client
 
 
 def get_input():

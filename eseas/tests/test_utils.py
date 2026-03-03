@@ -20,6 +20,8 @@
 
 from eseas.core.github_actions import GithubActions
 import pytest
+import sys
+import os
 
 
 def gth_testing():
@@ -30,3 +32,24 @@ reason_gth = "passing when github Actions "
 
 
 skip_if_github = pytest.mark.skipif(gth_testing(), reason=reason_gth)
+
+
+def has_cruncher():
+    """Check if jwsacruncher is available via JAVA_CRUNCHER_BIN environment variable."""
+    cruncher_bin = os.environ.get("JAVA_CRUNCHER_BIN")
+    return cruncher_bin is not None and cruncher_bin.strip() != ""
+
+
+# Use custom marker - the pytest_runtest_setup hook in conftest.py will handle skipping
+skip_if_no_cruncher = pytest.mark.skip_if_no_cruncher
+
+
+def is_unix():
+    """Check if the system is Unix-based (macOS or Linux)."""
+    return sys.platform in ("darwin", "linux")
+
+
+skip_if_unix = pytest.mark.skipif(
+    is_unix(),
+    reason="Skipping on Unix systems (macOS/Linux) - Windows-only features",
+)
