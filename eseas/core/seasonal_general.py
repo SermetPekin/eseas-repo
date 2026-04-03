@@ -41,6 +41,8 @@ from ._options import demetra_command_file_name
 
 # demetra_command_file_name = 'demetra_commands'
 
+from eseas.core.collect import collect_parts_of_results as collect
+
 
 class SeasonalADV:
     def __init__(self, options):
@@ -54,8 +56,21 @@ class SeasonalADV:
     def part1(self):
         self.common_space_check()
 
-    def part2(self):
-        self.seasonal_results_advanced()
+    def part2(
+        self,
+        xml_folders=None,
+        out_folder=None,
+        out_file_name="combined",
+        encoding="latin-1",
+    ):
+        collect(
+            self.options,
+            xml_folders=xml_folders,
+            out_folder=out_folder,
+            out_file_name=out_file_name,
+            encoding=encoding,
+        )
+        # self.seasonal_results_advanced()
 
     def run(self, seconds: int = 10):
         """Run part1 and part2 with a sleep in between"""
