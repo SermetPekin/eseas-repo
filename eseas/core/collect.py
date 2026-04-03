@@ -1,4 +1,6 @@
 from pathlib import Path
+import os
+
 import pandas as pd
 from evdspy.EVDSlocal.common.file_classes import FileItem
 
@@ -47,7 +49,11 @@ def collect_parts_of_results(
                 / f"{out_file_name}.xlsx"
             )
         else:
-            out_file_name_full = Path(out_folder) / xml_folder / f"{out_file_name}.xlsx"
+            dest_folder = Path(out_folder) / xml_folder
+            os.makedirs(dest_folder, exist_ok=True)
+
+            out_file_name_full = dest_folder / f"{out_file_name}.xlsx"
+
         with pd.ExcelWriter(out_file_name_full) as writer:
             for part, sheet in zip(parts, sheets):
                 sheet.to_excel(writer, sheet_name=part)
