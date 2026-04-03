@@ -2,11 +2,13 @@ from pathlib import Path
 import os
 
 import pandas as pd
+
 from evdspy.EVDSlocal.common.file_classes import FileItem
 
 # eseas
 from eseas.core.seasonal_options import SeasonalOptions as Options
 from eseas.core.seas_utils import get_xml_demetra
+
 
 def make_float(d: pd.DataFrame):
     if "Unnamed: 0" in d.columns:
@@ -15,6 +17,7 @@ def make_float(d: pd.DataFrame):
         cols = d.columns.to_list()[1:]
     d[cols] = d[cols].astype(str).apply(lambda x: x.str.replace(",", ".").astype(float))
     return d
+
 
 def collect_parts_of_results(
     options: Options,
@@ -31,16 +34,24 @@ def collect_parts_of_results(
     for xml_folder in xml_folders:
 
         for part in parts:
+            try:
+                source_file = (
+                    Path(options.local_folder)
+                    / rf"test_output\{xml_folder}\SAProcessing-1\series_{part}.csv"
+                )
+                sheet = pd.read_csv(
+                    source_file,
+                    encoding=encoding,
+                    delimiter=";",
+                )
 
-            sheet = pd.read_csv(
-                Path(options.local_folder)
-                / rf"test_output\{xml_folder}\SAProcessing-1\series_{part}.csv",
-                encoding=encoding,
-                delimiter=";",
-            )
+                sheet = make_float(sheet)
+                sheets.append(sheet)
+            except:
+                import traceback
+                traceback.print_exc()
+                print(f"passing collecting {part} from {source_file}")
 
-            sheet = make_float(sheet)
-            sheets.append(sheet)
         if out_folder is None:
             out_file_name_full = (
                 Path(options.local_folder)
