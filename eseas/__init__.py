@@ -28,7 +28,8 @@ from eseas.core.seasonal_general import SeasonalADV
 from eseas.core.seasonal_options import SeasonalOptions as Options
 from eseas.core.seasonal_options import SeasonalOptions
 from eseas.core.cruncher_classes import Cruncher
-from eseas.core.collect import collect_parts_of_results
+from eseas.core.collect import collect_parts_of_results as collect 
+
 from eseas.data_for_testing.some_data import get_sample_data
 from eseas.core.utils_general2 import walk, walk2, sleep
 
@@ -49,5 +50,5 @@ __all__ = [
     "Path",
     "refresh",
     "sleep",
-    "collect_parts_of_results"
+    "collect"
 ]
