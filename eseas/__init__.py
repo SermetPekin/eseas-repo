@@ -1,3 +1,5 @@
+# __init__.py
+
 # This file is part of the eseas project
 # Copyright (C) 2024 Sermet Pekin
 #
@@ -17,16 +19,18 @@
 # Alternatively, if agreed upon, you may use this code under any later
 # version of the EUPL published by the European Commission.
 
+from pathlib import Path
+import sys
 
+# eseas 
 from eseas.core.seasonal_general import SeasonalADV as Seasonal
 from eseas.core.seasonal_general import SeasonalADV
 from eseas.core.seasonal_options import SeasonalOptions as Options
 from eseas.core.seasonal_options import SeasonalOptions
 from eseas.core.cruncher_classes import Cruncher
+from eseas.core.collect import collect_parts_of_results
 from eseas.data_for_testing.some_data import get_sample_data
 from eseas.core.utils_general2 import walk, walk2, sleep
-from pathlib import Path
-import sys
 
 if sys.platform == "win32":
     from eseas.core.refresh_excel import refresh
@@ -42,8 +46,8 @@ __all__ = [
     "get_sample_data",
     "walk",
     "walk2",
-    "Path" ,
+    "Path",
     "refresh",
-    "sleep"
-    
+    "sleep",
+    "collect_parts_of_results"
 ]
