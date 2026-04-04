@@ -12,13 +12,12 @@ def main(part=1):
     demetra_source_folder = r"./demetra_source_folder"
     local_folder = r"./test_out"
 
-    options = Options(
-             demetra_source_folder,
-             java_folder,
-             local_folder,
-            result_file_names=("sa", "s_f", "cal",),
-            workspace_mode=True,  # True
-            file_name_explanation=True,  # True
+    options = Options(demetra_source_folder,
+                        java_folder,
+                        local_folder,
+                        result_file_names=("sa", "s_f", "cal",),
+                        workspace_mode=True,  # True
+                        file_name_explanation=True,  # True
     )
     seas = Seasonal(options)
 

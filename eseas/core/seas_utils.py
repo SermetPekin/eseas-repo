@@ -26,44 +26,18 @@ from typing import Union, Iterable
 
 
 from evdspy.EVDSlocal.common.file_classes import FileItem
-from evdspy.EVDSlocal.common.colors import (
-    print_excel_created_style,
-    print_with_info_style,
-    print_with_updating_style,
-    print_with_success_style,
-)
-
 from ._options import max_num
-
-color_funcs = (
-    print_excel_created_style,
-    print_with_info_style,
-    print_with_updating_style,
-    print_with_success_style,
-    print,
-)
-
-
-def get_print_color() -> callable:
-    return random.choice(color_funcs)
-
-
-def display_line(line):
-    indent = "" * 15
-    result = f"{indent}{line}"
-    return result
-
-
-def display_lines(lines):
-    st: str = "\n".join(tuple(map(display_line, lines)))
-    func = get_print_color()
-    func(st)
 
 
 def view_display(*msg):
+    from rich.console import Console
+    from rich.panel import Panel
+
+    console = Console()
     for item in msg:
         item = str(item)
-        display_lines(item.splitlines())
+        panel = Panel(item.strip(), style="on #1e1e1e", expand=False)
+        console.print(panel)
 
 
 class SingleOptions:
@@ -200,17 +174,24 @@ def list_files_recursive(folder: t.Union[str, Path]) -> list[FileItem]:
 
 
 def display(some_files: Iterable[FileItem], max_num=10):
-    template = ""
-    msg = f"""
-=====================================================
-        Number of files found :  {len(some_files)}
-=====================================================
-    """
-    template += msg + chr(10)
+    from rich.console import Console
+    from rich.panel import Panel
+
+    console = Console()
+    num_files = len(list(some_files))
+
+    files_str = ""
     for index, item in enumerate(some_files):
         if index < max_num:
-            template += item.file_name + chr(10)
-    view_display(template)
+            files_str += f"{item.file_name}\n"
+
+    panel = Panel(
+        files_str.strip(),
+        title=f"Number of files found : {num_files}",
+        expand=False,
+        style="on #1e1e1e"  # simple dark background
+    )
+    console.print(panel)
 
 
 def search_demetra_folder(

@@ -89,10 +89,6 @@ file_name : {item.file_name}
 
 
 def common_space_msg(test, demetra_folder):
-    return f"""
-========================================================================
-        common_space_check has run
+    return f"""common_space_check has run
 test : {test}
-folder to check demetra files : {demetra_folder}
-========================================================================
-"""
+folder to check demetra files : {demetra_folder}"""
