@@ -31,7 +31,7 @@ def _create_general_params(folder=".", file_name="general.params"):
 
 def get_general_params():
     return """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<wsaConfig bundle="10000" csvlayout="list" csvseparator=";" ndecs="6">
+<wsaConfig bundle="10000" csvlayout="vtable" csvseparator=";" ndecs="6">
     <policy>parameters</policy>
     <refreshall>true</refreshall>
     <matrix>
