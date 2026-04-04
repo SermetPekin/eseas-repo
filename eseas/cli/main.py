@@ -371,11 +371,21 @@ def cmd_logs(args):
 
 def main():
     """Main CLI entry point"""
+    # Get version
+    try:
+        from eseas import __version__
+    except ImportError:
+        import importlib.metadata
+        __version__ = importlib.metadata.version('eseas')
+
     parser = argparse.ArgumentParser(
         description="eseas - Seasonal adjustment tool CLI",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
+  # Show version
+  eseas --version
+
   # First run - creates eseas_config.yaml
   eseas run /path/to/workspace
 
@@ -400,6 +410,12 @@ Examples:
   # View logs
   eseas logs --type error
         """,
+    )
+
+    parser.add_argument(
+        '--version', '-V',
+        action='version',
+        version=f'eseas {__version__}'
     )
 
     subparsers = parser.add_subparsers(dest="command", help="Available commands")

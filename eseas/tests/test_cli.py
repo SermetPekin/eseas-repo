@@ -696,6 +696,20 @@ class TestMainCLI:
             main()
             mock_cmd.assert_called_once()
 
+    def test_main_version_flag(self):
+        """Test main with --version flag"""
+        with patch("sys.argv", ["eseas", "--version"]):
+            with pytest.raises(SystemExit) as exc_info:
+                main()
+            assert exc_info.value.code == 0
+
+    def test_main_version_short_flag(self):
+        """Test main with -V flag"""
+        with patch("sys.argv", ["eseas", "-V"]):
+            with pytest.raises(SystemExit) as exc_info:
+                main()
+            assert exc_info.value.code == 0
+
 
 class TestConfigEdgeCases:
     """Test edge cases in configuration handling"""
