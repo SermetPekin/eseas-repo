@@ -17,6 +17,9 @@ __pycache__/
 #!requirements.txt
 ABC/
 
+fake_local*/
+
+
 .venv/
 .pytest_cache/
 eseas_output/
