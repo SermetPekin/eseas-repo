@@ -21,9 +21,7 @@ def main():
 
     seas = Seasonal(options)
 
-    seas.part1()
-    time.sleep(10)
-    seas.part2()
+    seas.run()
 
 
 if __name__ == "__main__":
