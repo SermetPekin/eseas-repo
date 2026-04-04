@@ -2,7 +2,7 @@ You can install **eseas** using pip:
 
 .. code-block:: bash
 
-    pip install eseas
+    pip install eseas -U 
 
 Usage
 -----
@@ -12,36 +12,28 @@ Here’s an example demonstrating how to use **eseas**:
 
     from eseas import Seasonal, Options
 
-
     def main():
-        # Specify the path to the jwsacruncher bin directory
-        java_folder = r'../../Downloads/jwsacruncher-2.2.4/bin' 
+        # Folder containing your Demetra XML workspace files
+        demetra_source_folder = r"C:\Data\demetra_source_folder"
 
-        # [Optional] Java binary folder (where the Java executable exists)
-        # This will be added to the environment PATH variable if provided.
-        java_bin = r'/usr/bin'
+        # Your destination folder for the generated Excel files
+        local_folder = r"C:\Data\test_out"
 
-        # Folder containing Demetra XML files
-        demetra_source_folder = r"./demetra_source_folder"
-
-        # Workspace where output files will be stored
-        local_folder = r"./test_out"
-
+        # Initialize options focusing on simplicity and auto-downloading the engine
         options = Options(
-            demetra_source_folder,
-            java_folder,
-            local_folder,
-            result_file_names=("sa", "s_f", "cal"),  # See "Demetra Components" below
+            demetra_source_folder=demetra_source_folder,
+            local_folder=local_folder,
+            result_file_names=("sa", "s_f", "cal"),
             workspace_mode=True,
-            file_name_explanation=True,
-            java_bin=java_bin
+            auto_download=True,   # Seamlessly fetches jwsacruncher in the background
+            auto_approve=True     # Skips y/n CLI prompts automatically
         )
 
         # Initialize the Seasonal process
         seas = Seasonal(options)
 
-        # Execute the two-step process synchronously
-        seas.run() # Triggers part1 followed by part2 immediately
+        # Execute the seasonal adjustment workflow synchronously
+        seas.run()
 
     if __name__ == "__main__":
         main()

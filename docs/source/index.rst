@@ -12,7 +12,7 @@ Welcome to eseas's documentation!
 
    home
    example
-   example_env
+   advanced
    components
 
 Indices and tables
