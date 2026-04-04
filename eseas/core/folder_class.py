@@ -195,6 +195,34 @@ class JavaBinFolder(FolderClass):
 class CruncherFolder(FolderClass):
     type_ = "java_folder"
 
+    def warn_stop(self, msg: str = None):
+        help_msg = r"""
+================================================================================
+ERROR: 'java_folder' (JDemetra+ jwsacruncher path) is missing or invalid!
+
+You must either provide a valid path to the jwsacruncher 'bin' directory manually, 
+or enable 'auto_download=True' to fetch it automatically.
+
+Example 1 (Auto-Download / Simplest Approach):
+    options = Options(
+        demetra_source_folder=r"C:\Data\demetra_source_folder",
+        local_folder=r"C:\Data\test_out",
+        auto_download=True
+    )
+
+Example 2 (Manual Path Configuration):
+    options = Options(
+        demetra_source_folder=r"C:\Data\demetra_source_folder",
+        java_folder=r"C:\path\to\jwsacruncher\bin",
+        local_folder=r"C:\Data\test_out"
+    )
+
+For full documentation and advanced usages, please visit:
+https://eseas-repo.readthedocs.io/en/latest/home.html
+================================================================================
+"""
+        super().warn_stop(help_msg)
+
 
 class WorkspaceFolder(FolderClass):
     type_ = "local_folder"
