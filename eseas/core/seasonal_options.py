@@ -63,7 +63,15 @@ class SeasonalOptions:
         workspace_mode=True,
         file_name_explanation=True,
         java_bin=None,
+        auto_download=False,
     ):
+        
+        # If auto_download is True, automatically fetch the cruncher directly to java_folder
+        if auto_download:
+            from .download_tools import download_jwsacruncher
+            import pathlib
+            target_path = pathlib.Path(java_folder) if java_folder else pathlib.Path.home() / ".eseas"
+            java_folder = str(download_jwsacruncher(target_path))
 
         self.demetra_folder = DemetraFolder(demetra_folder)
         self.java_folder = CruncherFolder(java_folder)

@@ -6,8 +6,8 @@ import time
 
 
 def main():
-    java_folder = r"../Downloads/jwsacruncher-2.2.4/bin"
-    demetra_source_folder = r"./demetra_source_folder"
+    java_folder = r"../Downloads/jwsacruncher-2.2.5"
+    demetra_source_folder = r"./eseas/data_for_testing/unix"
     local_folder = r"./test_out"
 
     options = Options(
@@ -21,11 +21,12 @@ def main():
         ),
         workspace_mode=True,  # True creates a workspace folder and copies all demetra files
         file_name_explanation=True,  # True adds explanations to output file names
+        auto_download=True,
+        auto_approve=True,  # Automatically approve any file replacements without prompting
     )
     seas = Seasonal(options)
 
     seas.part1()
-    time.sleep(10)
     seas.part2()
 
 

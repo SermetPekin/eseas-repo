@@ -157,11 +157,17 @@ def test_seasonal_general_javabin_none():
 
 
 @skip_if_no_cruncher
-def test_seasonal_general_run():
+def test_seasonal_general_run(tmp_path):
+    import pathlib
+    
+    # We create a temporary empty output folder for parsing
+    temp_local_folder = tmp_path / "temp_output"
+    temp_local_folder.mkdir()
+    
     options = Options(
         demetra_folder,
         java_folder,
-        local_folder,
+        local_folder=str(temp_local_folder),
         test=False,
         verbose=False,
         replace_original_files=False,
@@ -174,8 +180,14 @@ def test_seasonal_general_run():
         workspace_mode=True,
         java_bin=None,
     )
+    
     m = Seasonal(options)
     m.run()
+    
+    # Verify exactly that the final collected result exists and was created *during* this test
+    # The output is placed in {local_folder}/test_output/airpassengers/combined.xlsx
+    expected_output = temp_local_folder / "test_output" / "airpassengers" / "combined.xlsx"
+    assert expected_output.exists(), "The combined output was not generated in the new run!"
 
 
 @skip_if_no_cruncher
