@@ -171,7 +171,6 @@ def test_seasonal_general_run(tmp_path):
         test=False,
         verbose=False,
         replace_original_files=False,
-        auto_approve=False,
         result_file_names=(
             "sa",
             "s",
@@ -179,6 +178,9 @@ def test_seasonal_general_run(tmp_path):
         ),
         workspace_mode=True,
         java_bin=None,
+        replace_general_params=True,
+        auto_approve=True,
+        csvlayout="vtable"
     )
     
     m = Seasonal(options)
@@ -188,6 +190,10 @@ def test_seasonal_general_run(tmp_path):
     # The output is placed in {local_folder}/test_output/airpassengers/combined.xlsx
     expected_output = temp_local_folder / "test_output" / "airpassengers" / "combined.xlsx"
     assert expected_output.exists(), "The combined output was not generated in the new run!"
+    
+    import pandas as pd
+    df = pd.read_excel(expected_output)
+    assert len(df) > 10, f"Expected more than 10 rows in combined.xlsx, got {len(df)}"
 
 
 @skip_if_no_cruncher

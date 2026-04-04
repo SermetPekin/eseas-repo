@@ -52,3 +52,5 @@ __all__ = [
     "sleep",
     "collect"
 ]
+
+__version__ = '2.0.0'

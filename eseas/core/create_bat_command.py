@@ -59,8 +59,18 @@ def general_params():
 
 def create_general_params():
     folder = get_cruncher().local_work_space
-
-    return _create_general_params(folder, "general.params")
+    from .seasonal_options import SingleOptions
+    
+    opts = SingleOptions().options
+    replace = False
+    auto_approve = False
+    csvlayout="list"
+    if opts is not None:
+        replace = getattr(opts, "replace_general_params", False)
+        auto_approve = getattr(opts, "auto_approve", False)
+        csvlayout = getattr(opts, "csvlayout", "list")
+    
+    return _create_general_params(folder, "general.params", replace=replace, auto_approve=auto_approve, csvlayout=csvlayout)
 
 
 def copy_folder_demetra(files: Iterable[FileItem]):

@@ -64,6 +64,8 @@ class SeasonalOptions:
         file_name_explanation=True,
         java_bin=None,
         auto_download=False,
+        replace_general_params=False,
+        csvlayout="list",
     ):
         try:
             self._init_impl(
@@ -79,6 +81,8 @@ class SeasonalOptions:
                 file_name_explanation=file_name_explanation,
                 java_bin=java_bin,
                 auto_download=auto_download,
+                replace_general_params=replace_general_params,
+                csvlayout=csvlayout,
             )
         except Exception as e:
             from .error_logger import log_eseas_error
@@ -98,6 +102,8 @@ class SeasonalOptions:
                 "file_name_explanation": file_name_explanation,
                 "java_bin": java_bin,
                 "auto_download": auto_download,
+                "replace_general_params": replace_general_params,
+                "csvlayout": csvlayout,
             }
             class OptsWrapper:
                 def __init__(self, d):
@@ -131,6 +137,8 @@ class SeasonalOptions:
         file_name_explanation=True,
         java_bin=None,
         auto_download=False,
+        replace_general_params=False,
+        csvlayout="list",
     ):
         
         # If auto_download is True, automatically fetch the cruncher directly to java_folder
@@ -157,6 +165,8 @@ class SeasonalOptions:
         self.result_file_names = result_file_names
         self.workspace_mode = workspace_mode
         self.file_name_explanation = file_name_explanation
+        self.replace_general_params = replace_general_params
+        self.csvlayout = csvlayout
 
         self.set_options(workspace_mode)
         so = SingleOptions()
@@ -174,7 +184,9 @@ class SeasonalOptions:
             auto_approve={self.auto_approve},
             result_file_names={self.result_file_names},
             workspace_mode={self.workspace_mode},
-            java_bin = {self.java_bin}
+            java_bin = {self.java_bin},
+            replace_general_params={self.replace_general_params},
+            csvlayout="{self.csvlayout}"
     )
         """
         return template

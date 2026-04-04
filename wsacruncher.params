@@ -1,48 +1,7 @@
-# This file is part of the eseas project
-# Copyright (C) 2024 Sermet Pekin
-#
-# This source code is free software; you can redistribute it and/or
-# modify it under the terms of the European Union Public License
-# (EUPL), Version 1.2, as published by the European Commission.
-#
-# You should have received a copy of the EUPL version 1.2 along with this
-# program. If not, you can obtain it at:
-# <https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12>.
-#
-# This source code is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# European Union Public License for more details.
-#
-# Alternatively, if agreed upon, you may use this code under any later
-# version of the EUPL published by the European Commission.
-
-from pathlib import Path
-from evdspy.EVDSlocal.common.files import Write
-
-
-def _create_general_params(folder=".", file_name="general.params", replace=False, auto_approve=True, csvlayout="list", refreshall=False):
-    file_name_full = Path(folder) / file_name
-
-    if file_name_full.is_file() and not replace:
-        return
-
-    if file_name_full.is_file() and replace and not auto_approve:
-        ans = input(f"\nDo you want to replace the existing '{file_name}' parameter file inside the workspace? (y/n) : ")
-        if ans.lower().strip() not in ('y', 'yes'):
-            print("Skipping replacement. Using existing general.params.")
-            return
-
-    content = get_general_params(csvlayout=csvlayout, refreshall=refreshall)
-    return Write(file_name_full, content)
-
-
-def get_general_params(csvlayout="list", refreshall=False):
-    refreshall_str = "true" if refreshall else "false"
-    return f"""<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<wsaConfig bundle="10000" csvlayout="{csvlayout}" csvseparator="," ndecs="6">
-    <policy>freeParameters</policy>
-    <refreshall>{refreshall_str}</refreshall>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<wsaConfig bundle="10000" csvlayout="list" csvseparator="," ndecs="6">
+    <policy>parameters</policy>
+    <refreshall>true</refreshall>
     <matrix>
         <item>period</item>
         <item>span.start</item>
@@ -420,4 +379,4 @@ def get_general_params(csvlayout="list", refreshall=False):
         <series>decomposition.e-tables.e3</series>
         <series>decomposition.e-tables.e11</series>
     </tsmatrix>
-</wsaConfig>"""
+</wsaConfig>

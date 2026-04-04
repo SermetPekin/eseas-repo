@@ -91,10 +91,14 @@ def get_paths_info():
 
 def log_eseas_run(status: str, error_msg: str=None, options=None):
     try:
-        import importlib.metadata
-        eseas_version = importlib.metadata.version('eseas')
-    except Exception:
-        eseas_version = "Unknown"
+        from .. import __version__
+        eseas_version = __version__
+    except ImportError:
+        try:
+            import importlib.metadata
+            eseas_version = importlib.metadata.version('eseas')
+        except Exception:
+            eseas_version = "Unknown"
         
     if status == "success":
         logger = setup_eseas_logger(name="eseas_success_logger", filename="last_good_run.log", level=logging.INFO)
