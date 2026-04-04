@@ -54,7 +54,7 @@ class SeasonalOptions:
         test=False,
         verbose=False,
         replace_original_files=False,
-        auto_approve=True,
+        auto_approve=False,
         result_file_names=(
             "sa",
             "s",
