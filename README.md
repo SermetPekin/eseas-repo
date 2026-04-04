@@ -90,55 +90,39 @@ Here's an example of how to use the `eseas` package:
 
 ```
 
-### Defining some parameters from .env file  (NEW in version 1.0.0 )
+### Auto-Downloading jwsacruncher (Recommended)
 
-You can define key parameters in an `.env` file located in the current directory where you run the script.
+Instead of manually deploying JDemetra+ binaries or configuring `.env` paths, `eseas` can now automatically download, extract, and execute `jwsacruncher` on the fly. 
 
-The function first checks whether the parameters are explicitly provided.
-If a parameter is not given in the function, it will automatically use the value from the `.env` file.
-
-
-```plaintext
-# `.env` file content (Example)
-
-# Required if not given from function
-java_folder = /Users/guest/app/jwsacruncher-2.2.6/bin
-demetra_source_folder = ./eseas/data_for_testing/unix
-local_folder = ./test_out
-
-#Optional
-java_bin = /usr/bin
-```
-
-### Usage: Running the Script When a `.env` File Exists
+Here is an example utilizing `auto_download=True` with Windows-based path structures:
 
 ```python
 from eseas import Seasonal, Options
 
+def main():
+    # Folder containing Demetra XML workspace files
+    demetra_source_folder = r"C:\Data\demetra_source_folder"
 
-# Load options from the `.env` file
-options = Options()
+    # Workspace where output Excel files will be stored
+    local_folder = r"C:\Data\test_out"
 
-# Initialize and execute the seasonal adjustment process synchronously
-m = Seasonal(options)
-m.run()
+    # We do not need a 'java_folder' path if auto_download is enabled!
+    options = Options(
+        demetra_source_folder=demetra_source_folder,
+        local_folder=local_folder,
+        result_file_names=("sa", "s_f", "cal"),
+        workspace_mode=True,
+        file_name_explanation=True,
+        auto_download=True,  # Seamlessly fetches jwsacruncher
+        auto_approve=True    # Skips CLI yes/no prompts during file generation
+    )
 
+    # Initialize and execute the seasonal adjustment process synchronously
+    seas = Seasonal(options)
+    seas.run()
 
-```
-### Usage: Overwriting demetra_folder from Function Call When `.env` File Exists
-If a .env file is present, you can override the demetra_folder value by passing it directly in the function call.
-```python
-from eseas import Seasonal, Options
-
-
-# Override `demetra_folder` from function call, ignoring the value in `.env`
-options = Options(demetra_folder="SomeDemetraFolder")
-
-# Initialize and execute the process efficiently without arbitrary sleep timers
-m = Seasonal(options)
-m.run()
-
-
+if __name__ == "__main__":
+    main()
 ```
 
 
