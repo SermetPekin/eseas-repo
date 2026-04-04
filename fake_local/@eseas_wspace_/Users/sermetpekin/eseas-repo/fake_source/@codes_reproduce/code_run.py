@@ -1,7 +1,7 @@
 
 
 #======================================================================
-# This script was created by eseas    2026-04-04 13:22:58.374808
+# This script was created by eseas    2026-04-04 13:24:00.349574
 #   In order to reproduce you may use this template
 #======================================================================
 from eseas import SeasonalOptions
@@ -10,7 +10,7 @@ def main():
     
     options= SeasonalOptions(
             demetra_folder="fake_source",
-            java_folder="/private/var/folders/7y/qkvg04q15k78xc5kkvt0tjth0000gn/T/pytest-of-sermetpekin/pytest-18/test_auto_approve_false0",
+            java_folder="/private/var/folders/7y/qkvg04q15k78xc5kkvt0tjth0000gn/T/pytest-of-sermetpekin/pytest-19/test_auto_approve_false0",
             local_folder="fake_local",
             test=False,
             verbose= False,
