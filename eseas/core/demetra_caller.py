@@ -59,7 +59,7 @@ class DemetraCallerWindows(DemetraCaller):
 @dataclass
 class DemetraCallerLinux(DemetraCaller):
     def cruncher_command(self):
-        return rf"{self.cf}/jwsacruncher"
+        return rf'"{self.cf}/jwsacruncher"'
 
     def demetra_command_file_name(self):
         return rf"{self.ws}/{demetra_command_file_name}.sh"

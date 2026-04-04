@@ -116,19 +116,18 @@ class Cruncher:
         def path_str(Path_: Path):
             r = replace_recursive(str(Path_), "\\", ".")
             r = replace_recursive(r, ":", "..")
+            r = replace_recursive(r, "/", ".")
             return r
 
         def naming_format():
-            p = Path() / self.instance.demetra_folder
-            p = path_str(p)
-            p = make_eng(p)
-            return f"@eseas_wspace_{p}"
+            return "@eseas_wspace"
 
         if self.workspace_mode:
             ws = self.instance.local_work_space
-            n_fname = Path() / ws / naming_format()
-            if create_directory(n_fname):
-                self.instance.local_work_space = n_fname
+            if "@eseas_wspace" not in str(ws):
+                n_fname = Path() / ws / naming_format()
+                if create_directory(n_fname):
+                    self.instance.local_work_space = n_fname
 
     def check_workspace_mode(self):
         # Cruncher

@@ -16,7 +16,7 @@ def main():
             "s_f",
             "cal",
         ),
-        workspace_mode=True,  # True creates a workspace folder and copies all demetra files
+        workspace_mode=False ,  # True creates a workspace folder and copies all demetra files
         file_name_explanation=True,  # True adds explanations to output file names
         auto_download=True,
         auto_approve=True,  # Automatically approve any file replacements without prompting

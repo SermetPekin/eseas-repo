@@ -24,7 +24,7 @@
                     <metaData>
                         <property name="@timestamp" value="Fri Jun 14 09:59:22 EET 2024"/>
                         <property name="@source" value="XCLPRVDR"/>
-                        <property name="@id" value="demetra://tsprovider/XCLPRVDR/20111201/SERIES?file=%2FUsers%2Fsermetpekin%2FDesktop%2Fair4.xlsx#seriesName=%23Passengers&amp;sheetName=Sheet1"/>
+                        <property name="@id" value="demetra://tsprovider/XCLPRVDR/20111201/SERIES?file=%2FUsers%2Fsermetpekin%2Feseas-repo%2Feseas%2Fdata_for_testing%2Fwin%2Fair4.xlsx#seriesName=%23Passengers&amp;sheetName=Sheet1"/>
                     </metaData>
                 </ts>
             </item>
