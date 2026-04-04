@@ -10,11 +10,12 @@ def main():
     However, if you provide a `java_folder` AND `auto_download=True`, 
     eseas will download and extract the cruncher precisely into that target path.
     
-    IMPORTANT: If eseas detects that the jwsacruncher binaries are already 
-    present in this folder from an earlier run, it will SKIP the download 
-    and proceed straight to the seasonal adjustment! This makes it perfectly 
-    safe and efficient to leave `auto_download=True` in your scripts without 
-    re-downloading a 30MB file every time you run it.
+    Note: If eseas detects that the jwsacruncher binaries are already 
+    present in this folder from an earlier run, it will skip the download 
+    and proceed to the seasonal adjustment. While this avoids re-downloading 
+    the file every run, you should evaluate whether automatic downloading 
+    aligns with your environment's security policies. Some users may prefer 
+    to download the tool manually and set `auto_download=False`.
     """
     options = Options(
         demetra_source_folder=r"C:\Data\demetra_source_folder",
