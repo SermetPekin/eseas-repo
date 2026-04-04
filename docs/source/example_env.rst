@@ -9,16 +9,14 @@ If a `.env` file is present in the current directory, the script will automatica
 .. code-block:: python
 
     from eseas import Seasonal, Options
-    import time
+
 
     # Load options from the `.env` file
     options = Options()
 
-    # Initialize and execute the seasonal adjustment process
+    # Initialize and execute the seasonal adjustment process synchronously
     m = Seasonal(options)
-    m.part1()
-    time.sleep(10)  # Pause before running part2
-    m.part2()
+    m.run()
 
 Overwriting `demetra_folder` from Function Call
 -----------------------------------------------
@@ -28,16 +26,14 @@ If a `.env` file exists, you can override the `demetra_folder` value by passing 
 .. code-block:: python
 
     from eseas import Seasonal, Options
-    import time
+
 
     # Override `demetra_folder` from function call, ignoring the value in `.env`
     options = Options(demetra_folder="SomeDemetraFolder")
 
-    # Initialize and execute the seasonal adjustment process
+    # Initialize and execute the seasonal adjustment process efficiently without arbitrary sleep timers
     m = Seasonal(options)
-    m.part1()
-    time.sleep(10)  # Pause before running part2
-    m.part2()
+    m.run()
 
 
 Example `.env` File Content

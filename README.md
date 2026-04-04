@@ -50,7 +50,7 @@ Here's an example of how to use the `eseas` package:
 
 
     from eseas import Seasonal, Options
-    import time
+
 
     def main():
         # Specify the path to the jwsacruncher bin directory
@@ -79,11 +79,9 @@ Here's an example of how to use the `eseas` package:
         # Initialize the Seasonal process
         seas = Seasonal(options)
 
-        # Execute the two-step process
-        seas.part1()
-        time.sleep(10)  # Wait before executing part2
-        seas.part2()
-
+        # Execute the two-step process synchronously
+        seas.run() # Equivalent to seas.part1() immediately followed by seas.part2()
+        
     if __name__ == "__main__":
         main()
 
@@ -114,16 +112,14 @@ java_bin = /usr/bin
 
 ```python
 from eseas import Seasonal, Options
-import time
+
 
 # Load options from the `.env` file
 options = Options()
 
-# Initialize and execute the seasonal adjustment process
+# Initialize and execute the seasonal adjustment process synchronously
 m = Seasonal(options)
-m.part1()
-time.sleep(10)  # Pause before running part2
-m.part2()
+m.run()
 
 
 ```
@@ -131,16 +127,14 @@ m.part2()
 If a .env file is present, you can override the demetra_folder value by passing it directly in the function call.
 ```python
 from eseas import Seasonal, Options
-import time
+
 
 # Override `demetra_folder` from function call, ignoring the value in `.env`
 options = Options(demetra_folder="SomeDemetraFolder")
 
-# Initialize and execute the seasonal adjustment process
+# Initialize and execute the process efficiently without arbitrary sleep timers
 m = Seasonal(options)
-m.part1()
-time.sleep(10)  # Pause before running part2
-m.part2()
+m.run()
 
 
 ```

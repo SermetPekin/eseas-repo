@@ -4,7 +4,7 @@
 
 from eseas import Seasonal
 from eseas import Options
-import time
+
 
 
 def main(part=1):
@@ -22,13 +22,8 @@ def main(part=1):
     )
     seas = Seasonal(options)
 
-    seas.part1()
-    time.sleep(10)
-    seas.part2()
-
-
-
-
+    # Process Demetra synchronously and extract outputs seamlessly
+    seas.run() 
 
 if "__main__" == __name__:
     main()

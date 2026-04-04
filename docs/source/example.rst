@@ -11,7 +11,7 @@ Here’s an example demonstrating how to use **eseas**:
 .. code-block:: python
 
     from eseas import Seasonal, Options
-    import time
+
 
     def main():
         # Specify the path to the jwsacruncher bin directory
@@ -40,10 +40,8 @@ Here’s an example demonstrating how to use **eseas**:
         # Initialize the Seasonal process
         seas = Seasonal(options)
 
-        # Execute the two-step process
-        seas.part1()
-        time.sleep(10)  # Wait before executing part2
-        seas.part2()
+        # Execute the two-step process synchronously
+        seas.run() # Triggers part1 followed by part2 immediately
 
     if __name__ == "__main__":
         main()
