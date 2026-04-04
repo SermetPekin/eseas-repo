@@ -9,7 +9,7 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     steps:
-      
+
       - uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -21,10 +21,33 @@ jobs:
         run: |
           pip install pytest
           pip install .[test] || pip install .
+
+      - name: Cache jwsacruncher
+        id: cache-jwsacruncher
+        uses: actions/cache@v3
+        with:
+          path: jwsacruncher
+          key: jwsacruncher-v2.2.5
+
+      - name: Download jwsacruncher if not cached
+        if: steps.cache-jwsacruncher.outputs.cache-hit != 'true'
+        run: |
+          wget https://github.com/jdemetra/jwsacruncher/releases/download/v2.2.5/jwsacruncher-2.2.5-bin.zip
+          unzip jwsacruncher-2.2.5-bin.zip -d jwsacruncher
+
+      - name: Make jwsacruncher executable
+        run: chmod +x jwsacruncher/jwsacruncher-2.2.5/bin/jwsacruncher
+
       - name: Build package
         run: python -m build
+
       - name: Run tests
-        run: pytest
+        env:
+          JAVA_CRUNCHER_BIN: ${{ github.workspace }}/jwsacruncher/jwsacruncher-2.2.5/bin
+        run: |
+          export PATH=$JAVA_CRUNCHER_BIN:$PATH
+          pytest -v
+
       - name: Publish to PyPI
         env:
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
