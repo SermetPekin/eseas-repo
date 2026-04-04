@@ -54,11 +54,11 @@ def get_demetra_type():
 
 
 def general_params():
-    return rf"{get_cruncher().crunch_folder}/general.params"
+    return rf"{get_cruncher().local_work_space}/general.params"
 
 
 def create_general_params():
-    folder = get_cruncher().crunch_folder
+    folder = get_cruncher().local_work_space
 
     return _create_general_params(folder, "general.params")
 
