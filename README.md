@@ -56,17 +56,13 @@ Here's an example of how to use the `eseas` package:
 
     def main():
         # Specify the path to the jwsacruncher bin directory
-        java_folder = r'../../Downloads/jwsacruncher-2.2.4/bin' 
-
-        # [Optional] Java binary folder (where the Java executable exists)
-        # This will be added to the environment PATH variable if provided.
-        java_bin = r'/usr/bin'
+        java_folder = r"C:\path\to\jwsacruncher\bin"
 
         # Folder containing Demetra XML files
-        demetra_source_folder = r"./demetra_source_folder"
+        demetra_source_folder = r"C:\Data\demetra_source_folder"
 
         # Workspace where output files will be stored
-        local_folder = r"./test_out"
+        local_folder = r"C:\Data\test_out"
 
         options = Options(
             demetra_source_folder,
@@ -74,8 +70,7 @@ Here's an example of how to use the `eseas` package:
             local_folder,
             result_file_names=("sa", "s_f", "cal"),  # See "Demetra Components" below
             workspace_mode=True,
-            file_name_explanation=True,
-            java_bin=java_bin
+            file_name_explanation=True
         )
 
         # Initialize the Seasonal process
@@ -90,7 +85,27 @@ Here's an example of how to use the `eseas` package:
 
 ```
 
-### Auto-Downloading jwsacruncher (Recommended)
+### Advanced Usage: Specifying Java Executable Path (`java_bin`)
+
+If your system struggles to locate the Java executables (or if you have multiple Java versions and want to point `eseas` directly to a specific one), you can provide `java_bin`.
+
+```python
+    # For a specific JDK installed on Windows:
+    java_bin = r"C:\Program Files\Java\jdk-17\bin"
+    # Or in Unix systems if not in PATH natively: java_bin = r"/usr/bin"
+    
+    options = Options(
+        demetra_source_folder=r"C:\Data\demetra_source",
+        java_folder=r"C:\path\to\jwsacruncher\bin",
+        local_folder=r"C:\Data\test_out",
+        java_bin=java_bin   # Forces eseas to inject this into the environment PATH automatically
+    )
+    
+    seas = Seasonal(options)
+    seas.run()
+```
+
+### Auto-Downloading jwsacruncher
 
 Instead of manually deploying JDemetra+ binaries or configuring `.env` paths, `eseas` can now automatically download, extract, and execute `jwsacruncher` on the fly. 
 
