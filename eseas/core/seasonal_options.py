@@ -65,6 +65,73 @@ class SeasonalOptions:
         java_bin=None,
         auto_download=False,
     ):
+        try:
+            self._init_impl(
+                demetra_folder=demetra_folder,
+                java_folder=java_folder,
+                local_folder=local_folder,
+                test=test,
+                verbose=verbose,
+                replace_original_files=replace_original_files,
+                auto_approve=auto_approve,
+                result_file_names=result_file_names,
+                workspace_mode=workspace_mode,
+                file_name_explanation=file_name_explanation,
+                java_bin=java_bin,
+                auto_download=auto_download,
+            )
+        except Exception as e:
+            from .error_logger import log_eseas_error
+            import traceback
+            error_msg = f"{str(e)}\n{traceback.format_exc()}"
+            # We don't have the fully constructed options object, but we can pass the locals
+            opts_dict = {
+                "demetra_folder": demetra_folder,
+                "java_folder": java_folder,
+                "local_folder": local_folder,
+                "test": test,
+                "verbose": verbose,
+                "replace_original_files": replace_original_files,
+                "auto_approve": auto_approve,
+                "result_file_names": result_file_names,
+                "workspace_mode": workspace_mode,
+                "file_name_explanation": file_name_explanation,
+                "java_bin": java_bin,
+                "auto_download": auto_download,
+            }
+            class OptsWrapper:
+                def __init__(self, d):
+                    for k, v in d.items():
+                        setattr(self, k, v)
+            log_eseas_error(error_msg, OptsWrapper(opts_dict))
+            raise
+        else:
+            # Also set up the .eseas directory to provide examples even if no crash occurs
+            from .error_logger import setup_eseas_logger
+            try:
+                setup_eseas_logger()
+            except Exception:
+                pass
+
+    def _init_impl(
+        self,
+        demetra_folder=None,
+        java_folder=None,
+        local_folder=None,
+        test=False,
+        verbose=False,
+        replace_original_files=False,
+        auto_approve=False,
+        result_file_names=(
+            "sa",
+            "s",
+            "cal",
+        ),
+        workspace_mode=True,
+        file_name_explanation=True,
+        java_bin=None,
+        auto_download=False,
+    ):
         
         # If auto_download is True, automatically fetch the cruncher directly to java_folder
         if auto_download:

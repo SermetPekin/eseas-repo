@@ -312,3 +312,4 @@ cython_debug/
 
 !Api_requester.py
 .github/.DS_Store
+.eseas/
