@@ -26,14 +26,11 @@ from evdspy.EVDSlocal.utils.utils_general import create_directory
 from .create_bat_command import run_bat_commands
 from .cruncher_classes import Cruncher
 from .demetra import get_demetra_files, write_bat_file_demetra
-from .picker_classes import OutFilePicker
 from .seas_utils import view_display
 from evdspy.EVDSlocal.common.files import Write
 from .seasonal_adv_utils import (
     get_input_from_user,
     common_space_msg,
-    seasonal_results_msg,
-    get_results_info,
     display,
 )
 
@@ -48,10 +45,6 @@ class SeasonalADV:
     def __init__(self, options):
         self.options = options
         self.code_reproduce()
-
-    def sleep(self, seconds: int = 2):
-        print(f"Sleeping for {seconds} seconds.")
-        time.sleep(seconds)
 
     def part1(self):
         self.common_space_check()
@@ -70,12 +63,10 @@ class SeasonalADV:
             out_file_name=out_file_name,
             encoding=encoding,
         )
-        # self.seasonal_results_advanced()
 
-    def run(self, seconds: int = 10):
-        """Run part1 and part2 with a sleep in between"""
+    def run(self):
+        """Run part1 and part2 sequentially without manual interruption"""
         self.part1()
-        self.sleep(seconds)
         self.part2()
 
     def common_space_check(self):
@@ -95,27 +86,6 @@ class SeasonalADV:
             )
             return
         run_bat_commands()
-
-    def seasonal_results_advanced(self):
-        """seasonal_results_advanced"""
-        view_display(seasonal_results_msg(self.options.test))
-        time.sleep(1)
-        if self.options.replace_original_files:
-            t = get_results_info(Cruncher().local_work_space)
-            print(t)
-        xml_demetra = get_demetra_files(self.options.demetra_folder)
-        if self.options.test:
-            xml_demetra = xml_demetra[0:5]
-        if self.options.verbose:
-            display(xml_demetra)
-        for file in xml_demetra:
-            of_picker = OutFilePicker(
-                file,
-                names=self.options.result_file_names,
-                file_name_explanation=self.options.file_name_explanation,
-            )
-            of_picker.pick_files()
-        return xml_demetra
 
     def code_reproduce(self):
         return ReproduceMevsimsel(self).code_reproduce()

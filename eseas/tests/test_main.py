@@ -28,7 +28,6 @@ from eseas.core.df_operations import make_df_float
 from eseas.core.cruncher_classes import get_cruncher
 from eseas.core.cruncher_classes import Cruncher
 from eseas.core.demetra import get_demetra_files
-from eseas.core.picker_classes import OutFilePicker
 from eseas.core.seas_testing_utils import get_testing_utils
 from eseas.core.seas_utils import filter_xls
 from eseas.core.df_operations import get_rand_hash
@@ -85,16 +84,6 @@ def test_mevsimsel_general_basic():
 
 # @skip_if_github
 @skip_if_no_cruncher
-def test_c1():
-    c = Cruncher()
-    c.set_items(java_folder, local_folder, demetra_folder)
-    dem_files = get_demetra_files(demetra_folder)
-    for f in dem_files:
-        of_picker = OutFilePicker(f)
-        of_picker.pick_files()
-
-
-# @skip_if_github
 @skip_if_no_cruncher
 def test_seasonal_general():
     options = Options(
@@ -113,6 +102,33 @@ def test_seasonal_general():
         workspace_mode=True,
     )
     m = Seasonal(options)
+    m.part1()
+    m.part2()
+
+
+@skip_if_no_cruncher
+def test_seasonal_general_workspace_mode_false():
+    testing_utils = get_testing_utils()
+
+    options = Options(
+        demetra_folder=testing_utils.demetra_folder,
+        java_folder=testing_utils.java_folder,
+        local_folder=testing_utils.local_folder,
+        test=False,
+        verbose=False,
+        replace_original_files=False,
+        auto_approve=False,
+        result_file_names=(
+            "sa",
+            "s",
+            "cal",
+        ),
+        workspace_mode=False,
+        java_bin=None,
+    )
+    m = Seasonal(options)
+    assert m is not None
+
     m.part1()
     m.part2()
 
@@ -159,7 +175,7 @@ def test_seasonal_general_run():
         java_bin=None,
     )
     m = Seasonal(options)
-    m.run(5)
+    m.run()
 
 
 @skip_if_no_cruncher

@@ -110,15 +110,13 @@ class JavaEnviron:
         time.sleep(num)
 
     def show_java_version(self):
-        print("[showing java version] ...")
         result = self.run_process(["java", "-version"])
         res = (str(result.stdout) + str(result.stderr)).strip().split("\n")
         msg = "\n".join(res)
-        print("Java Version \n", msg)
+        print(f"Java Version: \n{msg}")
         self.sleep(2)
 
     def check_java_folders(self):
-        print("[checking Java folders] ...")
         java_executables: list = self.find_java_paths()
         folders = self.split()
         active = False
@@ -142,29 +140,14 @@ class JavaEnviron:
             liste.append((bool_, p))
 
         self.show_folders(
-            potential_java_folders, "Current Folders in environment [Path variable]"
+            potential_java_folders, "Current Java executables in PATH:"
         )
 
         self.sleep(2)
         return potential_java_folders
 
     def show_cmd(self):
-        cmd = """
-        To check manually :
-        from Terminal type  
-                echo $PATH 
-                java -version 
-
-            """
-        if self.windows():
-            cmd = """
-        To check manually :
-        from Command line 
-                path
-                java -version 
-            """
-        print(cmd)
-        self.sleep(2)
+        pass
 
     def split(self) -> tuple:
         d = os.environ.get("PATH")
@@ -183,8 +166,7 @@ class JavaEnviron:
             return "     -> " + string
 
         def show():
-            template = msg
-            print(template)
+            print(msg)
             for bool_, item in items:
                 x = p(bool_, item)
                 if item is None:
@@ -202,10 +184,10 @@ class JavaEnviron:
             return string == str(self.java_bin)
 
         items2 = [(check(x), x) for x in folders2]
-        self.show_folders(items2)
+        self.show_folders(items2, "Setting PATH environment variable to include:")
         os.environ["PATH"] = self.separator.join(folders2)
 
-        print(f"[Done] {self.java_bin} was set as java folder")
+        print(f"Java prefix set to: {self.java_bin}\n")
         self.sleep(2)
 
 

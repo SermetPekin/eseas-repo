@@ -96,21 +96,3 @@ test : {test}
 folder to check demetra files : {demetra_folder}
 ========================================================================
 """
-
-
-def seasonal_results_msg(test):
-    return f"""
-========================================================================
-        seasonal_results function is running.
-        test : {test}
-        Collecting results
-========================================================================
-    """
-
-
-def get_results_info(adres):
-    t = f"""
-    --------------------------
-    {adres}
-    """
-    return t

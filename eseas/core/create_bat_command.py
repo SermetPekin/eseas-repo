@@ -108,7 +108,8 @@ def get_line_win(file_item: FileItem):
     line_info = f"rem {file_item.short_name}\nrem " + "-" * 50 + "\n"
     cmd1 = rf'{line_info}{get_demetra_type().cruncher_command()} "{dest}"'
     cmd2 = rf'-x "{general_params()}"'
-    cmd3 = rf'-d "{ws}/{middle_folder}/{file_item.short_name}"{NEW_LINE}'
+    d_path = ws / middle_folder / file_item.short_name
+    cmd3 = rf'-d "{d_path}"{NEW_LINE}'
     command = f"{cmd1} {cmd2} {cmd3}"
     # print(command)
     return command
@@ -120,7 +121,8 @@ def get_line_MAC(file_item: FileItem):
     line_info = f"# {file_item.short_name}\n# " + "-" * 50 + "\n"
     cmd1 = f'{line_info}\n{get_demetra_type().cruncher_command()} "{dest}"'
     cmd2 = f'-x "{general_params()}"'
-    cmd3 = f'-d "{ws}/{middle_folder}/{file_item.short_name}"{NEW_LINE}'
+    d_path = ws / middle_folder / file_item.short_name
+    cmd3 = f'-d "{d_path}"{NEW_LINE}'
     command = f"{cmd1} {cmd2} {cmd3}"
     # print(command)
     return command
