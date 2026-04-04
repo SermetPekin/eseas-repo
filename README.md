@@ -1,7 +1,7 @@
 
 
 [![PyPI](https://img.shields.io/pypi/v/eseas)](https://img.shields.io/pypi/v/eseas) 
-![t](https://img.shields.io/badge/status-maintained-yellow.svg) [![](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/) 
+![t](https://img.shields.io/badge/status-maintained-yellow.svg) [![](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/) 
 [![Windows](https://github.com/SermetPekin/eseas-repo/actions/workflows/latest_cr_version_win.yml/badge.svg?3)](https://github.com/SermetPekin/eseas-repo/actions/workflows/latest_cr_version_win.yml?3)
 [![Ubuntu / Mac ](https://github.com/SermetPekin/eseas-repo/actions/workflows/latest_cr_version.yml/badge.svg?3)](https://github.com/SermetPekin/eseas-repo/actions/workflows/latest_cr_version.yml?3)
 
