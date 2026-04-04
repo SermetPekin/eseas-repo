@@ -8,8 +8,10 @@ ignore*/
 excel_files/
 
 jwsacruncher/
+docs_md/
 
 !.envExample
+CHANGELOG.md
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -19,6 +21,7 @@ ABC/
 
 fake_local*/
 
+eseas_config.yaml
 
 
 .venv/

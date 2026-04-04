@@ -68,13 +68,16 @@ class SeasonalADV:
         """Run part1 and part2 sequentially without manual interruption"""
         from .error_logger import log_eseas_error, log_eseas_success
         import traceback
+        start_time = time.time()
         try:
             self.part1()
             self.part2()
-            log_eseas_success(self.options)
+            execution_time = time.time() - start_time
+            log_eseas_success(self.options, execution_time)
         except Exception as e:
+            execution_time = time.time() - start_time
             error_msg = f"{str(e)}\n{traceback.format_exc()}"
-            log_eseas_error(error_msg, self.options)
+            log_eseas_error(error_msg, self.options, execution_time)
             raise
 
     def common_space_check(self):

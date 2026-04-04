@@ -3,13 +3,26 @@ import logging
 from pathlib import Path
 from datetime import datetime
 import traceback
+import sys
+import platform
+import os
 
 def setup_eseas_logger(name="eseas_error_logger", filename="failed_runs.log", level=logging.ERROR):
+    """Setup logger with guaranteed directory creation"""
     cwd = Path.cwd()
     eseas_dir = cwd / ".eseas"
     logs_dir = eseas_dir / ".logs"
-    
-    logs_dir.mkdir(parents=True, exist_ok=True)
+
+    try:
+        logs_dir.mkdir(parents=True, exist_ok=True)
+    except Exception as e:
+        # Fallback to temp directory if unable to create in cwd
+        import tempfile
+        eseas_dir = Path(tempfile.gettempdir()) / ".eseas"
+        logs_dir = eseas_dir / ".logs"
+        logs_dir.mkdir(parents=True, exist_ok=True)
+        print(f"Warning: Using temporary directory for logs: {logs_dir}")
+        print(f"Original error: {e}")
     
     example_script = eseas_dir / "quick_start_example.py"
     if not example_script.exists():
@@ -59,83 +72,267 @@ It contains diagnostic logs in the .logs/ folder to assist with troubleshooting.
         
     return logger
 
+def get_system_info():
+    """Get comprehensive system information"""
+    info = {}
+    try:
+        info["platform"] = platform.platform()
+        info["python_version"] = sys.version
+        info["python_executable"] = sys.executable
+        info["cwd"] = str(Path.cwd())
+        info["user"] = os.environ.get("USER") or os.environ.get("USERNAME") or "unknown"
+        info["timestamp"] = datetime.now().isoformat()
+
+        # Check Java availability
+        try:
+            import subprocess
+            result = subprocess.run(["java", "-version"], capture_output=True, text=True, timeout=5)
+            info["java_available"] = True
+            info["java_version"] = result.stderr.split('\n')[0] if result.stderr else "unknown"
+        except Exception:
+            info["java_available"] = False
+            info["java_version"] = "not found"
+
+    except Exception as e:
+        info["error"] = f"Could not gather system info: {e}"
+
+    return info
+
 def get_paths_info():
+    """Get workspace and execution paths"""
     paths = {}
     try:
         from .cruncher_classes import get_cruncher
         from .create_bat_command import get_demetra_type
-        
+
         cruncher = get_cruncher()
         ws = cruncher.local_work_space
         paths["local_workspace"] = str(ws)
         paths["demetra_folder"] = str(cruncher.demetra_folder)
         paths["cruncher_folder"] = str(cruncher.crunch_folder)
         paths["general_params"] = str(Path(ws) / "general.params")
+
+        # Check if paths exist
+        paths["workspace_exists"] = Path(ws).exists()
+        paths["demetra_folder_exists"] = Path(cruncher.demetra_folder).exists()
+        paths["cruncher_folder_exists"] = Path(cruncher.crunch_folder).exists()
+
         try:
             paths["execution_script"] = str(get_demetra_type().demetra_command_file_name())
         except Exception:
             paths["execution_script"] = "Could not resolve"
-            
+
         # check script content
         try:
             exec_path = Path(paths["execution_script"])
             if exec_path.exists():
                 paths["script_content"] = exec_path.read_text(encoding="utf-8")
-        except Exception:
-            pass
-            
+                paths["script_exists"] = True
+            else:
+                paths["script_exists"] = False
+        except Exception as e:
+            paths["script_read_error"] = str(e)
+
     except Exception as e:
         paths["error"] = f"Could not resolve workspace paths: {e}"
-        
+        paths["traceback"] = traceback.format_exc()
+
     return paths
 
-def log_eseas_run(status: str, error_msg: str=None, options=None):
+def get_processing_stats():
+    """Get statistics about what was processed"""
+    stats = {}
     try:
-        from .. import __version__
-        eseas_version = __version__
-    except ImportError:
+        from .cruncher_classes import get_cruncher
+        cruncher = get_cruncher()
+        ws = Path(cruncher.local_work_space)
+
+        # Count XML files in demetra folder
+        if Path(cruncher.demetra_folder).exists():
+            xml_files = list(Path(cruncher.demetra_folder).rglob("*.xml"))
+            stats["xml_files_found"] = len(xml_files)
+            stats["xml_file_list"] = [str(f.name) for f in xml_files[:20]]  # Limit to first 20
+
+        # Count output files
+        if ws.exists():
+            test_output = ws / "test_output"
+            if test_output.exists():
+                csv_files = list(test_output.rglob("*.csv"))
+                xlsx_files = list(test_output.rglob("*.xlsx"))
+                stats["csv_outputs_generated"] = len(csv_files)
+                stats["xlsx_outputs_generated"] = len(xlsx_files)
+
+    except Exception as e:
+        stats["error"] = f"Could not gather processing stats: {e}"
+
+    return stats
+
+def log_eseas_run(status: str, error_msg: str=None, options=None, execution_time: float=None):
+    """
+    Comprehensive logging for eseas runs
+
+    Args:
+        status: 'success' or 'error'
+        error_msg: Error message with traceback
+        options: SeasonalOptions instance
+        execution_time: Time taken in seconds
+    """
+    try:
+        # Get version
         try:
-            import importlib.metadata
-            eseas_version = importlib.metadata.version('eseas')
-        except Exception:
-            eseas_version = "Unknown"
-        
-    if status == "success":
-        logger = setup_eseas_logger(name="eseas_success_logger", filename="last_good_run.log", level=logging.INFO)
-    else:
-        logger = setup_eseas_logger()
-        
-    options_dict = {}
-    if options:
+            from .. import __version__
+            eseas_version = __version__
+        except ImportError:
+            try:
+                import importlib.metadata
+                eseas_version = importlib.metadata.version('eseas')
+            except Exception:
+                eseas_version = "Unknown"
+
+        # Setup logger
+        if status == "success":
+            logger = setup_eseas_logger(name="eseas_success_logger", filename="last_good_run.log", level=logging.INFO)
+        else:
+            logger = setup_eseas_logger()
+
+        # Get options
+        options_dict = {}
+        if options:
+            try:
+                if hasattr(options, "__dict__"):
+                    for k, v in options.__dict__.items():
+                        options_dict[k] = str(v)
+                else:
+                    options_dict = {"repr": repr(options)}
+            except Exception as e:
+                options_dict = {"repr": "Could not parse options.", "error": str(e)}
+
+        # Gather comprehensive information
+        system_info = get_system_info()
+        paths_info = get_paths_info()
+        stats = get_processing_stats()
+
+        # Build log data
+        log_data = {
+            "status": status,
+            "eseas_version": eseas_version,
+            "timestamp": datetime.now().isoformat(),
+            "execution_time_seconds": execution_time if execution_time else "not_measured",
+            "system": system_info,
+            "options": options_dict,
+            "paths": paths_info,
+            "processing_stats": stats
+        }
+
+        if error_msg:
+            log_data["error"] = {
+                "message": str(error_msg),
+                "type": "runtime_error"
+            }
+
+        # Log with appropriate level
+        if status == "success":
+            logger.info(json.dumps(log_data, indent=2))
+        else:
+            logger.error(json.dumps(log_data, indent=2))
+
+        return True
+
+    except Exception as e:
+        # Emergency fallback - write to a simple text file if JSON logging fails
         try:
-            if hasattr(options, "__dict__"):
-                for k, v in options.__dict__.items():
-                    options_dict[k] = str(v)
-            else:
-                options_dict = {"repr": repr(options)}
+            emergency_log = Path.cwd() / ".eseas" / ".logs" / "emergency.log"
+            emergency_log.parent.mkdir(parents=True, exist_ok=True)
+            with open(emergency_log, "a", encoding="utf-8") as f:
+                f.write(f"\n{'='*80}\n")
+                f.write(f"EMERGENCY LOG ENTRY - {datetime.now().isoformat()}\n")
+                f.write(f"Logging system failed with error: {e}\n")
+                f.write(f"Original status: {status}\n")
+                f.write(f"Original error: {error_msg}\n")
+                f.write(f"Traceback:\n{traceback.format_exc()}\n")
+                f.write(f"{'='*80}\n")
         except Exception:
-            options_dict = {"repr": "Could not parse options."}
+            # Absolute last resort - print to stderr
+            print(f"CRITICAL: All logging mechanisms failed!", file=sys.stderr)
+            print(f"Error: {e}", file=sys.stderr)
+            if error_msg:
+                print(f"Original error: {error_msg}", file=sys.stderr)
 
-    paths_info = get_paths_info()
+        return False
 
-    log_data = {
-        "status": status,
-        "eseas_version": eseas_version,
-        "options": options_dict,
-        "paths": paths_info
-    }
-    
-    if error_msg:
-        log_data["error"] = str(error_msg)
-    
-    if status == "success":
-        logger.info(json.dumps(log_data, indent=2))
-    else:
-        logger.error(json.dumps(log_data, indent=2))
+def log_eseas_error(error_msg: str, options=None, execution_time: float=None):
+    """Log an error with comprehensive diagnostics"""
+    log_eseas_run("error", error_msg=error_msg, options=options, execution_time=execution_time)
 
-def log_eseas_error(error_msg: str, options=None):
-    log_eseas_run("error", error_msg=error_msg, options=options)
+def log_eseas_success(options=None, execution_time: float=None):
+    """Log a successful run with statistics"""
+    log_eseas_run("success", options=options, execution_time=execution_time)
 
-def log_eseas_success(options=None):
-    log_eseas_run("success", options=options)
+def ensure_log_on_exception(func):
+    """
+    Decorator to ensure logging happens even if an exception occurs.
+    This provides a central failure point to always create log files.
+
+    Usage:
+        @ensure_log_on_exception
+        def some_function(self):
+            # your code
+    """
+    def wrapper(*args, **kwargs):
+        import time
+        start_time = time.time()
+        options = None
+
+        # Try to extract options from args
+        try:
+            if args and hasattr(args[0], 'options'):
+                options = args[0].options
+        except Exception:
+            pass
+
+        try:
+            result = func(*args, **kwargs)
+            # Don't log here if the function logs internally
+            return result
+        except Exception as e:
+            execution_time = time.time() - start_time
+            error_msg = f"{str(e)}\n{traceback.format_exc()}"
+            log_eseas_error(error_msg, options, execution_time)
+            raise
+
+    return wrapper
+
+def install_global_exception_handler():
+    """
+    Install a global exception handler to catch any uncaught exceptions
+    and ensure they are logged before the program exits.
+    """
+    original_excepthook = sys.excepthook
+
+    def eseas_excepthook(exc_type, exc_value, exc_traceback):
+        """Custom exception hook that logs uncaught exceptions"""
+        # Format the exception
+        error_lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
+        error_msg = ''.join(error_lines)
+
+        # Try to log it
+        try:
+            log_eseas_error(error_msg, options=None)
+        except Exception:
+            # If logging fails, at least try emergency log
+            try:
+                emergency_log = Path.cwd() / ".eseas" / ".logs" / "emergency.log"
+                emergency_log.parent.mkdir(parents=True, exist_ok=True)
+                with open(emergency_log, "a", encoding="utf-8") as f:
+                    f.write(f"\n{'='*80}\n")
+                    f.write(f"UNCAUGHT EXCEPTION - {datetime.now().isoformat()}\n")
+                    f.write(error_msg)
+                    f.write(f"{'='*80}\n")
+            except Exception:
+                pass
+
+        # Call the original exception hook
+        original_excepthook(exc_type, exc_value, exc_traceback)
+
+    sys.excepthook = eseas_excepthook
 

@@ -22,16 +22,24 @@
 from pathlib import Path
 import sys
 
-# eseas 
+# eseas
 from eseas.core.seasonal_general import SeasonalADV as Seasonal
 from eseas.core.seasonal_general import SeasonalADV
 from eseas.core.seasonal_options import SeasonalOptions as Options
 from eseas.core.seasonal_options import SeasonalOptions
 from eseas.core.cruncher_classes import Cruncher
-from eseas.core.collect import collect_parts_of_results as collect 
+from eseas.core.collect import collect_parts_of_results as collect
 
 from eseas.data_for_testing.some_data import get_sample_data
 from eseas.core.utils_general2 import walk, walk2, sleep
+
+# Install global exception handler for comprehensive error logging
+try:
+    from eseas.core.error_logger import install_global_exception_handler
+    install_global_exception_handler()
+except Exception:
+    # Don't let exception handler installation break the import
+    pass
 
 if sys.platform == "win32":
     from eseas.core.refresh_excel import refresh

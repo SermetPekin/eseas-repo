@@ -14,6 +14,8 @@ Welcome to eseas's documentation!
    example
    advanced
    components
+   api_reference
+   logging
 
 Indices and tables
 ==================
