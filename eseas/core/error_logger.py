@@ -4,22 +4,19 @@ from pathlib import Path
 from datetime import datetime
 import traceback
 
-def setup_eseas_logger():
+def setup_eseas_logger(name="eseas_error_logger", filename="failed_runs.log", level=logging.ERROR):
     cwd = Path.cwd()
     eseas_dir = cwd / ".eseas"
     logs_dir = eseas_dir / ".logs"
     
-    # Create the necessary directories
     logs_dir.mkdir(parents=True, exist_ok=True)
     
-    # Dump a helpful example script to guide users if it doesn't already exist
     example_script = eseas_dir / "quick_start_example.py"
     if not example_script.exists():
         example_content = r"""# Auto-generated Quick Start Example for eseas
 from eseas import Options, Seasonal
 
 def main():
-    # Example utilizing auto_download for a completely smooth setup 
     options = Options(
         demetra_source_folder=r"C:\Data\your_demetra_xmls",
         local_folder=r"C:\Data\eseas_outputs", 
@@ -38,26 +35,23 @@ if __name__ == "__main__":
         except Exception:
             pass
 
-    # Dump a README for the .eseas directory explicitly
     readme_file = eseas_dir / "README.txt"
     if not readme_file.exists():
         readme_content = """This .eseas directory is automatically generated.
-It contains diagnostic logs in the .logs/ folder (e.g. failed_runs.log) to help you troubleshoot any crashes.
-A quick_start_example.py has also been provided for your convenience.
+It contains diagnostic logs in the .logs/ folder to help you troubleshoot.
 """
         try:
             readme_file.write_text(readme_content, encoding='utf-8')
         except Exception:
             pass
             
-    # Set up the logger
-    logger = logging.getLogger("eseas_error_logger")
+    logger = logging.getLogger(name)
     if not logger.handlers:
-        logger.setLevel(logging.ERROR)
+        logger.setLevel(level)
         
-        log_file = logs_dir / "failed_runs.log"
+        log_file = logs_dir / filename
         handler = logging.FileHandler(log_file, encoding='utf-8')
-        handler.setLevel(logging.ERROR)
+        handler.setLevel(level)
         
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         handler.setFormatter(formatter)
@@ -66,15 +60,34 @@ A quick_start_example.py has also been provided for your convenience.
         
     return logger
 
-def log_eseas_error(error_msg: str, options=None):
+def get_paths_info():
+    paths = {}
+    try:
+        from .cruncher_classes import get_cruncher
+        from .create_bat_command import get_demetra_type
+        
+        cruncher = get_cruncher()
+        ws = cruncher.local_work_space
+        paths["local_workspace"] = str(ws)
+        paths["general_params"] = str(Path(ws) / "general.params")
+        paths["execution_script"] = str(get_demetra_type().demetra_command_file_name())
+    except Exception:
+        paths["error"] = "Could not resolve workspace paths."
+        
+    return paths
+
+def log_eseas_run(status: str, error_msg: str=None, options=None):
     try:
         import importlib.metadata
         eseas_version = importlib.metadata.version('eseas')
     except Exception:
         eseas_version = "Unknown"
         
-    logger = setup_eseas_logger()
-    
+    if status == "success":
+        logger = setup_eseas_logger(name="eseas_success_logger", filename="last_good_run.log", level=logging.INFO)
+    else:
+        logger = setup_eseas_logger()
+        
     options_dict = {}
     if options:
         try:
@@ -85,12 +98,27 @@ def log_eseas_error(error_msg: str, options=None):
                 options_dict = {"repr": repr(options)}
         except Exception:
             options_dict = {"repr": "Could not parse options."}
-            
+
+    paths_info = get_paths_info()
+
     log_data = {
+        "status": status,
         "eseas_version": eseas_version,
-        "error": str(error_msg),
-        "options": options_dict
+        "options": options_dict,
+        "paths": paths_info
     }
     
-    logger.error(json.dumps(log_data, indent=2))
+    if error_msg:
+        log_data["error"] = str(error_msg)
+    
+    if status == "success":
+        logger.info(json.dumps(log_data, indent=2))
+    else:
+        logger.error(json.dumps(log_data, indent=2))
+
+def log_eseas_error(error_msg: str, options=None):
+    log_eseas_run("error", error_msg=error_msg, options=options)
+
+def log_eseas_success(options=None):
+    log_eseas_run("success", options=options)
 

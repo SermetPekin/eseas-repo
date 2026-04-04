@@ -66,11 +66,12 @@ class SeasonalADV:
 
     def run(self):
         """Run part1 and part2 sequentially without manual interruption"""
-        from .error_logger import log_eseas_error
+        from .error_logger import log_eseas_error, log_eseas_success
         import traceback
         try:
             self.part1()
             self.part2()
+            log_eseas_success(self.options)
         except Exception as e:
             error_msg = f"{str(e)}\n{traceback.format_exc()}"
             log_eseas_error(error_msg, self.options)
