@@ -31,6 +31,10 @@ class DemetraCaller(ABC):
     def cf(self):
         return get_cruncher().crunch_folder
 
+    @property
+    def ws(self):
+        return get_cruncher().local_work_space
+
     @abstractmethod
     def cruncher_command(self): ...
 
@@ -46,10 +50,10 @@ class DemetraCallerWindows(DemetraCaller):
         return rf'call "{self.cf}/jwsacruncher.bat"'
 
     def demetra_command_file_name(self):
-        return rf"{self.cf}/{demetra_command_file_name}.bat"
+        return rf"{self.ws}/{demetra_command_file_name}.bat"
 
     def exec_file_name(self, file_name):
-        return rf"{ self.cf }/{file_name}.bat"
+        return rf"{self.ws}/{file_name}.bat"
 
 
 @dataclass
@@ -58,10 +62,10 @@ class DemetraCallerLinux(DemetraCaller):
         return rf"{self.cf}/jwsacruncher"
 
     def demetra_command_file_name(self):
-        return rf"{ self.cf}/{demetra_command_file_name}.sh"
+        return rf"{self.ws}/{demetra_command_file_name}.sh"
 
     def exec_file_name(self, file_name):
-        return rf"{self.cf}/{file_name}.sh"
+        return rf"{self.ws}/{file_name}.sh"
 
 
 @dataclass
