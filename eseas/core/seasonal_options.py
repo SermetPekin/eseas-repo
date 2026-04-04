@@ -65,7 +65,7 @@ class SeasonalOptions:
         java_bin=None,
         auto_download=False,
         replace_general_params=False,
-        csvlayout="list",
+        csvlayout="vtable",
     ):
         try:
             self._init_impl(

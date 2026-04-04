@@ -35,4 +35,5 @@ def test_search_demetra_folder(capsys):
         fs2 = search_demetra_folder(demetra_folder, filter_xml)
         fs3 = filter_xml_demetra(fs2)
         print(fs3)
-        assert len(fs3) == 1
+        # Should find 3 workspace files: airpassengers.xml, multivariate.xml, multivariate_quarterly.xml
+        assert len(fs3) == 3

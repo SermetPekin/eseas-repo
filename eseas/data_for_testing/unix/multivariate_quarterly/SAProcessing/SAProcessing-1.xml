@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<informationSet xmlns="ec/tss.core">
+    <item name="metadata">
+        <subset>
+            <item name="timestamp">
+                <string>Apr 04, 2026 10:00:00 AM</string>
+            </item>
+        </subset>
+    </item>
+    <item name="sa1">
+        <subset>
+            <item name="ts">
+                <ts name="GDP">
+                    <freq>4</freq>
+                    <firstYear>1990</firstYear>
+                    <firstPeriod>1</firstPeriod>
+                    <data>5234.5 5356.8 5441.2 5543.7 5621.3 5693.4 5788.9 5876.5 5943.2 6034.7 6112.8 6198.4 6287.9 6365.2 6456.8 6532.1 6623.4 6701.9 6789.5 6881.2 6954.8 7043.5 7123.9 7218.6 7289.4 7378.2 7456.3 7545.9 7621.8 7712.4 7798.5 7889.3 7967.2 8056.8 8134.5 8223.9 8298.7 8387.2 8465.8 8556.4 8632.9 8721.5 8799.2 8889.8 8965.4 9054.9 9132.7 9223.5 9298.2 9387.8 9465.4 9556.9 9632.5 9721.4 9798.9 9889.7 9965.3 10054.8 10132.5 10223.9</data>
+                </ts>
+            </item>
+            <item name="domainspec">
+                <string>spec1</string>
+            </item>
+            <item name="estimationspec">
+                <subset>
+                    <item name="algorithm">
+                        <method version="0.1.0.0">
+                            <name>tramoseats</name>
+                            <family>Seasonal adjustment</family>
+                        </method>
+                    </item>
+                    <item name="tramo">
+                        <subset>
+                            <item name="algorithm">
+<method version="0.1.0.0">
+    <name>tramo</name>
+    <family>Modelling</family>
+</method>
+                            </item>
+                            <item name="transform">
+<subset>
+    <item name="function">
+        <string>Auto</string>
+    </item>
+</subset>
+                            </item>
+                            <item name="arima">
+<subset>
+    <item name="mu">
+        <param/>
+    </item>
+    <item name="theta">
+        <params>
+            <coef/>
+        </params>
+    </item>
+    <item name="btheta">
+        <params>
+            <coef/>
+        </params>
+    </item>
+</subset>
+                            </item>
+                            <item name="automdl">
+<subset>
+    <item name="enabled">
+        <boolean>true</boolean>
+    </item>
+</subset>
+                            </item>
+                            <item name="outlier">
+<subset>
+    <item name="types">
+        <strings>
+            <items>AO TC LS</items>
+        </strings>
+    </item>
+</subset>
+                            </item>
+                            <item name="regression">
+<subset>
+    <item name="calendar">
+        <subset>
+            <item name="td">
+                <subset>
+                    <item name="mauto">
+                        <string>FTest</string>
+                    </item>
+                    <item name="option">
+                        <string>TradingDays</string>
+                    </item>
+                    <item name="leapyear">
+                        <boolean>true</boolean>
+                    </item>
+                    <item name="testtype">
+                        <string>Separate_T</string>
+                    </item>
+                </subset>
+            </item>
+            <item name="easter">
+                <subset>
+                    <item name="type">
+                        <string>IncludeEaster</string>
+                    </item>
+                    <item name="test">
+                        <boolean>true</boolean>
+                    </item>
+                </subset>
+            </item>
+        </subset>
+    </item>
+</subset>
+                            </item>
+                        </subset>
+                    </item>
+                    <item name="benchmarking">
+                        <subset/>
+                    </item>
+                </subset>
+            </item>
+        </subset>
+    </item>
+    <item name="sa2">
+        <subset>
+            <item name="ts">
+                <ts name="Consumption">
+                    <freq>4</freq>
+                    <firstYear>1990</firstYear>
+                    <firstPeriod>1</firstPeriod>
+                    <data>3456.2 3521.8 3598.4 3654.3 3723.7 3789.2 3867.5 3921.8 3998.6 4067.3 4134.9 4203.8 4278.5 4345.2 4423.7 4489.4 4567.8 4632.5 4709.3 4778.9 4843.6 4921.8 4987.4 5065.9 5129.8 5207.3 5273.8 5352.4 5418.9 5497.5 5564.2 5643.7 5709.8 5788.4 5854.9 5933.7 5999.2 6078.8 6145.3 6224.9 6291.4 6370.8 6437.2 6516.9 6583.4 6662.7 6729.3 6808.9 6875.4 6954.8 7021.3 7100.9 7167.4 7246.8 7313.2 7392.9 7459.4 7538.7 7605.2 7684.9</data>
+                </ts>
+            </item>
+            <item name="domainspec">
+                <string>spec1</string>
+            </item>
+            <item name="estimationspec">
+                <subset>
+                    <item name="algorithm">
+                        <method version="0.1.0.0">
+                            <name>tramoseats</name>
+                            <family>Seasonal adjustment</family>
+                        </method>
+                    </item>
+                    <item name="tramo">
+                        <subset>
+                            <item name="algorithm">
+<method version="0.1.0.0">
+    <name>tramo</name>
+    <family>Modelling</family>
+</method>
+                            </item>
+                            <item name="transform">
+<subset>
+    <item name="function">
+        <string>Auto</string>
+    </item>
+</subset>
+                            </item>
+                            <item name="arima">
+<subset>
+    <item name="mu">
+        <param/>
+    </item>
+    <item name="theta">
+        <params>
+            <coef/>
+        </params>
+    </item>
+    <item name="btheta">
+        <params>
+            <coef/>
+        </params>
+    </item>
+</subset>
+                            </item>
+                            <item name="automdl">
+<subset>
+    <item name="enabled">
+        <boolean>true</boolean>
+    </item>
+</subset>
+                            </item>
+                            <item name="outlier">
+<subset>
+    <item name="types">
+        <strings>
+            <items>AO TC LS</items>
+        </strings>
+    </item>
+</subset>
+                            </item>
+                            <item name="regression">
+<subset>
+    <item name="calendar">
+        <subset>
+            <item name="td">
+                <subset>
+                    <item name="mauto">
+                        <string>FTest</string>
+                    </item>
+                    <item name="option">
+                        <string>TradingDays</string>
+                    </item>
+                    <item name="leapyear">
+                        <boolean>true</boolean>
+                    </item>
+                    <item name="testtype">
+                        <string>Separate_T</string>
+                    </item>
+                </subset>
+            </item>
+            <item name="easter">
+                <subset>
+                    <item name="type">
+                        <string>IncludeEaster</string>
+                    </item>
+                    <item name="test">
+                        <boolean>true</boolean>
+                    </item>
+                </subset>
+            </item>
+        </subset>
+    </item>
+</subset>
+                            </item>
+                        </subset>
+                    </item>
+                    <item name="benchmarking">
+                        <subset/>
+                    </item>
+                </subset>
+            </item>
+        </subset>
+    </item>
+    <item name="domainspecs">
+        <subset>
+            <item name="spec1">
+                <subset>
+                    <item name="algorithm">
+                        <method version="0.1.0.0">
+                            <name>tramoseats</name>
+                            <family>Seasonal adjustment</family>
+                        </method>
+                    </item>
+                    <item name="tramo">
+                        <subset>
+                            <item name="algorithm">
+<method version="0.1.0.0">
+    <name>tramo</name>
+    <family>Modelling</family>
+</method>
+                            </item>
+                            <item name="transform">
+<subset>
+    <item name="function">
+        <string>Auto</string>
+    </item>
+</subset>
+                            </item>
+                            <item name="arima">
+<subset>
+    <item name="mu">
+        <param/>
+    </item>
+    <item name="theta">
+        <params>
+            <coef/>
+        </params>
+    </item>
+    <item name="btheta">
+        <params>
+            <coef/>
+        </params>
+    </item>
+</subset>
+                            </item>
+                            <item name="automdl">
+<subset>
+    <item name="enabled">
+        <boolean>true</boolean>
+    </item>
+</subset>
+                            </item>
+                            <item name="outlier">
+<subset>
+    <item name="types">
+        <strings>
+            <items>AO TC LS</items>
+        </strings>
+    </item>
+</subset>
+                            </item>
+                            <item name="regression">
+<subset>
+    <item name="calendar">
+        <subset>
+            <item name="td">
+                <subset>
+                    <item name="mauto">
+                        <string>FTest</string>
+                    </item>
+                    <item name="option">
+                        <string>TradingDays</string>
+                    </item>
+                    <item name="leapyear">
+                        <boolean>true</boolean>
+                    </item>
+                    <item name="testtype">
+                        <string>Separate_T</string>
+                    </item>
+                </subset>
+            </item>
+            <item name="easter">
+                <subset>
+                    <item name="type">
+                        <string>IncludeEaster</string>
+                    </item>
+                    <item name="test">
+                        <boolean>true</boolean>
+                    </item>
+                </subset>
+            </item>
+        </subset>
+    </item>
+</subset>
+                            </item>
+                        </subset>
+                    </item>
+                    <item name="benchmarking">
+                        <subset/>
+                    </item>
+                </subset>
+            </item>
+        </subset>
+    </item>
+</informationSet>
