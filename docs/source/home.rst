@@ -14,6 +14,8 @@ Features
 
 Installation
 ------------
+**Note:** **eseas v2.0.0+ requires Python 3.10+**. If you are on Python 3.9 or older, pip will automatically download the last compatible 1.x version instead.
+
 You can install **eseas** using pip:
 
 .. code-block:: bash

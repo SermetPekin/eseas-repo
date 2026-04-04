@@ -26,7 +26,9 @@ You can install the `eseas` package via pip:
 pip install eseas -U
 ```
 
- 
+> **Note:** `eseas` **v2.0.0+ requires Python 3.10 or higher**. If you are installing via pip on Python 3.9 or older, pip will automatically download the last compatible `1.x` version without the v2.0.0 features.
+
+
 ## Prerequisites
 
 ### jwsacruncher
