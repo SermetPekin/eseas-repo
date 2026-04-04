@@ -4,7 +4,6 @@ import pytest
 import yaml
 from pathlib import Path
 from unittest.mock import patch, MagicMock, call
-from click.testing import CliRunner
 import sys
 
 # Import CLI functions
