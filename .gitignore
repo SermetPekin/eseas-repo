@@ -20,6 +20,7 @@ __pycache__/
 #!requirements.txt
 ABC/
 *_wspace/
+.claude/
 
 temp_test/
 .ruff_cache/
