@@ -40,7 +40,7 @@ def _create_general_params(folder=".", file_name="general.params", replace=False
 def get_general_params(csvlayout="list", refreshall=False):
     refreshall_str = "true" if refreshall else "false"
     return f"""<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<wsaConfig bundle="10000" csvlayout="{csvlayout}" csvseparator="," ndecs="6">
+<wsaConfig bundle="10000" csvlayout="{csvlayout}" csvseparator=";" ndecs="6">
     <policy>freeParameters</policy>
     <refreshall>{refreshall_str}</refreshall>
     <matrix>
