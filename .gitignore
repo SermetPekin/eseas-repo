@@ -19,6 +19,7 @@ __pycache__/
 *.txt
 #!requirements.txt
 ABC/
+*_wspace/
 
 fake_local*/
 
