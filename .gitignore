@@ -21,6 +21,8 @@ __pycache__/
 ABC/
 *_wspace/
 
+temp_test/
+
 fake_local*/
 
 eseas_config.yaml
