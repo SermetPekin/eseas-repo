@@ -1,9 +1,8 @@
 from pathlib import Path
 import os
-
 import pandas as pd
 
-from evdspy.EVDSlocal.common.file_classes import FileItem
+from evdspy.EVDSlocal.common.file_classes import FileItem , file_items_update
 
 # eseas
 from eseas.core.seasonal_options import SeasonalOptions as Options
@@ -41,7 +40,9 @@ class ResultCollector:
         if xml_folders is not None:
             return xml_folders
         files: list[FileItem] = get_xml_demetra(self.options.demetra_folder)
-        return [Path(x.file_name).stem for x in files]
+        files = file_items_update(files)
+        return [x.encoded_name for x in files ]
+
 
     def get_source_file(self, xml_folder: str, part: str) -> Path:
         return (
