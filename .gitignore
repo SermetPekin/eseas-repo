@@ -12,6 +12,7 @@ docs_md/
 
 !.envExample
 CHANGELOG.md
+wsacruncher.params
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

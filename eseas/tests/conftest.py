@@ -18,14 +18,11 @@
 # version of the EUPL published by the European Commission.
 
 import os
-import shutil
-import subprocess
 import urllib.request
 import zipfile
 from pathlib import Path
 import pytest
 import time
-
 
 CRUNCHER_VERSION = "2.2.5"
 CRUNCHER_URL = f"https://github.com/jdemetra/jwsacruncher/releases/download/v{CRUNCHER_VERSION}/jwsacruncher-{CRUNCHER_VERSION}-bin.zip"
@@ -49,17 +46,16 @@ def download_jwsacruncher():
     for attempt in range(MAX_RETRIES):
         try:
             print(f"Download attempt {attempt + 1}/{MAX_RETRIES}...")
-            
+
             # Create a custom request with a User-Agent header
             req = urllib.request.Request(
-                CRUNCHER_URL,
-                headers={'User-Agent': 'Mozilla/5.0'}
+                CRUNCHER_URL, headers={"User-Agent": "Mozilla/5.0"}
             )
-            
+
             with urllib.request.urlopen(req, timeout=60) as response:
-                with open(zip_file, 'wb') as out_file:
+                with open(zip_file, "wb") as out_file:
                     out_file.write(response.read())
-            
+
             print(f"Downloaded to {zip_file}")
 
             print(f"Extracting to {CRUNCHER_EXTRACT_PATH}...")
@@ -74,7 +70,7 @@ def download_jwsacruncher():
             print(f"Download attempt {attempt + 1} failed: {e}")
             if zip_file.exists():
                 zip_file.unlink()
-            
+
             if attempt < MAX_RETRIES - 1:
                 print(f"Waiting {RETRY_DELAY} seconds before retry...")
                 time.sleep(RETRY_DELAY)
@@ -90,10 +86,12 @@ def setup_cruncher():
     if os.environ.get("JAVA_CRUNCHER_BIN"):
         cruncher_bin = os.environ.get("JAVA_CRUNCHER_BIN")
         print(f"Using existing JAVA_CRUNCHER_BIN: {cruncher_bin}")
-        
+
         # Verify it exists
         if not Path(cruncher_bin).exists():
-            print(f"Warning: JAVA_CRUNCHER_BIN points to non-existent path: {cruncher_bin}")
+            print(
+                f"Warning: JAVA_CRUNCHER_BIN points to non-existent path: {cruncher_bin}"
+            )
         return
 
     # Try to download
@@ -102,7 +100,9 @@ def setup_cruncher():
         os.environ["JAVA_CRUNCHER_BIN"] = str(CRUNCHER_BIN_PATH)
         print(f"Set JAVA_CRUNCHER_BIN to {os.environ['JAVA_CRUNCHER_BIN']}")
     else:
-        print("WARNING: Could not download jwsacruncher. Tests requiring the cruncher will be skipped.")
+        print(
+            "WARNING: Could not download jwsacruncher. Tests requiring the cruncher will be skipped."
+        )
 
 
 def pytest_configure(config):
@@ -113,8 +113,10 @@ def pytest_configure(config):
             os.environ["JAVA_CRUNCHER_BIN"] = str(CRUNCHER_BIN_PATH)
             print(f"Set JAVA_CRUNCHER_BIN to {os.environ['JAVA_CRUNCHER_BIN']}")
         else:
-            print("WARNING: Could not download jwsacruncher. Tests requiring the cruncher will be skipped.")
-    
+            print(
+                "WARNING: Could not download jwsacruncher. Tests requiring the cruncher will be skipped."
+            )
+
     # Register custom markers
     config.addinivalue_line(
         "markers", "skip_if_no_cruncher: skip test if jwsacruncher is not available"
@@ -126,4 +128,3 @@ def pytest_runtest_setup(item):
     if item.get_closest_marker("skip_if_no_cruncher"):
         if not os.environ.get("JAVA_CRUNCHER_BIN"):
             pytest.skip("jwsacruncher not available (JAVA_CRUNCHER_BIN not set)")
-

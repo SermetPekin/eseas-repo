@@ -7,7 +7,10 @@ import sys
 import platform
 import os
 
-def setup_eseas_logger(name="eseas_error_logger", filename="failed_runs.log", level=logging.ERROR):
+
+def setup_eseas_logger(
+    name="eseas_error_logger", filename="failed_runs.log", level=logging.ERROR
+):
     """Setup logger with guaranteed directory creation"""
     cwd = Path.cwd()
     eseas_dir = cwd / ".eseas"
@@ -18,12 +21,13 @@ def setup_eseas_logger(name="eseas_error_logger", filename="failed_runs.log", le
     except Exception as e:
         # Fallback to temp directory if unable to create in cwd
         import tempfile
+
         eseas_dir = Path(tempfile.gettempdir()) / ".eseas"
         logs_dir = eseas_dir / ".logs"
         logs_dir.mkdir(parents=True, exist_ok=True)
         print(f"Warning: Using temporary directory for logs: {logs_dir}")
         print(f"Original error: {e}")
-    
+
     example_script = eseas_dir / "quick_start_example.py"
     if not example_script.exists():
         example_content = r"""from eseas import Options, Seasonal
@@ -43,7 +47,7 @@ if __name__ == "__main__":
     main()
 """
         try:
-            example_script.write_text(example_content, encoding='utf-8')
+            example_script.write_text(example_content, encoding="utf-8")
         except Exception:
             pass
 
@@ -53,24 +57,27 @@ if __name__ == "__main__":
 It contains diagnostic logs in the .logs/ folder to assist with troubleshooting.
 """
         try:
-            readme_file.write_text(readme_content, encoding='utf-8')
+            readme_file.write_text(readme_content, encoding="utf-8")
         except Exception:
             pass
-            
+
     logger = logging.getLogger(name)
     if not logger.handlers:
         logger.setLevel(level)
-        
+
         log_file = logs_dir / filename
-        handler = logging.FileHandler(log_file, encoding='utf-8')
+        handler = logging.FileHandler(log_file, encoding="utf-8")
         handler.setLevel(level)
-        
-        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+        formatter = logging.Formatter(
+            "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        )
         handler.setFormatter(formatter)
-        
+
         logger.addHandler(handler)
-        
+
     return logger
+
 
 def get_system_info():
     """Get comprehensive system information"""
@@ -86,9 +93,14 @@ def get_system_info():
         # Check Java availability
         try:
             import subprocess
-            result = subprocess.run(["java", "-version"], capture_output=True, text=True, timeout=5)
+
+            result = subprocess.run(
+                ["java", "-version"], capture_output=True, text=True, timeout=5
+            )
             info["java_available"] = True
-            info["java_version"] = result.stderr.split('\n')[0] if result.stderr else "unknown"
+            info["java_version"] = (
+                result.stderr.split("\n")[0] if result.stderr else "unknown"
+            )
         except Exception:
             info["java_available"] = False
             info["java_version"] = "not found"
@@ -97,6 +109,7 @@ def get_system_info():
         info["error"] = f"Could not gather system info: {e}"
 
     return info
+
 
 def get_paths_info():
     """Get workspace and execution paths"""
@@ -118,7 +131,9 @@ def get_paths_info():
         paths["cruncher_folder_exists"] = Path(cruncher.crunch_folder).exists()
 
         try:
-            paths["execution_script"] = str(get_demetra_type().demetra_command_file_name())
+            paths["execution_script"] = str(
+                get_demetra_type().demetra_command_file_name()
+            )
         except Exception:
             paths["execution_script"] = "Could not resolve"
 
@@ -139,11 +154,13 @@ def get_paths_info():
 
     return paths
 
+
 def get_processing_stats():
     """Get statistics about what was processed"""
     stats = {}
     try:
         from .cruncher_classes import get_cruncher
+
         cruncher = get_cruncher()
         ws = Path(cruncher.local_work_space)
 
@@ -151,7 +168,9 @@ def get_processing_stats():
         if Path(cruncher.demetra_folder).exists():
             xml_files = list(Path(cruncher.demetra_folder).rglob("*.xml"))
             stats["xml_files_found"] = len(xml_files)
-            stats["xml_file_list"] = [str(f.name) for f in xml_files[:20]]  # Limit to first 20
+            stats["xml_file_list"] = [
+                str(f.name) for f in xml_files[:20]
+            ]  # Limit to first 20
 
         # Count output files
         if ws.exists():
@@ -167,7 +186,10 @@ def get_processing_stats():
 
     return stats
 
-def log_eseas_run(status: str, error_msg: str=None, options=None, execution_time: float=None):
+
+def log_eseas_run(
+    status: str, error_msg: str = None, options=None, execution_time: float = None
+):
     """
     Comprehensive logging for eseas runs
 
@@ -181,17 +203,23 @@ def log_eseas_run(status: str, error_msg: str=None, options=None, execution_time
         # Get version
         try:
             from .. import __version__
+
             eseas_version = __version__
         except ImportError:
             try:
                 import importlib.metadata
-                eseas_version = importlib.metadata.version('eseas')
+
+                eseas_version = importlib.metadata.version("eseas")
             except Exception:
                 eseas_version = "Unknown"
 
         # Setup logger
         if status == "success":
-            logger = setup_eseas_logger(name="eseas_success_logger", filename="last_good_run.log", level=logging.INFO)
+            logger = setup_eseas_logger(
+                name="eseas_success_logger",
+                filename="last_good_run.log",
+                level=logging.INFO,
+            )
         else:
             logger = setup_eseas_logger()
 
@@ -217,18 +245,17 @@ def log_eseas_run(status: str, error_msg: str=None, options=None, execution_time
             "status": status,
             "eseas_version": eseas_version,
             "timestamp": datetime.now().isoformat(),
-            "execution_time_seconds": execution_time if execution_time else "not_measured",
+            "execution_time_seconds": (
+                execution_time if execution_time else "not_measured"
+            ),
             "system": system_info,
             "options": options_dict,
             "paths": paths_info,
-            "processing_stats": stats
+            "processing_stats": stats,
         }
 
         if error_msg:
-            log_data["error"] = {
-                "message": str(error_msg),
-                "type": "runtime_error"
-            }
+            log_data["error"] = {"message": str(error_msg), "type": "runtime_error"}
 
         # Log with appropriate level
         if status == "success":
@@ -253,20 +280,25 @@ def log_eseas_run(status: str, error_msg: str=None, options=None, execution_time
                 f.write(f"{'='*80}\n")
         except Exception:
             # Absolute last resort - print to stderr
-            print(f"CRITICAL: All logging mechanisms failed!", file=sys.stderr)
+            print("CRITICAL: All logging mechanisms failed!", file=sys.stderr)
             print(f"Error: {e}", file=sys.stderr)
             if error_msg:
                 print(f"Original error: {error_msg}", file=sys.stderr)
 
         return False
 
-def log_eseas_error(error_msg: str, options=None, execution_time: float=None):
-    """Log an error with comprehensive diagnostics"""
-    log_eseas_run("error", error_msg=error_msg, options=options, execution_time=execution_time)
 
-def log_eseas_success(options=None, execution_time: float=None):
+def log_eseas_error(error_msg: str, options=None, execution_time: float = None):
+    """Log an error with comprehensive diagnostics"""
+    log_eseas_run(
+        "error", error_msg=error_msg, options=options, execution_time=execution_time
+    )
+
+
+def log_eseas_success(options=None, execution_time: float = None):
     """Log a successful run with statistics"""
     log_eseas_run("success", options=options, execution_time=execution_time)
+
 
 def ensure_log_on_exception(func):
     """
@@ -278,14 +310,16 @@ def ensure_log_on_exception(func):
         def some_function(self):
             # your code
     """
+
     def wrapper(*args, **kwargs):
         import time
+
         start_time = time.time()
         options = None
 
         # Try to extract options from args
         try:
-            if args and hasattr(args[0], 'options'):
+            if args and hasattr(args[0], "options"):
                 options = args[0].options
         except Exception:
             pass
@@ -302,6 +336,7 @@ def ensure_log_on_exception(func):
 
     return wrapper
 
+
 def install_global_exception_handler():
     """
     Install a global exception handler to catch any uncaught exceptions
@@ -313,7 +348,7 @@ def install_global_exception_handler():
         """Custom exception hook that logs uncaught exceptions"""
         # Format the exception
         error_lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
-        error_msg = ''.join(error_lines)
+        error_msg = "".join(error_lines)
 
         # Try to log it
         try:
@@ -335,4 +370,3 @@ def install_global_exception_handler():
         original_excepthook(exc_type, exc_value, exc_traceback)
 
     sys.excepthook = eseas_excepthook
-

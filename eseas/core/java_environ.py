@@ -25,7 +25,6 @@ import subprocess
 from pathlib import Path
 
 
-
 def check_java_version():
     JAVA_EXEC_PATH = "/usr/bin/java"
     os.system(f"{JAVA_EXEC_PATH} -version")
@@ -33,7 +32,6 @@ def check_java_version():
 
 def get_os():
     return str(platform.system()).lower()
-
 
 
 @dataclass
@@ -139,9 +137,7 @@ class JavaEnviron:
             bool_ = active_java_folder == p
             liste.append((bool_, p))
 
-        self.show_folders(
-            potential_java_folders, "Current Java executables in PATH:"
-        )
+        self.show_folders(potential_java_folders, "Current Java executables in PATH:")
 
         self.sleep(2)
         return potential_java_folders

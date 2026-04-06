@@ -2,7 +2,7 @@ from pathlib import Path
 import os
 import pandas as pd
 
-from evdspy.EVDSlocal.common.file_classes import FileItem , file_items_update
+from evdspy.EVDSlocal.common.file_classes import FileItem, file_items_update
 
 # eseas
 from eseas.core.seasonal_options import SeasonalOptions as Options
@@ -23,6 +23,7 @@ class ResultCollector:
     """
     Collects seasonality result parts (sa, s, cal, etc.) and compiles them into Excel resources.
     """
+
     def __init__(
         self,
         options: Options,
@@ -41,8 +42,7 @@ class ResultCollector:
             return xml_folders
         files: list[FileItem] = get_xml_demetra(self.options.demetra_folder)
         files = file_items_update(files)
-        return [x.encoded_name for x in files ]
-
+        return [x.encoded_name for x in files]
 
     def get_source_file(self, xml_folder: str, part: str) -> Path:
         return (
@@ -86,6 +86,7 @@ class ResultCollector:
                 sheets_data[part] = self.load_sheet(source_file)
             except Exception:
                 import traceback
+
                 traceback.print_exc()
                 print(f"passing collecting {part} from {source_file}")
 

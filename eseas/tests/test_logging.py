@@ -35,13 +35,16 @@ def test_success_log_format():
 
     # Split by the log timestamp pattern to get individual log entries
     import re
-    entries = re.split(r'\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3} - \w+ - INFO - ', log_content)
+
+    entries = re.split(
+        r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3} - \w+ - INFO - ", log_content
+    )
 
     # Get the last non-empty entry
     last_json = None
     for entry in reversed(entries):
         entry = entry.strip()
-        if entry and entry.startswith('{'):
+        if entry and entry.startswith("{"):
             try:
                 last_json = json.loads(entry)
                 break
@@ -90,7 +93,7 @@ def test_error_log_creation():
         options = Options(
             demetra_folder="nonexistent_folder_xyz123",
             java_folder="/usr/bin",
-            local_folder="./temp_test"
+            local_folder="./temp_test",
         )
         m = Seasonal(options)
         m.run()

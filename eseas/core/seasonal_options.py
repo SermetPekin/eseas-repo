@@ -87,6 +87,7 @@ class SeasonalOptions:
         except Exception as e:
             from .error_logger import log_eseas_error
             import traceback
+
             error_msg = f"{str(e)}\n{traceback.format_exc()}"
             # We don't have the fully constructed options object, but we can pass the locals
             opts_dict = {
@@ -105,15 +106,18 @@ class SeasonalOptions:
                 "replace_general_params": replace_general_params,
                 "csvlayout": csvlayout,
             }
+
             class OptsWrapper:
                 def __init__(self, d):
                     for k, v in d.items():
                         setattr(self, k, v)
+
             log_eseas_error(error_msg, OptsWrapper(opts_dict))
             raise
         else:
             # Also set up the .eseas directory to provide examples even if no crash occurs
             from .error_logger import setup_eseas_logger
+
             try:
                 setup_eseas_logger()
             except Exception:
@@ -140,12 +144,17 @@ class SeasonalOptions:
         replace_general_params=False,
         csvlayout="list",
     ):
-        
+
         # If auto_download is True, automatically fetch the cruncher directly to java_folder
         if auto_download:
             from .download_tools import download_jwsacruncher
             import pathlib
-            target_path = pathlib.Path(java_folder) if java_folder else pathlib.Path.home() / ".eseas"
+
+            target_path = (
+                pathlib.Path(java_folder)
+                if java_folder
+                else pathlib.Path.home() / ".eseas"
+            )
             java_folder = str(download_jwsacruncher(target_path))
 
         self.demetra_folder = DemetraFolder(demetra_folder)

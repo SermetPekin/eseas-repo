@@ -21,15 +21,24 @@ from pathlib import Path
 from evdspy.EVDSlocal.common.files import Write
 
 
-def _create_general_params(folder=".", file_name="general.params", replace=False, auto_approve=True, csvlayout="list", refreshall=False):
+def _create_general_params(
+    folder=".",
+    file_name="general.params",
+    replace=False,
+    auto_approve=True,
+    csvlayout="list",
+    refreshall=False,
+):
     file_name_full = Path(folder) / file_name
 
     if file_name_full.is_file() and not replace:
         return
 
     if file_name_full.is_file() and replace and not auto_approve:
-        ans = input(f"\nDo you want to replace the existing '{file_name}' parameter file inside the workspace? (y/n) : ")
-        if ans.lower().strip() not in ('y', 'yes'):
+        ans = input(
+            f"\nDo you want to replace the existing '{file_name}' parameter file inside the workspace? (y/n) : "
+        )
+        if ans.lower().strip() not in ("y", "yes"):
             print("Skipping replacement. Using existing general.params.")
             return
 

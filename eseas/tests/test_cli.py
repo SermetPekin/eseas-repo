@@ -3,8 +3,7 @@
 import pytest
 import yaml
 from pathlib import Path
-from unittest.mock import patch, MagicMock, call
-import sys
+from unittest.mock import patch, MagicMock
 
 # Import CLI functions
 from eseas.cli.main import (
@@ -183,7 +182,7 @@ class TestCmdDoctor:
         # Mock Java check
         mock_result = MagicMock()
         mock_result.returncode = 0
-        mock_result.stderr = "java version \"11.0.25\""
+        mock_result.stderr = 'java version "11.0.25"'
         mock_run.return_value = mock_result
 
         # Mock config path
@@ -214,6 +213,7 @@ class TestCmdLogs:
         """Test logs when no logs directory exists"""
         # Change to temp directory
         import os
+
         orig_cwd = os.getcwd()
         try:
             os.chdir(tmp_path)
@@ -235,6 +235,7 @@ class TestCmdLogs:
         log_file.write_text("Test log content\nLine 2\nLine 3")
 
         import os
+
         orig_cwd = os.getcwd()
         try:
             os.chdir(tmp_path)
@@ -255,6 +256,7 @@ class TestCmdLogs:
         log_file.write_text("Error log content")
 
         import os
+
         orig_cwd = os.getcwd()
         try:
             os.chdir(tmp_path)
@@ -275,6 +277,7 @@ class TestCmdLogs:
         (logs_dir / "failed_runs.log").write_text("errors")
 
         import os
+
         orig_cwd = os.getcwd()
         try:
             os.chdir(tmp_path)
@@ -294,6 +297,7 @@ class TestCmdConfig:
     def test_config_show_no_file(self, tmp_path):
         """Test showing config when no file exists"""
         import os
+
         orig_cwd = os.getcwd()
         try:
             os.chdir(tmp_path)
@@ -314,6 +318,7 @@ class TestCmdConfig:
         save_config(config, config_path)
 
         import os
+
         orig_cwd = os.getcwd()
         try:
             os.chdir(tmp_path)
@@ -329,6 +334,7 @@ class TestCmdConfig:
     def test_config_set_value(self, tmp_path):
         """Test setting a config value"""
         import os
+
         orig_cwd = os.getcwd()
         try:
             os.chdir(tmp_path)
@@ -352,6 +358,7 @@ class TestCmdConfig:
     def test_config_set_list_value(self, tmp_path):
         """Test setting a list value"""
         import os
+
         orig_cwd = os.getcwd()
         try:
             os.chdir(tmp_path)
@@ -373,6 +380,7 @@ class TestCmdConfig:
     def test_config_set_boolean_values(self, tmp_path):
         """Test setting boolean values with different representations"""
         import os
+
         orig_cwd = os.getcwd()
         try:
             os.chdir(tmp_path)
@@ -415,6 +423,7 @@ class TestCmdConfig:
         workspace.mkdir()
 
         import os
+
         orig_cwd = os.getcwd()
         try:
             os.chdir(tmp_path)
@@ -440,6 +449,7 @@ class TestCmdConfig:
         config_path.write_text("existing: config")
 
         import os
+
         orig_cwd = os.getcwd()
         try:
             os.chdir(tmp_path)
@@ -464,6 +474,7 @@ class TestCmdConfig:
         config_path.write_text("existing: config")
 
         import os
+
         orig_cwd = os.getcwd()
         try:
             os.chdir(tmp_path)
@@ -495,6 +506,7 @@ class TestCmdRun:
         workspace.mkdir()
 
         import os
+
         orig_cwd = os.getcwd()
         try:
             os.chdir(tmp_path)
@@ -533,6 +545,7 @@ class TestCmdRun:
         save_config(config, config_path)
 
         import os
+
         orig_cwd = os.getcwd()
         try:
             os.chdir(tmp_path)
@@ -556,6 +569,7 @@ class TestCmdRun:
     def test_run_no_workspace_no_config(self, tmp_path):
         """Test run without workspace and without config"""
         import os
+
         orig_cwd = os.getcwd()
         try:
             os.chdir(tmp_path)
@@ -586,6 +600,7 @@ class TestCmdRun:
         save_config(config, config_path)
 
         import os
+
         orig_cwd = os.getcwd()
         try:
             os.chdir(tmp_path)
@@ -622,6 +637,7 @@ class TestCmdRun:
         save_config(config, custom_config)
 
         import os
+
         orig_cwd = os.getcwd()
         try:
             os.chdir(tmp_path)
@@ -645,6 +661,7 @@ class TestCmdRun:
     def test_run_nonexistent_custom_config(self, tmp_path):
         """Test run with non-existent custom config file"""
         import os
+
         orig_cwd = os.getcwd()
         try:
             os.chdir(tmp_path)
@@ -739,6 +756,7 @@ class TestConfigEdgeCases:
     def test_config_set_without_key_value(self, tmp_path):
         """Test config set without key or value"""
         import os
+
         orig_cwd = os.getcwd()
         try:
             os.chdir(tmp_path)
@@ -760,13 +778,16 @@ class TestIntegration:
 
     @patch("eseas.Seasonal")
     @patch("eseas.Options")
-    def test_full_workflow_first_run_then_rerun(self, mock_options, mock_seasonal, tmp_path):
+    def test_full_workflow_first_run_then_rerun(
+        self, mock_options, mock_seasonal, tmp_path
+    ):
         """Test complete workflow: first run, then subsequent run"""
         workspace = tmp_path / "workspace"
         workspace.mkdir()
         (workspace / "test.xml").touch()
 
         import os
+
         orig_cwd = os.getcwd()
         try:
             os.chdir(tmp_path)
@@ -817,6 +838,7 @@ class TestIntegration:
 
         # Then config init
         import os
+
         orig_cwd = os.getcwd()
         try:
             os.chdir(tmp_path)

@@ -3,7 +3,7 @@
 import pytest
 import sys
 from pathlib import Path
-from unittest.mock import patch, MagicMock, call
+from unittest.mock import patch, MagicMock
 from eseas.core.refresh_excel import (
     ask_permission,
     excel_running,
@@ -343,7 +343,9 @@ class TestRefreshFunction:
 
     @patch("eseas.core.refresh_excel.pythoncom")
     @patch("eseas.core.refresh_excel.check_and_get_files")
-    def test_refresh_function_with_excel_app(self, mock_check_files, mock_com, tmp_path):
+    def test_refresh_function_with_excel_app(
+        self, mock_check_files, mock_com, tmp_path
+    ):
         """Test refresh function with existing excel_app"""
         import eseas.core.refresh_excel as refresh_module
 

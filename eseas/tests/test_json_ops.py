@@ -1,9 +1,7 @@
 """Tests for eseas.core.json_ops module"""
 
 import json
-import pytest
-from pathlib import Path
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 from eseas.core.json_ops import (
     dict_apply,
     remove_json_bad_chars,

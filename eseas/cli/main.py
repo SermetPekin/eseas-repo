@@ -161,7 +161,9 @@ Next time, simply run: [yellow]eseas run[/yellow]""",
             auto_approve=config.get("auto_approve", False),
             csvlayout=config.get("csvlayout", "vtable"),
             workspace_mode=config.get("workspace_mode", True),
-            result_file_names=tuple(config.get("result_file_names", ["sa", "s", "cal"])),
+            result_file_names=tuple(
+                config.get("result_file_names", ["sa", "s", "cal"])
+            ),
             verbose=config.get("verbose", False),
             test=config.get("test", False),
             replace_general_params=config.get("replace_general_params", False),
@@ -173,10 +175,12 @@ Next time, simply run: [yellow]eseas run[/yellow]""",
         m.run()
 
         console.print()
-        console.print(Panel.fit(
-            "[green]✓ Seasonal adjustment completed successfully![/green]",
-            border_style="green",
-        ))
+        console.print(
+            Panel.fit(
+                "[green]✓ Seasonal adjustment completed successfully![/green]",
+                border_style="green",
+            )
+        )
 
     except Exception as e:
         console.print(f"\n[red]Error during execution: {e}[/red]")
@@ -191,7 +195,9 @@ def cmd_config(args):
     if args.action == "show":
         # Show current configuration
         if not config_path.exists():
-            console.print(f"[yellow]No configuration file found at {config_path}[/yellow]")
+            console.print(
+                f"[yellow]No configuration file found at {config_path}[/yellow]"
+            )
             console.print("[cyan]Run 'eseas run <workspace>' to create one.[/cyan]")
             return
 
@@ -239,7 +245,6 @@ def cmd_config(args):
 
 def cmd_validate(args):
     """Validate workspace and configuration"""
-    from eseas.core.folder_class import FolderClass
 
     workspace_path = Path(args.workspace)
 
@@ -250,18 +255,18 @@ def cmd_validate(args):
     if not workspace_path.exists():
         console.print(f"[red]✗ Path does not exist: {workspace_path}[/red]")
         sys.exit(1)
-    console.print(f"[green]✓[/green] Path exists")
+    console.print("[green]✓[/green] Path exists")
 
     # Check if it's a directory
     if not workspace_path.is_dir():
-        console.print(f"[red]✗ Path is not a directory[/red]")
+        console.print("[red]✗ Path is not a directory[/red]")
         sys.exit(1)
-    console.print(f"[green]✓[/green] Path is a directory")
+    console.print("[green]✓[/green] Path is a directory")
 
     # Check for XML files
     xml_files = list(workspace_path.rglob("*.xml"))
     if not xml_files:
-        console.print(f"[yellow]⚠[/yellow] No XML files found")
+        console.print("[yellow]⚠[/yellow] No XML files found")
     else:
         console.print(f"[green]✓[/green] Found {len(xml_files)} XML file(s)")
         for xml_file in xml_files[:5]:  # Show first 5
@@ -313,7 +318,7 @@ def cmd_doctor(args):
     if config_path.exists():
         console.print(f"[green]✓[/green] Config: {config_path}")
     else:
-        console.print(f"[yellow]⚠[/yellow] No config file found")
+        console.print("[yellow]⚠[/yellow] No config file found")
         console.print("  [dim]Run 'eseas run <workspace>' to create one[/dim]")
 
     # Logs directory
@@ -376,7 +381,8 @@ def main():
         from eseas import __version__
     except ImportError:
         import importlib.metadata
-        __version__ = importlib.metadata.version('eseas')
+
+        __version__ = importlib.metadata.version("eseas")
 
     parser = argparse.ArgumentParser(
         description="eseas - Seasonal adjustment tool CLI",
@@ -413,9 +419,7 @@ Examples:
     )
 
     parser.add_argument(
-        '--version', '-V',
-        action='version',
-        version=f'eseas {__version__}'
+        "--version", "-V", action="version", version=f"eseas {__version__}"
     )
 
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
@@ -430,9 +434,15 @@ Examples:
         "--demetra-folder", help="Path to Demetra workspace (alternative to positional)"
     )
     run_parser.add_argument("--output", "-o", help="Output directory")
-    run_parser.add_argument("--verbose", "-v", action="store_true", help="Verbose output")
-    run_parser.add_argument("--test", "-t", action="store_true", help="Test mode (limit files)")
-    run_parser.add_argument("--csvlayout", choices=["vtable", "list"], help="CSV layout format")
+    run_parser.add_argument(
+        "--verbose", "-v", action="store_true", help="Verbose output"
+    )
+    run_parser.add_argument(
+        "--test", "-t", action="store_true", help="Test mode (limit files)"
+    )
+    run_parser.add_argument(
+        "--csvlayout", choices=["vtable", "list"], help="CSV layout format"
+    )
     run_parser.set_defaults(func=cmd_run)
 
     # Config command
@@ -444,7 +454,9 @@ Examples:
     config_parser.add_argument("--value", help="Configuration value to set")
     config_parser.add_argument("--workspace", help="Workspace path for init")
     config_parser.add_argument("--config", "-c", help="Config file path")
-    config_parser.add_argument("--force", action="store_true", help="Force overwrite for init")
+    config_parser.add_argument(
+        "--force", action="store_true", help="Force overwrite for init"
+    )
     config_parser.set_defaults(func=cmd_config)
 
     # Validate command

@@ -21,7 +21,6 @@
 import typing as t
 from pathlib import Path
 import os
-import random
 from typing import Union, Iterable
 
 
@@ -189,7 +188,7 @@ def display(some_files: Iterable[FileItem], max_num=10):
         files_str.strip(),
         title=f"Number of files found : {num_files}",
         expand=False,
-        style="on #1e1e1e"  # simple dark background
+        style="on #1e1e1e",  # simple dark background
     )
     console.print(panel)
 

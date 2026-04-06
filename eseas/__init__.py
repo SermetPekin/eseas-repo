@@ -36,6 +36,7 @@ from eseas.core.utils_general2 import walk, walk2, sleep
 # Install global exception handler for comprehensive error logging
 try:
     from eseas.core.error_logger import install_global_exception_handler
+
     install_global_exception_handler()
 except Exception:
     # Don't let exception handler installation break the import
@@ -58,7 +59,7 @@ __all__ = [
     "Path",
     "refresh",
     "sleep",
-    "collect"
+    "collect",
 ]
 
-__version__ = '2.0.0'
+__version__ = "2.0.0"

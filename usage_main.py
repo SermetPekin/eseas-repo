@@ -1,5 +1,4 @@
 from eseas import Seasonal, Options
-import time
 
 
 def main():

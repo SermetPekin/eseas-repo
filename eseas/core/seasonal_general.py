@@ -31,7 +31,6 @@ from evdspy.EVDSlocal.common.files import Write
 from .seasonal_adv_utils import (
     get_input_from_user,
     common_space_msg,
-    display,
 )
 
 from ._options import demetra_command_file_name
@@ -68,6 +67,7 @@ class SeasonalADV:
         """Run part1 and part2 sequentially without manual interruption"""
         from .error_logger import log_eseas_error, log_eseas_success
         import traceback
+
         start_time = time.time()
         try:
             self.part1()

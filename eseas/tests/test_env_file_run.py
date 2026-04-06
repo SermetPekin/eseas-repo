@@ -18,7 +18,6 @@
 # version of the EUPL published by the European Commission.
 
 
-
 from eseas import Seasonal
 from eseas import Options
 from eseas.core.seas_testing_utils import get_testing_utils

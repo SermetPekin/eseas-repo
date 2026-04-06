@@ -18,7 +18,6 @@
 # version of the EUPL published by the European Commission.
 
 
-
 from eseas.core.java_environ import JavaEnviron
 
 import os

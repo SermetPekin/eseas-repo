@@ -27,7 +27,6 @@ from eseas import Options
 from eseas.core.df_operations import make_df_float
 from eseas.core.cruncher_classes import get_cruncher
 from eseas.core.cruncher_classes import Cruncher
-from eseas.core.demetra import get_demetra_files
 from eseas.core.seas_testing_utils import get_testing_utils
 from eseas.core.seas_utils import filter_xls
 from eseas.core.df_operations import get_rand_hash
@@ -158,12 +157,11 @@ def test_seasonal_general_javabin_none():
 
 @skip_if_no_cruncher
 def test_seasonal_general_run(tmp_path):
-    import pathlib
-    
+
     # We create a temporary empty output folder for parsing
     temp_local_folder = tmp_path / "temp_output"
     temp_local_folder.mkdir()
-    
+
     options = Options(
         demetra_folder,
         java_folder,
@@ -180,18 +178,23 @@ def test_seasonal_general_run(tmp_path):
         java_bin=None,
         replace_general_params=True,
         auto_approve=True,
-        csvlayout="vtable"
+        csvlayout="vtable",
     )
-    
+
     m = Seasonal(options)
     m.run()
-    
+
     # Verify exactly that the final collected result exists and was created *during* this test
     # The output is placed in {local_folder}/test_output/airpassengers/combined.xlsx
-    expected_output = temp_local_folder / "test_output" / "airpassengers" / "combined.xlsx"
-    assert expected_output.exists(), "The combined output was not generated in the new run!"
-    
+    expected_output = (
+        temp_local_folder / "test_output" / "airpassengers" / "combined.xlsx"
+    )
+    assert (
+        expected_output.exists()
+    ), "The combined output was not generated in the new run!"
+
     import pandas as pd
+
     df = pd.read_excel(expected_output)
     assert len(df) > 10, f"Expected more than 10 rows in combined.xlsx, got {len(df)}"
 
@@ -240,7 +243,6 @@ def test_seasonal_general_with_javabin():
     m = Seasonal(options)
     m.part1()
     m.part2()
-
 
 
 @skip_if_no_cruncher
