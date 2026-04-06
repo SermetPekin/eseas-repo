@@ -22,6 +22,7 @@ ABC/
 *_wspace/
 
 temp_test/
+.ruff_cache/
 
 fake_local*/
 
