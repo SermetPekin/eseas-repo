@@ -30,7 +30,10 @@ from eseas.core.cruncher_classes import Cruncher
 from eseas.core.seas_testing_utils import get_testing_utils
 from eseas.core.seas_utils import filter_xls
 from eseas.core.df_operations import get_rand_hash
-from eseas.tests.test_utils import skip_if_no_cruncher
+from eseas.tests.test_utils import skip_if_no_cruncher, skip_if_windows
+
+
+
 
 # from .test_utils import skip_if_github
 
@@ -221,7 +224,7 @@ def test_seasonal_general_javabin_none_new_folder():
     m.part1()
     m.part2()
 
-
+@skip_if_windows
 @skip_if_no_cruncher
 def test_seasonal_general_with_javabin():
     options = Options(
@@ -244,7 +247,7 @@ def test_seasonal_general_with_javabin():
     m.part1()
     m.part2()
 
-
+@skip_if_windows
 @skip_if_no_cruncher
 def test_seasonal_general_with_wrong_javabin():
     with pytest.raises(ValueError):
