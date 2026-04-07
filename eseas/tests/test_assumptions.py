@@ -9,7 +9,7 @@ from eseas.core.demetra_caller import (
     DemetraCallerMac,
 )
 from eseas import Options
-from eseas.tests.test_utils import skip_if_no_cruncher
+from eseas.tests.test_utils import skip_if_no_cruncher, skip_if_windows
 
 
 def test_executable_quoting(tmp_path):
@@ -87,6 +87,8 @@ def test_hardcoded_jwsacruncher_direct_call():
         pytest.fail(f"jwsacruncher failed to execute directly via OS: {e}")
 
 
+
+@skip_if_windows
 def test_xml_url_encoding(tmp_path):
     """
     Ensure the path injected into XML is correctly URL encoded as required by JDemetra's tsprovider.
