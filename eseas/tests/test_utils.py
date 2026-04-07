@@ -53,3 +53,9 @@ skip_if_unix = pytest.mark.skipif(
     is_unix(),
     reason="Skipping on Unix systems (macOS/Linux) - Windows-only features",
 )
+
+
+skip_if_windows = pytest.mark.skipif(
+    not is_unix(),
+    reason="Skipping on Unix systems (macOS/Linux) - Windows-only features",
+)
