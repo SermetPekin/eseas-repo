@@ -14,14 +14,14 @@ Here’s an example demonstrating how to use **eseas**:
 
     def main():
         # Folder containing your Demetra XML workspace files
-        demetra_folder = r"C:\Data\demetra_source_folder"
+        demetra_folder = r"C:\Data\demetra_folder"
 
         # Your destination folder for the generated Excel files
         local_folder = r"C:\Data\test_out"
 
         # Initialize options focusing on simplicity and auto-downloading the engine
         options = Options(
-            demetra_folder=demetra_source_folder,
+            demetra_folder=demetra_folder,
             local_folder=local_folder,
             result_file_names=("sa", "s_f", "cal"),
             workspace_mode=True,
