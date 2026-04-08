@@ -66,6 +66,7 @@ class SeasonalOptions:
         auto_download=False,
         replace_general_params=False,
         csvlayout="vtable",
+        general_params_path=None,
     ):
         try:
             self._init_impl(
@@ -83,6 +84,7 @@ class SeasonalOptions:
                 auto_download=auto_download,
                 replace_general_params=replace_general_params,
                 csvlayout=csvlayout,
+                general_params_path=general_params_path,
             )
         except Exception as e:
             from .error_logger import log_eseas_error
@@ -105,6 +107,7 @@ class SeasonalOptions:
                 "auto_download": auto_download,
                 "replace_general_params": replace_general_params,
                 "csvlayout": csvlayout,
+                "general_params_path": general_params_path,
             }
 
             class OptsWrapper:
@@ -143,6 +146,7 @@ class SeasonalOptions:
         auto_download=False,
         replace_general_params=False,
         csvlayout="list",
+        general_params_path=None,
     ):
 
         # If auto_download is True, automatically fetch the cruncher directly to java_folder
@@ -176,6 +180,9 @@ class SeasonalOptions:
         self.file_name_explanation = file_name_explanation
         self.replace_general_params = replace_general_params
         self.csvlayout = csvlayout
+        
+        import pathlib
+        self.general_params_path = general_params_path if general_params_path else str(pathlib.Path.cwd() / "general.params")
 
         self.set_options(workspace_mode)
         so = SingleOptions()
@@ -195,7 +202,8 @@ class SeasonalOptions:
             workspace_mode={self.workspace_mode},
             java_bin = {self.java_bin},
             replace_general_params={self.replace_general_params},
-            csvlayout="{self.csvlayout}"
+            csvlayout="{self.csvlayout}",
+            general_params_path="{self.general_params_path}"
     )
         """
         return template

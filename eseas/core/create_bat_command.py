@@ -54,14 +54,25 @@ def get_demetra_type():
 
 
 def general_params():
-    return rf"{get_cruncher().local_work_space}/general.params"
+    from .seasonal_options import SingleOptions
+    opts = SingleOptions().options
+    if getattr(opts, "general_params_path", None):
+        return str(opts.general_params_path)
+    return str(Path.cwd() / "general.params")
 
 
 def create_general_params():
-    folder = get_cruncher().local_work_space
     from .seasonal_options import SingleOptions
-
     opts = SingleOptions().options
+    
+    if getattr(opts, "general_params_path", None):
+        full_path = Path(opts.general_params_path)
+        folder = str(full_path.parent)
+        file_name = full_path.name
+    else:
+        folder = str(Path.cwd())
+        file_name = "general.params"
+
     replace = False
     auto_approve = False
     csvlayout = "list"
@@ -72,7 +83,7 @@ def create_general_params():
 
     return _create_general_params(
         folder,
-        "general.params",
+        file_name,
         replace=replace,
         auto_approve=auto_approve,
         csvlayout=csvlayout,
