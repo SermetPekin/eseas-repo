@@ -82,6 +82,17 @@ def download_jwsacruncher():
 @pytest.fixture(scope="session", autouse=True)
 def setup_cruncher():
     """Automatically download and set up jwsacruncher for tests."""
+    
+    def set_executable_perms(bin_dir: Path):
+        """Ensure jwsacruncher has execute permissions on non-Windows OS."""
+        if os.name != "nt":
+            exe_path = bin_dir / "jwsacruncher"
+            if exe_path.exists():
+                try:
+                    os.chmod(exe_path, 0o755)
+                except Exception as e:
+                    print(f"Warning: Failed to set executable permissions on {exe_path}: {e}")
+
     # Check if JAVA_CRUNCHER_BIN is already set
     if os.environ.get("JAVA_CRUNCHER_BIN"):
         cruncher_bin = os.environ.get("JAVA_CRUNCHER_BIN")
@@ -92,6 +103,8 @@ def setup_cruncher():
             print(
                 f"Warning: JAVA_CRUNCHER_BIN points to non-existent path: {cruncher_bin}"
             )
+        else:
+            set_executable_perms(Path(cruncher_bin))
         return
 
     # Try to download
@@ -99,6 +112,7 @@ def setup_cruncher():
         # Set the environment variable
         os.environ["JAVA_CRUNCHER_BIN"] = str(CRUNCHER_BIN_PATH)
         print(f"Set JAVA_CRUNCHER_BIN to {os.environ['JAVA_CRUNCHER_BIN']}")
+        set_executable_perms(CRUNCHER_BIN_PATH)
     else:
         print(
             "WARNING: Could not download jwsacruncher. Tests requiring the cruncher will be skipped."
@@ -107,15 +121,28 @@ def setup_cruncher():
 
 def pytest_configure(config):
     """Hook that runs before test collection to setup cruncher and register markers."""
+    
+    def set_executable_perms(bin_dir: Path):
+        if os.name != "nt":
+            exe_path = bin_dir / "jwsacruncher"
+            if exe_path.exists():
+                try:
+                    os.chmod(exe_path, 0o755)
+                except Exception:
+                    pass
+
     # Ensure download happens before any test collection
     if not os.environ.get("JAVA_CRUNCHER_BIN"):
         if download_jwsacruncher():
             os.environ["JAVA_CRUNCHER_BIN"] = str(CRUNCHER_BIN_PATH)
             print(f"Set JAVA_CRUNCHER_BIN to {os.environ['JAVA_CRUNCHER_BIN']}")
+            set_executable_perms(CRUNCHER_BIN_PATH)
         else:
             print(
                 "WARNING: Could not download jwsacruncher. Tests requiring the cruncher will be skipped."
             )
+    else:
+        set_executable_perms(Path(os.environ["JAVA_CRUNCHER_BIN"]))
 
     # Register custom markers
     config.addinivalue_line(
