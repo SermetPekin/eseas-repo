@@ -82,7 +82,7 @@ def download_jwsacruncher():
 @pytest.fixture(scope="session", autouse=True)
 def setup_cruncher():
     """Automatically download and set up jwsacruncher for tests."""
-    
+
     def set_executable_perms(bin_dir: Path):
         """Ensure jwsacruncher has execute permissions on non-Windows OS."""
         if os.name != "nt":
@@ -91,7 +91,9 @@ def setup_cruncher():
                 try:
                     os.chmod(exe_path, 0o755)
                 except Exception as e:
-                    print(f"Warning: Failed to set executable permissions on {exe_path}: {e}")
+                    print(
+                        f"Warning: Failed to set executable permissions on {exe_path}: {e}"
+                    )
 
     # Check if JAVA_CRUNCHER_BIN is already set
     if os.environ.get("JAVA_CRUNCHER_BIN"):
@@ -121,7 +123,7 @@ def setup_cruncher():
 
 def pytest_configure(config):
     """Hook that runs before test collection to setup cruncher and register markers."""
-    
+
     def set_executable_perms(bin_dir: Path):
         if os.name != "nt":
             exe_path = bin_dir / "jwsacruncher"

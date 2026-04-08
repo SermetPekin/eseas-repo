@@ -21,7 +21,13 @@ import subprocess
 from pathlib import Path
 import shutil
 from typing import Iterable
+import logging
 
+logger = logging.getLogger(__name__)
+
+class CruncherExecutionError(Exception):
+    """Raised when Jwsacruncher fails to execute correctly"""
+    pass
 
 from evdspy.EVDSlocal.common.file_classes import FileItem
 from ._options import middle_folder
@@ -55,6 +61,7 @@ def get_demetra_type():
 
 def general_params():
     from .seasonal_options import SingleOptions
+
     opts = SingleOptions().options
     if getattr(opts, "general_params_path", None):
         return str(opts.general_params_path)
@@ -63,8 +70,9 @@ def general_params():
 
 def create_general_params():
     from .seasonal_options import SingleOptions
+
     opts = SingleOptions().options
-    
+
     if getattr(opts, "general_params_path", None):
         full_path = Path(opts.general_params_path)
         folder = str(full_path.parent)
@@ -212,18 +220,28 @@ else:
 
 def write_bat_file(content, file_name):
     content = begin_content() + content + end_content()
-    print("WRITING", content)
+    logger.debug(f"WRITING content to {file_name}: {content}")
     fname = get_demetra_type().exec_file_name(file_name)
     with open(fname, mode="w+", encoding="utf-8") as file_:
         file_.write(content)
+
+
+def _handle_execution(result: subprocess.CompletedProcess):
+    if result.returncode != 0:
+        logger.error(f"Jwsacruncher execution failed with return code {result.returncode}")
+        if result.stderr:
+            logger.error(f"stderr: {result.stderr}")
+        raise CruncherExecutionError(f"JDemetra+ run failed: {result.stderr or result.stdout}")
+    logger.info("Jwsacruncher executed successfully.")
+    logger.debug(result.stdout)
 
 
 def run_bat_commands_win():
     """run_bat_commands_win"""
     create_general_params()
     name = get_demetra_type().demetra_command_file_name()
-    f = subprocess.Popen(name, shell=True).wait()
-    print(f)
+    result = subprocess.run(name, shell=True, capture_output=True, text=True)
+    _handle_execution(result)
 
 
 def run_bat_commands_mac():
@@ -233,7 +251,8 @@ def run_bat_commands_mac():
     create_general_params()
     script_path = get_demetra_type().demetra_command_file_name()
     os.chmod(script_path, 0o755)
-    subprocess.run([script_path])
+    result = subprocess.run([script_path], capture_output=True, text=True)
+    _handle_execution(result)
 
 
 if os_str == "windows":

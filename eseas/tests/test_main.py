@@ -32,9 +32,6 @@ from eseas.core.seas_utils import filter_xls
 from eseas.core.df_operations import get_rand_hash
 from eseas.tests.test_utils import skip_if_no_cruncher, skip_if_windows
 
-
-
-
 # from .test_utils import skip_if_github
 
 import random
@@ -224,6 +221,7 @@ def test_seasonal_general_javabin_none_new_folder():
     m.part1()
     m.part2()
 
+
 @skip_if_windows
 @skip_if_no_cruncher
 def test_seasonal_general_with_javabin():
@@ -246,6 +244,7 @@ def test_seasonal_general_with_javabin():
     m = Seasonal(options)
     m.part1()
     m.part2()
+
 
 @skip_if_windows
 @skip_if_no_cruncher

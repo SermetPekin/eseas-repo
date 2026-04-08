@@ -104,3 +104,47 @@ def test_auto_approve_false(
             print(f"Exception happened: {e}")
 
         mock_get_input.assert_called_once()
+
+def test_seasonal_options_pydantic_defaults():
+    """Test that Pydantic properly assigns the default values."""
+    from eseas.core.seasonal_options import SeasonalOptions as Options
+    
+    with patch("eseas.core.cruncher_classes.check_cruncher", return_value=True):
+        opts = Options()
+        assert opts.csvlayout == "vtable"
+        assert opts.workspace_mode is True
+        assert opts.test is False
+        assert opts.auto_approve is False
+        assert opts.result_file_names == ("sa", "s", "cal")
+
+def test_seasonal_options_pydantic_type_conversion():
+    """Test that Pydantic properly converts compatible types like strings 'yes'/'no' or ints 1/0 to bool."""
+    from eseas.core.seasonal_options import SeasonalOptions as Options
+    
+    with patch("eseas.core.cruncher_classes.check_cruncher", return_value=True):
+        # 1 -> True, "yes" -> True, 0 -> False
+        opts = Options(test=1, verbose="yes", replace_original_files=0)
+        assert opts.test is True
+        assert opts.verbose is True
+        assert opts.replace_original_files is False
+
+def test_seasonal_options_pydantic_validation_error():
+    """Test that Pydantic rejects completely incompatible types with a ValidationError."""
+    import pydantic
+    import pytest
+    from eseas.core.seasonal_options import SeasonalOptions as Options
+    
+    with pytest.raises(pydantic.ValidationError):
+        # "not a bool string" cannot be parsed into a boolean
+        Options(test="not a bool string")
+
+def test_seasonal_options_positional_args():
+    """Test that the first 3 positional arguments are successfully mapped to demetra, java, and local folders."""
+    from eseas.core.seasonal_options import SeasonalOptions as Options
+    
+    with patch("eseas.core.cruncher_classes.check_cruncher", return_value=True):
+        opts = Options("mock_demetra", "mock_java", "mock_local")
+        
+        assert "mock_demetra" in opts.demetra_folder
+        assert "mock_java" in opts.java_folder
+        assert "mock_local" in opts.local_folder

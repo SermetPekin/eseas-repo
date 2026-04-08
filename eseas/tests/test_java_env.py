@@ -19,9 +19,10 @@
 
 
 from eseas.core.java_environ import JavaEnviron
-from eseas.tests.test_utils import skip_if_windows 
+from eseas.tests.test_utils import skip_if_windows
 
 import os
+
 
 @skip_if_windows
 def test_java_environ(capsys):
@@ -33,6 +34,7 @@ def test_java_environ(capsys):
         assert j.java_bin == folder
 
         assert folder in os.environ["PATH"].split(j.separator)
+
 
 @skip_if_windows
 def test_java_environ2(capsys):

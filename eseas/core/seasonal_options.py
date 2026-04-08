@@ -22,6 +22,11 @@
 #
 # eseas
 #
+from pydantic import BaseModel, Field, model_validator, ConfigDict
+from typing import Tuple, Optional, Any
+import pathlib
+import traceback
+
 from .cruncher_classes import Cruncher
 from .folder_class import (
     DemetraFolder,
@@ -32,161 +37,105 @@ from .folder_class import (
 
 # ====================================================================
 
-
 class SingleOptions:
     """SingleOptions"""
+    _instance = None
 
     def __new__(cls):
-        if not hasattr(cls, "instance"):
-            cls.instance = super(SingleOptions, cls).__new__(cls)
-        return cls.instance
+        if cls._instance is None:
+            cls._instance = super(SingleOptions, cls).__new__(cls)
+            cls._instance.options = None
+        return cls._instance
 
-    def set_items(cls, options):
-        cls.instance.options = options
+    def set_items(self, options):
+        self.options = options
 
 
-class SeasonalOptions:
+class SeasonalOptions(BaseModel):
+    model_config = ConfigDict(arbitrary_types_allowed=True, extra="ignore")
+
+    demetra_folder: Optional[str] = None
+    java_folder: Optional[str] = None
+    local_folder: Optional[str] = None
+    test: bool = False
+    verbose: bool = False
+    replace_original_files: bool = False
+    auto_approve: bool = False
+    result_file_names: Tuple[str, ...] = ("sa", "s", "cal")
+    workspace_mode: bool = True
+    file_name_explanation: bool = True
+    java_bin: Optional[str] = None
+    auto_download: bool = False
+    replace_general_params: bool = False
+    csvlayout: str = "vtable"
+    general_params_path: Optional[str] = None
+
     def __init__(
         self,
-        demetra_folder=None,
-        java_folder=None,
-        local_folder=None,
-        test=False,
-        verbose=False,
-        replace_original_files=False,
-        auto_approve=False,
-        result_file_names=(
-            "sa",
-            "s",
-            "cal",
-        ),
-        workspace_mode=True,
-        file_name_explanation=True,
-        java_bin=None,
-        auto_download=False,
-        replace_general_params=False,
-        csvlayout="vtable",
-        general_params_path=None,
+        *args,
+        **kwargs
     ):
+        from .error_logger import log_eseas_error, setup_eseas_logger
+
+        # Map positional arguments to kwargs if they were passed
+        if args:
+            arg_names = ["demetra_folder", "java_folder", "local_folder"]
+            for i, arg in enumerate(args):
+                if i < len(arg_names) and arg_names[i] not in kwargs:
+                    kwargs[arg_names[i]] = arg
+
         try:
-            self._init_impl(
-                demetra_folder=demetra_folder,
-                java_folder=java_folder,
-                local_folder=local_folder,
-                test=test,
-                verbose=verbose,
-                replace_original_files=replace_original_files,
-                auto_approve=auto_approve,
-                result_file_names=result_file_names,
-                workspace_mode=workspace_mode,
-                file_name_explanation=file_name_explanation,
-                java_bin=java_bin,
-                auto_download=auto_download,
-                replace_general_params=replace_general_params,
-                csvlayout=csvlayout,
-                general_params_path=general_params_path,
-            )
-        except Exception as e:
-            from .error_logger import log_eseas_error
-            import traceback
-
-            error_msg = f"{str(e)}\n{traceback.format_exc()}"
-            # We don't have the fully constructed options object, but we can pass the locals
-            opts_dict = {
-                "demetra_folder": demetra_folder,
-                "java_folder": java_folder,
-                "local_folder": local_folder,
-                "test": test,
-                "verbose": verbose,
-                "replace_original_files": replace_original_files,
-                "auto_approve": auto_approve,
-                "result_file_names": result_file_names,
-                "workspace_mode": workspace_mode,
-                "file_name_explanation": file_name_explanation,
-                "java_bin": java_bin,
-                "auto_download": auto_download,
-                "replace_general_params": replace_general_params,
-                "csvlayout": csvlayout,
-                "general_params_path": general_params_path,
-            }
-
-            class OptsWrapper:
-                def __init__(self, d):
-                    for k, v in d.items():
-                        setattr(self, k, v)
-
-            log_eseas_error(error_msg, OptsWrapper(opts_dict))
-            raise
-        else:
-            # Also set up the .eseas directory to provide examples even if no crash occurs
-            from .error_logger import setup_eseas_logger
-
+            super().__init__(**kwargs)
             try:
                 setup_eseas_logger()
             except Exception:
                 pass
+        except Exception as e:
+            error_msg = f"{str(e)}\n{traceback.format_exc()}"
+            class OptsWrapper:
+                def __init__(self, d):
+                    for k, v in d.items():
+                        setattr(self, k, v)
+            log_eseas_error(error_msg, OptsWrapper(kwargs))
+            try:
+                setup_eseas_logger()
+            except Exception:
+                pass
+            raise
 
-    def _init_impl(
-        self,
-        demetra_folder=None,
-        java_folder=None,
-        local_folder=None,
-        test=False,
-        verbose=False,
-        replace_original_files=False,
-        auto_approve=False,
-        result_file_names=(
-            "sa",
-            "s",
-            "cal",
-        ),
-        workspace_mode=True,
-        file_name_explanation=True,
-        java_bin=None,
-        auto_download=False,
-        replace_general_params=False,
-        csvlayout="list",
-        general_params_path=None,
-    ):
-
+    @model_validator(mode='after')
+    def apply_logic(self):
         # If auto_download is True, automatically fetch the cruncher directly to java_folder
-        if auto_download:
+        if self.auto_download:
             from .download_tools import download_jwsacruncher
-            import pathlib
 
             target_path = (
-                pathlib.Path(java_folder)
-                if java_folder
+                pathlib.Path(self.java_folder)
+                if self.java_folder
                 else pathlib.Path.home() / ".eseas"
             )
-            java_folder = str(download_jwsacruncher(target_path))
+            self.java_folder = str(download_jwsacruncher(target_path))
 
-        self.demetra_folder = DemetraFolder(demetra_folder)
-        self.java_folder = CruncherFolder(java_folder)
-        self.local_folder = WorkspaceFolder(local_folder)
-        self.java_bin = JavaBinFolder(java_bin)
+        dem_folder = DemetraFolder(self.demetra_folder)
+        jav_folder = CruncherFolder(self.java_folder)
+        loc_folder = WorkspaceFolder(self.local_folder)
+        jav_bin = JavaBinFolder(self.java_bin) if self.java_bin else None
 
-        self.demetra_folder = str(self.demetra_folder)
-        self.java_folder = str(self.java_folder)
-        self.local_folder = str(self.local_folder)
-        self.java_bin = java_bin if java_bin else None
+        self.demetra_folder = str(dem_folder)
+        self.java_folder = str(jav_folder)
+        self.local_folder = str(loc_folder)
+        self.java_bin = str(jav_bin) if jav_bin else None
 
-        self.test = test
-        self.verbose = verbose
-        self.replace_original_files = replace_original_files
-        self.auto_approve = auto_approve
-        self.result_file_names = result_file_names
-        self.workspace_mode = workspace_mode
-        self.file_name_explanation = file_name_explanation
-        self.replace_general_params = replace_general_params
-        self.csvlayout = csvlayout
-        
-        import pathlib
-        self.general_params_path = general_params_path if general_params_path else str(pathlib.Path.cwd() / "general.params")
+        self.general_params_path = (
+            self.general_params_path
+            if self.general_params_path
+            else str(pathlib.Path.cwd() / "general.params")
+        )
 
-        self.set_options(workspace_mode)
+        self.set_options(self.workspace_mode)
         so = SingleOptions()
         so.set_items(self)
+        return self
 
     def __repr__(self):
         template = f"""

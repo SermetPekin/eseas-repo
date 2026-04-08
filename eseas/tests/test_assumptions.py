@@ -87,7 +87,6 @@ def test_hardcoded_jwsacruncher_direct_call():
         pytest.fail(f"jwsacruncher failed to execute directly via OS: {e}")
 
 
-
 @skip_if_windows
 def test_xml_url_encoding(tmp_path):
     """

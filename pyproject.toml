@@ -11,6 +11,7 @@ keywords = ["seasonal adjustment", "data processing", "jwsacruncher", "Demetra"]
 requires-python = ">=3.10"
 dependencies = [
     "evdspy>=1.1.41",
+    "pydantic>=2.0",
     "psutil>=7.2.2",
     "pywin32>=311; sys_platform == 'win32'",
     "requests>=2.32.4",

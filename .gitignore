@@ -2,6 +2,7 @@ scr*.py
 !tox.ini
 new_folder/
 test_out/
+SU*.md
 
 ignore*.*
 ignore*/
@@ -18,6 +19,8 @@ wsacruncher.params
 *.bak
 *.tmp
 *.swp 
+general.params
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.txt

@@ -19,7 +19,9 @@
 
 from pathlib import Path
 from evdspy.EVDSlocal.common.files import Write
+import logging
 
+logger = logging.getLogger(__name__)
 
 def _create_general_params(
     folder=".",
@@ -32,7 +34,7 @@ def _create_general_params(
     file_name_full = Path(folder) / file_name
 
     if file_name_full.is_file() and not replace:
-        print(f"\n[INFO] Using existing parameter file: '{file_name_full.absolute()}'")
+        logger.info(f"Using existing parameter file: '{file_name_full.absolute()}'")
         return
 
     if file_name_full.is_file() and replace and not auto_approve:
@@ -40,10 +42,12 @@ def _create_general_params(
             f"\nDo you want to replace the existing '{file_name}' parameter file inside the workspace? (y/n) : "
         )
         if ans.lower().strip() not in ("y", "yes"):
-            print(f"[INFO] Skipping replacement. Using existing '{file_name_full.absolute()}'.")
+            logger.info(
+                f"Skipping replacement. Using existing '{file_name_full.absolute()}'."
+            )
             return
 
-    print(f"\n[INFO] Creating new parameter file: '{file_name_full.absolute()}'")
+    logger.info(f"Creating new parameter file: '{file_name_full.absolute()}'")
     content = get_general_params(csvlayout=csvlayout, refreshall=refreshall)
     return Write(file_name_full, content)
 
