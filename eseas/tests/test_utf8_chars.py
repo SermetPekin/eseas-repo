@@ -36,9 +36,9 @@ def test_turkish_characters_in_workspace_name(tmp_path):
     shutil.copytree(orig_dir, target_dir)
 
     # Modify the generic workspace XML's "name" attribute just in case JDemetra cares
-    content = target_xml.read_text()
+    content = target_xml.read_text(encoding="utf-8")
     content = content.replace('name="airpassengers"', f'name="{new_basename}"')
-    target_xml.write_text(content)
+    target_xml.write_text(content, encoding="utf-8")
 
     # Output directory
     local_output = tmp_path / "eseas_output_utf8"
@@ -102,9 +102,9 @@ def test_french_characters_in_workspace_name(tmp_path):
     shutil.copy(orig_xml, target_xml)
     shutil.copytree(orig_dir, target_dir)
 
-    content = target_xml.read_text()
+    content = target_xml.read_text(encoding="utf-8")
     content = content.replace('name="airpassengers"', f'name="{new_basename}"')
-    target_xml.write_text(content)
+    target_xml.write_text(content, encoding="utf-8")
 
     local_output = tmp_path / "eseas_output_french"
 

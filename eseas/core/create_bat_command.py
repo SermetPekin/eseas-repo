@@ -177,7 +177,8 @@ def begin_content_win():
     from datetime import date
 
     today = date.today()
-    template = f"""rem ==============================================================
+    template = f"""@chcp 65001>nul
+rem ==============================================================
 rem         evdspy
 rem         @2022 evdspy ==> JDemetra caller
 rem         searched space  : {get_cruncher().demetra_folder}
