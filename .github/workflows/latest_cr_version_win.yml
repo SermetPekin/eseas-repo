@@ -57,6 +57,6 @@ jobs:
         JAVA_CRUNCHER_BIN: ${{ github.workspace }}/jwsacruncher/jwsacruncher-2.2.5/bin
       run: |
         $env:PATH = "$env:JAVA_CRUNCHER_BIN;$env:PATH"
-        uv run pytest -v
         uv run python -c "import os;print(os.environ['JAVA_CRUNCHER_BIN'])"
+        uv run pytest -v
 
