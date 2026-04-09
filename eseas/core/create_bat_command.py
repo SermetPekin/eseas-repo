@@ -241,7 +241,7 @@ def run_bat_commands_win():
     """run_bat_commands_win"""
     create_general_params()
     name = get_demetra_type().demetra_command_file_name()
-    result = subprocess.run(name, shell=True, capture_output=True, text=True)
+    result = subprocess.run(name, shell=True, capture_output=True, text=True , encoding='utf-8')
     _handle_execution(result)
 
 
@@ -252,7 +252,7 @@ def run_bat_commands_mac():
     create_general_params()
     script_path = get_demetra_type().demetra_command_file_name()
     os.chmod(script_path, 0o755)
-    result = subprocess.run([script_path], capture_output=True, text=True)
+    result = subprocess.run([script_path], capture_output=True, text=True , encoding='utf-8')
     _handle_execution(result)
 
 
