@@ -54,7 +54,7 @@ def _create_general_params(
 
 
 def get_general_params_default():
-    template = f"""<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    return f"""<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <wsaConfig bundle="10000" csvlayout="Vtable" csvseparator=";" ndecs="6">
     <policy>parameters</policy>
     <refreshall>true</refreshall>
@@ -436,6 +436,7 @@ def get_general_params_default():
         <series>decomposition.si_cmp</series>
     </tsmatrix>
 </wsaConfig>"""
+
 
 def get_general_params(csvlayout="Vtable", refreshall=False):
     refreshall_str = "true" if refreshall else "false"
