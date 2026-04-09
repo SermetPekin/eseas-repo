@@ -102,7 +102,7 @@ def filter_xml_demetra(items: t.List[FileItem]):
 
     def check_demetra(file_item: FileItem):
         """
-        SomeFolder_JDemtra.xml
+        SomeFolder_JDemetra.xml
         Calendars.xml
         SAProcessing-1.xml
         Vars-1.xml
@@ -148,6 +148,7 @@ class MaxFileNumberReached(BaseException): ...
 
 
 def list_files_recursive(folder: t.Union[str, Path]) -> list[FileItem]:
+    raise NotImplementedError("Cancelled list_files_recursive to avoid adding redundant demetra files")
     res = []
     break_loop = False
     if not Path(folder).is_dir():
@@ -171,6 +172,37 @@ def list_files_recursive(folder: t.Union[str, Path]) -> list[FileItem]:
         print("max number reached... returning limit number of files...")
     return res
 
+
+def list_files_root_only(folder: t.Union[str, Path] ) -> list[FileItem]:
+    """
+    list_files_root_only
+    """
+    res = []
+    break_loop = False
+
+    if not Path(folder).is_dir():
+        raise FileNotFoundError(folder)
+
+    try:
+        for file_name in os.listdir(folder):
+            if break_loop:
+                break
+
+            file_path = Path(folder) / file_name
+            if file_path.is_file():
+                file_item = FileItem(folder, file_name)
+                if max_num < len(file_item.created_items):
+                    print(
+                        "limit max number reached  you "
+                        " may change it from search_main.py file "
+                    )
+                    n = len(file_item.created_items)
+                    raise MaxFileNumberReached(f"Max{n}")
+                res.append(file_item)
+    except MaxFileNumberReached:
+        print("max number reached... returning limit number of files...")
+
+    return res
 
 def display(some_files: Iterable[FileItem], max_num=10):
     from rich.console import Console
@@ -199,7 +231,9 @@ def search_demetra_folder(
 ) -> list[FileItem]:
     if not root:
         raise ValueError
-    f = list_files_recursive(root)
+    f = list_files_root_only(root) 
+    #  canceling recursive one to avoid redundant demetra files
+    #  list_files_recursive(root)
     if not f or not callable(filter_func):
         return f
 
