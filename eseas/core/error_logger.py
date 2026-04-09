@@ -95,7 +95,7 @@ def get_system_info():
             import subprocess
 
             result = subprocess.run(
-                ["java", "-version"], capture_output=True, text=True, timeout=5
+                ["java", "-version"], capture_output=True, text=True, timeout=5 , encoding='utf-8'
             )
             info["java_available"] = True
             info["java_version"] = (
