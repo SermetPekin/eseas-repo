@@ -34,7 +34,7 @@ def shut_excel(approve: bool = False):
     command = ["cmd", "/c", "taskkill", "/f", "/im", "EXCEL.EXE"]
     print("closing Excel.exe application ...")
     try:
-        result = subprocess.run(command, capture_output=True, text=True, check=True)
+        result = subprocess.run(command, capture_output=True, text=True, check=True , encoding='utf-8')
         print(result.stdout)
     except subprocess.CalledProcessError as e:
         print(f"Error: {e}")
