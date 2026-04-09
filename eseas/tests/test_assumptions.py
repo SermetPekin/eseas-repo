@@ -81,7 +81,7 @@ def test_hardcoded_jwsacruncher_direct_call():
 
     try:
         # Run with '--version' or empty args to catch raw execution errors safely
-        res = subprocess.run([str(exe_path)], capture_output=True, text=True)
+        res = subprocess.run([str(exe_path)], capture_output=True, text=True , encoding='utf-8')
         assert res.returncode in (0, 1, 2)
     except OSError as e:
         pytest.fail(f"jwsacruncher failed to execute directly via OS: {e}")
