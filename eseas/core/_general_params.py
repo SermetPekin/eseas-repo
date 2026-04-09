@@ -28,7 +28,7 @@ def _create_general_params(
     file_name="general.params",
     replace=False,
     auto_approve=True,
-    csvlayout="vtable",
+    csvlayout="Vtable",
     refreshall=False,
 ):
     file_name_full = Path(folder) / file_name
@@ -437,7 +437,7 @@ def get_general_params_default():
     </tsmatrix>
 </wsaConfig>"""
 
-def get_general_params(csvlayout="vtable", refreshall=False):
+def get_general_params(csvlayout="Vtable", refreshall=False):
     refreshall_str = "true" if refreshall else "false"
     return f"""<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <wsaConfig bundle="10000" csvlayout="{csvlayout}" csvseparator=";" ndecs="6">
