@@ -39,7 +39,7 @@ class TestDefaultConfig:
         assert config["demetra_folder"] is None
         assert config["auto_download"] is True
         assert config["local_folder"] == "./eseas_output"
-        assert config["csvlayout"] == "vtable"
+        assert config["csvlayout"] == "Vtable"
         assert config["result_file_names"] == ["sa", "s", "cal"]
 
     def test_create_default_config_with_workspace(self, tmp_path):
