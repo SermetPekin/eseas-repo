@@ -40,11 +40,12 @@ def test_auto_download_disabled(tmp_path):
             assert str(opts.java_folder) == str(tmp_path)
 
 
+
 @patch("eseas.core.seasonal_general.get_input_from_user")
 @patch("eseas.core.seasonal_general.SeasonalADV.part2")
 @patch("eseas.core.seasonal_general.run_bat_commands")
 @patch("eseas.core.seasonal_general.get_demetra_files")
-@patch("eseas.core.seasonal_general.write_bat_file_demetra")
+@patch("eseas.core.seasonal_general.write_and_run_bat_file_demetra")
 def test_auto_approve_true(
     mock_write_bat,
     mock_get_demetra,
