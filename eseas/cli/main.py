@@ -21,7 +21,7 @@ DEFAULT_CONFIG = {
     "local_folder": "./eseas_output",
     "auto_download": True,
     "auto_approve": False,
-    "csvlayout": "vtable",
+    "csvlayout": "Vtable",
     "workspace_mode": True,
     "result_file_names": ["sa", "s", "cal"],
     "verbose": False,
