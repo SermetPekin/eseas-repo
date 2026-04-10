@@ -179,9 +179,9 @@ def begin_content_win():
     today = date.today()
     template = f"""@chcp 65001>nul
 rem ==============================================================
-rem         evdspy
-rem         @2022 evdspy ==> JDemetra caller
-rem         searched space  : {get_cruncher().demetra_folder}
+rem         eseas
+rem         @2022 eseas ==> JDemetra caller
+rem         demetra folder (searched space) : '{get_cruncher().demetra_folder}'
 rem         date created : {today}
 rem ==============================================================
 echo on
