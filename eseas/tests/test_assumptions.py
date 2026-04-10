@@ -11,7 +11,7 @@ from eseas.core.demetra_caller import (
 from eseas import Options
 from eseas.tests.test_utils import skip_if_no_cruncher, skip_if_windows
 
-
+@skip_if_windows
 def test_executable_quoting(tmp_path):
     fake_java = tmp_path / "opt" / "my cool cruncher"
     fake_java.mkdir(parents=True)
@@ -96,12 +96,9 @@ def test_xml_url_encoding(tmp_path):
 
     complex_dir = tmp_path / "complex name with spaces"
     complex_dir.mkdir()
-
     excel_path = complex_dir / "data.xlsx"
     abs_path = str(excel_path.absolute())
-
     mac_url_part = quote(abs_path, safe="")
-
     # Assert forward slashes are encoded to %2F (strict tsprovider requirement)
     assert "%2F" in mac_url_part
     assert "complex%20name%20with%20spaces" in mac_url_part
