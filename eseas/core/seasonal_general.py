@@ -23,9 +23,8 @@ from pathlib import Path
 import time
 from evdspy.EVDSlocal.common.colors import print_with_failure_style
 from evdspy.EVDSlocal.utils.utils_general import create_directory
-from .create_bat_command import run_bat_commands
 from .cruncher_classes import Cruncher
-from .demetra import get_demetra_files, write_bat_file_demetra
+from .demetra import get_demetra_files, write_and_run_bat_file_demetra
 from .seas_utils import view_display
 from evdspy.EVDSlocal.common.files import Write
 from .seasonal_adv_utils import (
@@ -34,9 +33,6 @@ from .seasonal_adv_utils import (
 )
 
 from ._options import demetra_command_file_name
-
-# demetra_command_file_name = 'demetra_commands'
-
 from eseas.core.collect import collect_parts_of_results as collect
 
 
@@ -89,14 +85,17 @@ class SeasonalADV:
         if self.options.test:
             xml_demetra = xml_demetra[0:20]
         fn = demetra_command_file_name
-        write_bat_file_demetra(xml_demetra, file_name=fn)
+        write_and_run_bat_file_demetra(xml_demetra, file_name=fn)
         if not self.options.auto_approve and not get_input_from_user():
             view_display(
                 "demetra command did not run.\n"
                 "You may type y next time if you like them to run."
             )
             return
-        run_bat_commands()
+        
+        # run_bat_commands()
+        # run_bat_commands_direct()
+        
 
     def code_reproduce(self):
         return ReproduceMevsimsel(self).code_reproduce()
@@ -139,6 +138,5 @@ def main():
 main()
         """
         return template
-
 
 __all__ = ["SeasonalADV"]
