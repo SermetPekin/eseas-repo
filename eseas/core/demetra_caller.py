@@ -47,7 +47,8 @@ class DemetraCaller(ABC):
 
 class DemetraCallerWindows(DemetraCaller):
     def cruncher_command(self):
-        return rf'call "{self.cf}/jwsacruncher.bat"'
+        # call will be added by caller if needed 
+        return rf'"{self.cf}/jwsacruncher.bat"'
 
     def demetra_command_file_name(self):
         return rf"{self.ws}/{demetra_command_file_name}.bat"
