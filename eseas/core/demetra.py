@@ -73,18 +73,25 @@ def show_title(msg: str) -> None:
     print("=" * 50)
 
 
-def write_bat_file_demetra(xml_demetra, file_name=demetra_command_file_name) -> None:
+def write_and_run_bat_file_demetra(xml_demetra, file_name=demetra_command_file_name) -> None:
     from .create_bat_command import (
-        create_command,
+        create_command, create_command_clean , run_bat_commands_direct , 
         copy_xml_files_local,
         copy_folder_demetra,
         write_bat_file,
     )
 
-    cmds = create_command(xml_demetra)
+    cmds = create_command(xml_demetra)   
     copy_xml_files_local(xml_demetra)
     copy_folder_demetra(xml_demetra)
     text = "".join(cmds)
     show_title(f"Creating command file to call `jwsacruncher` : [{file_name}]")
-
     write_bat_file(text, file_name)
+
+    # Run directly with a subprocess these commands for each XML file 
+    cmds_clean = create_command_clean(xml_demetra) 
+    for c in cmds_clean:
+        print("[Running]", c)
+        run_bat_commands_direct(c) 
+
+            
