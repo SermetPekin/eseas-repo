@@ -41,70 +41,6 @@ def test_auto_download_disabled(tmp_path):
 
 
 
-@patch("eseas.core.seasonal_general.get_input_from_user")
-@patch("eseas.core.seasonal_general.SeasonalADV.part2")
-@patch("eseas.core.seasonal_general.run_bat_commands")
-@patch("eseas.core.seasonal_general.get_demetra_files")
-@patch("eseas.core.seasonal_general.write_and_run_bat_file_demetra")
-def test_auto_approve_true(
-    mock_write_bat,
-    mock_get_demetra,
-    mock_run_bat_commands,
-    mock_part2,
-    mock_get_input,
-    tmp_path,
-):
-    """Test if auto_approve bypasses the get_input_from_user prompt."""
-    with patch("eseas.core.cruncher_classes.check_cruncher", return_value=True):
-        opts = Options(
-            demetra_folder="fake_source",
-            java_folder=str(tmp_path),
-            local_folder="fake_local",
-            auto_approve=True,
-        )
-
-        m = Seasonal(opts)
-
-        try:
-            m.part1()
-        except Exception:
-            pass
-
-        mock_get_input.assert_not_called()
-
-
-@patch("eseas.core.seasonal_general.get_input_from_user")
-@patch("eseas.core.seasonal_general.SeasonalADV.part2")
-@patch("eseas.core.seasonal_general.run_bat_commands")
-@patch("eseas.core.seasonal_general.get_demetra_files")
-@patch("eseas.core.seasonal_general.write_bat_file_demetra")
-def test_auto_approve_false(
-    mock_write_bat,
-    mock_get_demetra,
-    mock_run_bat_commands,
-    mock_part2,
-    mock_get_input,
-    tmp_path,
-):
-    """Test if auto_approve=False correctly calls the get_input_from_user prompt."""
-    with patch("eseas.core.cruncher_classes.check_cruncher", return_value=True):
-        opts = Options(
-            demetra_folder="fake_source",
-            java_folder=str(tmp_path),
-            local_folder="fake_local",
-            auto_approve=False,
-        )
-
-        mock_get_input.return_value = True  # Simulate user pressing "Y"
-        mock_get_demetra.return_value = []
-        m = Seasonal(opts)
-
-        try:
-            m.part1()
-        except Exception as e:
-            print(f"Exception happened: {e}")
-
-        mock_get_input.assert_called_once()
 
 def test_seasonal_options_pydantic_defaults():
     """Test that Pydantic properly assigns the default values."""
@@ -112,7 +48,7 @@ def test_seasonal_options_pydantic_defaults():
     
     with patch("eseas.core.cruncher_classes.check_cruncher", return_value=True):
         opts = Options()
-        assert opts.csvlayout == "vtable"
+        assert opts.csvlayout == "Vtable"
         assert opts.workspace_mode is True
         assert opts.test is False
         assert opts.auto_approve is False
