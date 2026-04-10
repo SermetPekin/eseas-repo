@@ -67,7 +67,7 @@ class SeasonalOptions(BaseModel):
     java_bin: Optional[str] = None
     auto_download: bool = False
     replace_general_params: bool = False
-    csvlayout: str = "vtable"
+    csvlayout: str = "Vtable"
     general_params_path: Optional[str] = None
 
     def __init__(
