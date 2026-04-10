@@ -135,20 +135,28 @@ def copy_xml_files_local(files: list[FileItem]):
 
     return list(map(copy_xml_file, files))
 
+def demetra_command_general(file_item: FileItem):
+    fname = str(file_item.encoded_name + ".xml")
+    ws = Path(get_cruncher().local_work_space)
+    dest = ws / fname
+    cmd1 = rf'{get_demetra_type().cruncher_command()} "{dest}"'
+    cmd2 = rf'-x "{general_params()}"'
+    d_path = ws / middle_folder / file_item.encoded_name
+    cmd3 = rf'-d "{d_path}"'
+    command = f"{cmd1} {cmd2} {cmd3}"
+    return command
 
 def get_line_win(file_item: FileItem):
     fname = str(file_item.encoded_name + ".xml")
     ws = Path(get_cruncher().local_work_space)
     dest = ws / fname
     line_info = f"rem {file_item.short_name}\nrem " + "-" * 50 + "\n"
-    cmd1 = rf'{line_info}{get_demetra_type().cruncher_command()} "{dest}"'
+    cmd1 = rf'call {line_info}{get_demetra_type().cruncher_command()} "{dest}"'
     cmd2 = rf'-x "{general_params()}"'
     d_path = ws / middle_folder / file_item.encoded_name
     cmd3 = rf'-d "{d_path}"{NEW_LINE}'
     command = f"{cmd1} {cmd2} {cmd3}"
-    # print(command)
     return command
-
 
 def get_line_MAC(file_item: FileItem):
     ws = Path(get_cruncher().local_work_space)
@@ -166,6 +174,8 @@ def get_line_MAC(file_item: FileItem):
 def create_command(files):
     return map(get_line, files)
 
+def create_command_clean(files):
+    return map(demetra_command_general, files)
 
 def patch_template_for_os(template):
     if get_os() != "windows":
@@ -179,9 +189,9 @@ def begin_content_win():
     today = date.today()
     template = f"""@chcp 65001>nul
 rem ==============================================================
-rem         eseas
-rem         @2022 eseas ==> JDemetra caller
-rem         demetra folder (searched space) : '{get_cruncher().demetra_folder}'
+rem         evdspy
+rem         @2022 evdspy ==> JDemetra caller
+rem         searched space  : {get_cruncher().demetra_folder}
 rem         date created : {today}
 rem ==============================================================
 echo on
@@ -237,26 +247,42 @@ def _handle_execution(result: subprocess.CompletedProcess):
     logger.debug(result.stdout)
 
 
-def run_bat_commands_win():
-    """run_bat_commands_win"""
-    create_general_params()
-    name = get_demetra_type().demetra_command_file_name()
-    result = subprocess.run(name, shell=True, capture_output=True, text=True , encoding='utf-8')
-    _handle_execution(result)
-
-
-def run_bat_commands_mac():
-    """run_bat_commands_mac"""
+def run_bat_commands_from_file():
     import os
 
     create_general_params()
     script_path = get_demetra_type().demetra_command_file_name()
-    os.chmod(script_path, 0o755)
+    if os_str != "windows":
+        os.chmod(script_path, 0o755)
     result = subprocess.run([script_path], capture_output=True, text=True , encoding='utf-8')
     _handle_execution(result)
+    
 
+def get_commands_from_file(script_path:str |Path ):
+    raise NotImplementedError() 
+    content = None 
+    if not Path(script_path).exists() :
+        raise FileExistsError(f" file : {script_path}")
+    
+    with open(script_path, encoding="utf-8") as file:
+        content =  file.read()
+    if content is None :
+        raise ValueError(f"could not read [{script_path}]")
+    def should_escape(string :str ):
+        string = string.strip()
+        comment_char = "rem" if os_str == "windows" else "#"
+        if len(string)== 0  :  return True 
+        if string.lower().startswith(comment_char ) : return True 
+        return False 
+    commands = []
+    for line in content.splitlines():
+        if should_escape(line) :
+            continue 
+        commands.append(line)        
+    return commands 
 
-if os_str == "windows":
-    run_bat_commands = run_bat_commands_win
-else:
-    run_bat_commands = run_bat_commands_mac
+def run_bat_commands_direct(commands):
+    from eseas.core._subprocess import Subprocess
+    create_general_params()
+    s = Subprocess( commands , convert=False)   
+    s.run(verbose = True )
