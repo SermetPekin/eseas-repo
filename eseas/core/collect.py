@@ -99,20 +99,20 @@ class ResultCollector:
             return
 
         out_file_name_full = self.get_output_file_name(xml_folder)
-        self.write_combined_file(out_file_name_full) 
+        self.write_combined_file(out_file_name_full, sheets_data) 
     
     def process_folder_special(self, xml_folder: str , index : int ):
         sheets_data = self.collect_sheets(xml_folder)
         if not sheets_data:
             return
-        if len(self.special_names) >= index +1 
+        if len(self.special_names) >= index +1 : 
             out_file_name_full = self.special_names[index]  
         else : 
             out_file_name_full = self.get_output_file_name(xml_folder)
+            
+        self.write_combined_file(out_file_name_full, sheets_data) 
         
-        self.write_combined_file(out_file_name_full) 
-        
-    def write_combined_file(self, out_file_name_full):
+    def write_combined_file(self, out_file_name_full, sheets_data):
         with pd.ExcelWriter(out_file_name_full) as writer:
             for part, sheet in sheets_data.items():
                 sheet.to_excel(writer, sheet_name=part)
@@ -120,7 +120,7 @@ class ResultCollector:
 
     def collect(self, xml_folders=None):
         folders = self.get_xml_folders(xml_folders)
-        process_fnc = if self.special_names :  self.process_folder_special else  process_folder
+        process_fnc =   self.process_folder_special  if self.special_names else   self.process_folder_special  
         for index ,  xml_folder in enumerate(folders):
             process_fnc(xml_folder , index)
 
