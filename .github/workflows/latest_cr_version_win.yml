@@ -58,5 +58,5 @@ jobs:
       run: |
         $env:PATH = "$env:JAVA_CRUNCHER_BIN;$env:PATH"
         uv run python -c "import os;print(os.environ['JAVA_CRUNCHER_BIN'])"
-        uv run pytest -v
+        uv run pytest -v -x 
 
