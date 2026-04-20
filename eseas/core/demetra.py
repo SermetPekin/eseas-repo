@@ -21,6 +21,8 @@
 from rich import print
 import pandas as pd
 from evdspy.EVDSlocal.common.file_classes import file_items_update, FileItem
+
+from eseas.core.create_bat_command import run_bat_commands_from_file
 from .df_operations import make_df_float
 from .seas_utils import get_xml_demetra, display
 
@@ -73,25 +75,35 @@ def show_title(msg: str) -> None:
     print("=" * 50)
 
 
-def write_and_run_bat_file_demetra(xml_demetra, file_name=demetra_command_file_name) -> None:
+
+def write_and_run_bat_file_demetra(
+    xml_demetra, file_name=demetra_command_file_name
+) -> None:
+    from eseas.core.create_bat_command import run_bat_commands_from_file 
+
     from .create_bat_command import (
-        create_command, create_command_clean , run_bat_commands_direct , 
+        create_command,
+        create_command_clean,
+        run_bat_commands_direct,
         copy_xml_files_local,
         copy_folder_demetra,
         write_bat_file,
     )
-
-    cmds = create_command(xml_demetra)   
+    
+    from eseas.core.utils_general2 import is_windows 
+    cmds = create_command(xml_demetra)
     copy_xml_files_local(xml_demetra)
     copy_folder_demetra(xml_demetra)
     text = "".join(cmds)
     show_title(f"Creating command file to call `jwsacruncher` : [{file_name}]")
     write_bat_file(text, file_name)
-
-    # Run directly with a subprocess these commands for each XML file 
-    cmds_clean = create_command_clean(xml_demetra) 
-    for c in cmds_clean:
-        print("[Running]", c)
-        run_bat_commands_direct(c) 
-
+    
+    if not is_windows() :    
+        run_bat_commands_from_file()
+    else :
             
+        # Run directly with a subprocess these commands for each XML file
+        cmds_clean = create_command_clean(xml_demetra)
+        for c in cmds_clean:
+            print("[Running]", c)
+            run_bat_commands_direct(c)
