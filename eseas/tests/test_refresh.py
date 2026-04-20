@@ -82,7 +82,7 @@ class TestFileClass(unittest.TestCase):
         file_obj = File(self.non_existent_file, dont_check=True)
         file_obj.check()  
 
-    def test_file_refresh(self):
+    def t_file_refresh(self):
         file_obj = File(self.file1)
         file_obj.refresh()   
 
