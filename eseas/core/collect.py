@@ -105,7 +105,7 @@ class ResultCollector:
         sheets_data = self.collect_sheets(xml_folder)
         if not sheets_data:
             return
-        if len(self.special_names) >= index +1 : 
+        if self.special_names  and len(self.special_names) >= index +1 : 
             out_file_name_full = self.special_names[index]  
         else : 
             out_file_name_full = self.get_output_file_name(xml_folder)
