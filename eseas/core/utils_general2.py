@@ -166,3 +166,7 @@ def get_os():
     import platform
 
     return str(platform.system()).lower()
+
+
+def is_windows():
+    return get_os() == "windows" 
