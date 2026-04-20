@@ -119,7 +119,7 @@ class TestFileClass:
         file_name = "test.xlsx"
         file = File(file_name, tmp_path)
         assert file.name == file_name
-        assert file.folder == tmp_path
+        assert file.root == tmp_path
         assert isinstance(file.path, Path)
 
     def test_file_str_representation(self, tmp_path):
@@ -164,7 +164,7 @@ class TestFileClass:
     def test_file_with_current_directory(self):
         """Test File with current directory"""
         file = File("test.xlsx", Path("."))
-        assert isinstance(file.folder, Path)
+        assert isinstance(file.root, Path)
         assert file.path.is_absolute()
 
 
