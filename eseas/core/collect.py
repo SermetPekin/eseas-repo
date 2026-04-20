@@ -30,12 +30,14 @@ class ResultCollector:
         out_folder: str = None,
         out_file_name: str = "combined",
         encoding: str = "latin-1",
+        special_names = None 
     ):
         self.options = options
         self.out_folder = out_folder
         self.out_file_name = out_file_name
         self.encoding = encoding
         self.parts = options.result_file_names
+        self.special_names = special_names
 
     def get_xml_folders(self, xml_folders: list = None) -> list:
         if xml_folders is not None:
@@ -76,7 +78,7 @@ class ResultCollector:
             out_file_name_full = dest_folder / f"{self.out_file_name}.xlsx"
         return out_file_name_full
 
-    def process_folder(self, xml_folder: str):
+    def collect_sheets(self, xml_folder: str):
         # We explicitly store parts in a dictionary to prevent zip mismatch
         # in case a specific part fails to load.
         sheets_data = {}
@@ -89,11 +91,28 @@ class ResultCollector:
 
                 traceback.print_exc()
                 print(f"passing collecting {part} from {source_file}")
+        return sheets_data        
 
+    def process_folder(self, xml_folder: str , index : int ):
+        sheets_data = self.collect_sheets(xml_folder)
         if not sheets_data:
             return
 
         out_file_name_full = self.get_output_file_name(xml_folder)
+        self.write_combined_file(out_file_name_full) 
+    
+    def process_folder_special(self, xml_folder: str , index : int ):
+        sheets_data = self.collect_sheets(xml_folder)
+        if not sheets_data:
+            return
+        if len(self.special_names) >= index +1 
+            out_file_name_full = self.special_names[index]  
+        else : 
+            out_file_name_full = self.get_output_file_name(xml_folder)
+        
+        self.write_combined_file(out_file_name_full) 
+        
+    def write_combined_file(self, out_file_name_full):
         with pd.ExcelWriter(out_file_name_full) as writer:
             for part, sheet in sheets_data.items():
                 sheet.to_excel(writer, sheet_name=part)
@@ -101,8 +120,9 @@ class ResultCollector:
 
     def collect(self, xml_folders=None):
         folders = self.get_xml_folders(xml_folders)
-        for xml_folder in folders:
-            self.process_folder(xml_folder)
+        process_fnc = if self.special_names :  self.process_folder_special else  process_folder
+        for index ,  xml_folder in enumerate(folders):
+            process_fnc(xml_folder , index)
 
 
 def collect_parts_of_results(
@@ -111,6 +131,7 @@ def collect_parts_of_results(
     out_folder=None,
     out_file_name="combined",
     encoding="latin-1",
+    special_names = None 
 ):
     """
     Collects parts of results using the ResultCollector class.
@@ -120,5 +141,6 @@ def collect_parts_of_results(
         out_folder=out_folder,
         out_file_name=out_file_name,
         encoding=encoding,
+        special_names = special_names
     )
     collector.collect(xml_folders)
