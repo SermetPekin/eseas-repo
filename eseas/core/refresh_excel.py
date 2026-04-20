@@ -34,7 +34,9 @@ def shut_excel(approve: bool = False):
     command = ["cmd", "/c", "taskkill", "/f", "/im", "EXCEL.EXE"]
     print("closing Excel.exe application ...")
     try:
-        result = subprocess.run(command, capture_output=True, text=True, check=True , encoding='utf-8')
+        result = subprocess.run(
+            command, capture_output=True, text=True, check=True, encoding="utf-8"
+        )
         print(result.stdout)
     except subprocess.CalledProcessError as e:
         print(f"Error: {e}")
@@ -52,10 +54,28 @@ def excel_running():
 
 
 class File:
-    def __init__(self, name: str, folder: str = ".", approve: bool = False):
+    """
+    File ( a.xlsx , a/b/c) => a/b/c/a.xlsx
+
+    File (a/b/c/a.xlsx)
+
+    File (a/b/c/a.xlsx, root = None )
+
+    """
+
+    def __init__(self, name: str, root: str = None, approve: bool = False , dont_check = False ):
         self.name = name
-        self.folder = folder
-        self.path: Path = (self.folder / name).absolute()
+        self.root = root
+        self.dont_check = dont_check 
+        if self.root is None:
+            self.path = Path(name).absolute()
+        else:
+
+            if isinstance(root, str):
+                self.root = Path(self.root)
+
+            self.path: Path = (self.root / name).absolute()
+
         self.approve = approve
 
     def __str__(self):
@@ -65,6 +85,9 @@ class File:
         return self.path.exists()
 
     def check(self):
+        if self.dont_check :
+            print("Passing check since this is test") 
+            return 
         if not self.exists():
 
             raise ValueError(f"File Not found ! {self.path}")
@@ -90,9 +113,9 @@ class File:
             print(f"Error - {self}:\n{e}")
 
 
-def check_and_get_files(files=None, root=".", approve: bool = False):
+def check_and_get_files(files, root=None, approve: bool = False , dont_check :bool  = False ):
 
-    fs = [File(x, root, approve) for x in files]
+    fs = [File(x, root=root, approve=approve, dont_check=dont_check) for x in files]
     for a in fs:
         a.check()
 
@@ -109,7 +132,7 @@ def get_excel_app(approve=False):
     return excel_app
 
 
-def refresh(files, root: Path | str = ".", approve: bool = False):
+def refresh(files, root: Path | str | None = None, approve: bool = False):
 
     pythoncom.CoInitialize()
 
