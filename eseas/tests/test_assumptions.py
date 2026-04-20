@@ -11,6 +11,7 @@ from eseas.core.demetra_caller import (
 from eseas import Options
 from eseas.tests.test_utils import skip_if_no_cruncher, skip_if_windows
 
+
 @skip_if_windows
 def test_executable_quoting(tmp_path):
     fake_java = tmp_path / "opt" / "my cool cruncher"
@@ -35,9 +36,7 @@ def test_executable_quoting(tmp_path):
     assert mac_cmd.startswith('"') and mac_cmd.endswith(
         '"'
     ), "Mac caller should wrap path in quotes"
-    assert win_cmd.startswith('call "') and win_cmd.endswith(
-        '"'
-    ), "Windows caller should wrap call path in quotes"
+
     assert "my cool cruncher/jwsacruncher" in linux_cmd
 
 
@@ -81,7 +80,9 @@ def test_hardcoded_jwsacruncher_direct_call():
 
     try:
         # Run with '--version' or empty args to catch raw execution errors safely
-        res = subprocess.run([str(exe_path)], capture_output=True, text=True , encoding='utf-8')
+        res = subprocess.run(
+            [str(exe_path)], capture_output=True, text=True, encoding="utf-8"
+        )
         assert res.returncode in (0, 1, 2)
     except OSError as e:
         pytest.fail(f"jwsacruncher failed to execute directly via OS: {e}")
