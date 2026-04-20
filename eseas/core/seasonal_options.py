@@ -68,7 +68,8 @@ class SeasonalOptions(BaseModel):
     auto_download: bool = False
     replace_general_params: bool = False
     csvlayout: str = "Vtable"
-    general_params_path: Optional[str] = None
+    general_params_path: Optional[str] = None , 
+    special_names : Optional[tuple] = None , 
 
     def __init__(
         self,
@@ -152,7 +153,8 @@ class SeasonalOptions(BaseModel):
             java_bin = {self.java_bin},
             replace_general_params={self.replace_general_params},
             csvlayout="{self.csvlayout}",
-            general_params_path="{self.general_params_path}"
+            general_params_path="{self.general_params_path}",
+            special_names="{self.special_names}"
     )
         """
         return template
