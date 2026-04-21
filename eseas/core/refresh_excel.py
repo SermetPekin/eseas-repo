@@ -6,10 +6,9 @@ import time
 from pathlib import Path
 import psutil
 import subprocess
+import pythoncom
 
-if sys.platform == "win32":
-    import pythoncom
-    import win32com.client
+import win32com.client
 
 
 def get_input():
@@ -42,11 +41,7 @@ def shut_excel(approve: bool = False):
         print(f"Error: {e}")
 
 
-excel_app = None
-
-
 def excel_running():
-
     for proc in psutil.process_iter(["name"]):
         if proc.info["name"].lower() == "excel.exe":
             return True
@@ -63,10 +58,10 @@ class File:
 
     """
 
-    def __init__(self, name: str, root: str = None, approve: bool = False , dont_check = False ):
+    def __init__(self, name: str, root: str = None, approve: bool = False, dont_check=False):
         self.name = name
         self.root = root
-        self.dont_check = dont_check 
+        self.dont_check = dont_check
         if self.root is None:
             self.path = Path(name).absolute()
         else:
@@ -85,18 +80,15 @@ class File:
         return self.path.exists()
 
     def check(self):
-        if self.dont_check :
-            print("Passing check since this is test") 
-            return 
+        if self.dont_check:
+            print("Passing check since this is test")
+            return
         if not self.exists():
 
             raise ValueError(f"File Not found ! {self.path}")
         assert self.exists()
 
-    def refresh(self):
-        global excel_app
-        excel_app = get_excel_app(self.approve)
-
+    def refresh(self, excel_app):  # Pass excel_app as an argument
         try:
             print(f"working on: {self}")
             wb = excel_app.Workbooks.Open(self.path)
@@ -113,7 +105,7 @@ class File:
             print(f"Error - {self}:\n{e}")
 
 
-def check_and_get_files(files, root=None, approve: bool = False , dont_check :bool  = False ):
+def check_and_get_files(files, root=None, approve: bool = False, dont_check: bool = False):
 
     fs = [File(x, root=root, approve=approve, dont_check=dont_check) for x in files]
     for a in fs:
@@ -124,7 +116,6 @@ def check_and_get_files(files, root=None, approve: bool = False , dont_check :bo
 
 
 def get_excel_app(approve=False):
-    global excel_app
     if excel_running():
         shut_excel(approve)
 
@@ -133,19 +124,27 @@ def get_excel_app(approve=False):
 
 
 def refresh(files, root: Path | str | None = None, approve: bool = False):
-
     pythoncom.CoInitialize()
+    excel_app = None   
 
-    for File_ in check_and_get_files(files, root, approve):
-        File_.refresh()
+    try:
+        excel_app = get_excel_app(approve)
+        for File_ in check_and_get_files(files, root, approve):
+            File_.refresh(excel_app)  
 
-    if excel_app is not None:
-        try:
-            excel_app.Quit()
-            print("Before exiting closing excel application!")
-        except Exception as quit_error:
-            import traceback
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        print(f"An error occurred during refresh: {e}")
 
-            traceback.print_exc()
-            print(f"Error while trying to close excel : {quit_error}")
-    pythoncom.CoUninitialize()
+    finally:
+        if excel_app is not None:
+            try:
+                excel_app.Quit()
+                print("Closing excel application!")
+            except Exception as quit_error:
+                import traceback
+                traceback.print_exc()
+                print(f"Error while trying to close excel : {quit_error}")
+
+        pythoncom.CoUninitialize()
