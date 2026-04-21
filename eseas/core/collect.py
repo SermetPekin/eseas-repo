@@ -30,14 +30,15 @@ class ResultCollector:
         out_folder: str = None,
         out_file_name: str = "combined",
         encoding: str = "latin-1",
-        special_names = None 
+
     ):
         self.options = options
         self.out_folder = out_folder
         self.out_file_name = out_file_name
         self.encoding = encoding
         self.parts = options.result_file_names
-        self.special_names = special_names
+        self.special_names = options.special_names
+        self.out_index =options.out_index 
 
     def get_xml_folders(self, xml_folders: list = None) -> list:
         if xml_folders is not None:
@@ -115,7 +116,7 @@ class ResultCollector:
     def write_combined_file(self, out_file_name_full, sheets_data):
         with pd.ExcelWriter(out_file_name_full) as writer:
             for part, sheet in sheets_data.items():
-                sheet.to_excel(writer, sheet_name=part)
+                sheet.to_excel(writer, sheet_name=part, index = self.out_index)
         print(f"[created] {out_file_name_full}")
 
     def collect(self, xml_folders=None):
@@ -131,7 +132,7 @@ def collect_parts_of_results(
     out_folder=None,
     out_file_name="combined",
     encoding="latin-1",
-    special_names = None 
+
 ):
     """
     Collects parts of results using the ResultCollector class.
@@ -140,7 +141,6 @@ def collect_parts_of_results(
         options=options,
         out_folder=out_folder,
         out_file_name=out_file_name,
-        encoding=encoding,
-        special_names = special_names
+        encoding=encoding
     )
     collector.collect(xml_folders)
