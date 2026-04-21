@@ -50,19 +50,14 @@ class SeasonalADV:
         out_folder=None,
         out_file_name="combined",
         encoding="latin-1",
-        special_names = None 
     ):  
-        special_names = self.options.special_names if special_names is None else special_names
-        if not special_names is None : 
-            if not isinstance(special_names, (tuple, list)):
-                special_names= [special_names]
+
         collect(
             self.options,
             xml_folders=xml_folders,
             out_folder=out_folder,
             out_file_name=out_file_name,
             encoding=encoding,
-            special_names = special_names 
         )
 
     def run(self):
