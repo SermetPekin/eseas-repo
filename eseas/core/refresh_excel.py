@@ -6,10 +6,11 @@ import time
 from pathlib import Path
 import psutil
 import subprocess
-import pythoncom
 
-import win32com.client
-
+if sys.platform == "win32":
+    import pythoncom
+    import win32com.client
+    
 
 def get_input():
     ans = input(
@@ -125,12 +126,12 @@ def get_excel_app(approve=False):
 
 def refresh(files, root: Path | str | None = None, approve: bool = False):
     pythoncom.CoInitialize()
-    excel_app = None   
+    excel_app = None  # Initialize excel_app to None here
 
     try:
         excel_app = get_excel_app(approve)
         for File_ in check_and_get_files(files, root, approve):
-            File_.refresh(excel_app)  
+            File_.refresh(excel_app)  # Pass excel_app to the refresh method
 
     except Exception as e:
         import traceback
