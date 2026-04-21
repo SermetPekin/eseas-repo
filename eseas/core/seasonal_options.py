@@ -25,6 +25,7 @@
 from pydantic import BaseModel, Field, model_validator, ConfigDict
 from typing import Tuple, Optional, Any
 import pathlib
+from pathlib import Path
 import traceback
 
 from .cruncher_classes import Cruncher
@@ -37,8 +38,10 @@ from .folder_class import (
 
 # ====================================================================
 
+
 class SingleOptions:
     """SingleOptions"""
+
     _instance = None
 
     def __new__(cls):
@@ -54,9 +57,9 @@ class SingleOptions:
 class SeasonalOptions(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True, extra="ignore")
 
-    demetra_folder: Optional[str] = None
-    java_folder: Optional[str] = None
-    local_folder: Optional[str] = None
+    demetra_folder: Optional[str] | Optional[Path] = None
+    java_folder: Optional[str] | Optional[Path] = None
+    local_folder: Optional[str] | Optional[Path] = None
     test: bool = False
     verbose: bool = False
     replace_original_files: bool = False
@@ -64,19 +67,15 @@ class SeasonalOptions(BaseModel):
     result_file_names: Tuple[str, ...] = ("sa", "s", "cal")
     workspace_mode: bool = True
     file_name_explanation: bool = True
-    java_bin: Optional[str] = None
+    java_bin: Optional[str] | Optional[Path] = None
     auto_download: bool = False
     replace_general_params: bool = False
     csvlayout: str = "Vtable"
-    general_params_path: Optional[str] = None  
-    special_names : Optional[tuple] = None  
-    out_index : Optional[bool] = False 
+    general_params_path: Optional[str] = None
+    special_names: Optional[tuple] = None
+    out_index: Optional[bool] = False
 
-    def __init__(
-        self,
-        *args,
-        **kwargs
-    ):
+    def __init__(self, *args, **kwargs):
         from .error_logger import log_eseas_error, setup_eseas_logger
 
         # Map positional arguments to kwargs if they were passed
@@ -94,10 +93,12 @@ class SeasonalOptions(BaseModel):
                 pass
         except Exception as e:
             error_msg = f"{str(e)}\n{traceback.format_exc()}"
+
             class OptsWrapper:
                 def __init__(self, d):
                     for k, v in d.items():
                         setattr(self, k, v)
+
             log_eseas_error(error_msg, OptsWrapper(kwargs))
             try:
                 setup_eseas_logger()
@@ -105,7 +106,7 @@ class SeasonalOptions(BaseModel):
                 pass
             raise
 
-    @model_validator(mode='after')
+    @model_validator(mode="after")
     def apply_logic(self):
         # If auto_download is True, automatically fetch the cruncher directly to java_folder
         if self.auto_download:
