@@ -70,6 +70,7 @@ class SeasonalOptions(BaseModel):
     csvlayout: str = "Vtable"
     general_params_path: Optional[str] = None  
     special_names : Optional[tuple] = None  
+    out_index : Optional[bool] = False 
 
     def __init__(
         self,
