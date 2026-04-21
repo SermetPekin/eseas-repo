@@ -68,8 +68,8 @@ class SeasonalOptions(BaseModel):
     auto_download: bool = False
     replace_general_params: bool = False
     csvlayout: str = "Vtable"
-    general_params_path: Optional[str] = None , 
-    special_names : Optional[tuple] = None , 
+    general_params_path: Optional[str] = None  
+    special_names : Optional[tuple] = None  
 
     def __init__(
         self,
