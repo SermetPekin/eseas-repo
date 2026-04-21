@@ -15,11 +15,21 @@ def main():
             "sa",
             "s_f",
             "cal",
+
         ),
-        workspace_mode=False,  # True creates a workspace folder and copies all demetra files
-        file_name_explanation=True,  # True adds explanations to output file names
-        auto_download=True,
-        auto_approve=True,  # Automatically approve any file replacements without prompting
+        # True creates a workspace folder and copies all demetra files
+        workspace_mode=False,  
+        # True adds explanations to output file names
+        file_name_explanation=True,  
+        # Downloads jwsacruncher 
+        auto_download=True, 
+        # Automatically approve any file replacements without prompting
+        auto_approve=True,  
+        #special Output filenames . 
+        # (can be fullp ath SomeFolder/passengers_combined.xlsx)
+        special_names = ["air_passengers_combined.xlsx" , "multi_combined.xlsx" , "multi_Q_combined.xlsx"] , 
+        # index for combined excel file True  | False  
+        out_index = True,
     )
     seas = Seasonal(options)
 
