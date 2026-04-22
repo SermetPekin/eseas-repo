@@ -32,6 +32,8 @@ from eseas.core.collect import collect_parts_of_results as collect
 
 from eseas.data_for_testing.some_data import get_sample_data
 from eseas.core.utils_general2 import walk, walk2, sleep
+from eseas.core._path import SPath 
+
 
 # Install global exception handler for comprehensive error logging
 try:
@@ -60,6 +62,7 @@ __all__ = [
     "refresh",
     "sleep",
     "collect",
+    "SPath" , 
 ]
 
 __version__ = "2.0.0"
