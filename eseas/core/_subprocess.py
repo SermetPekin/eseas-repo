@@ -1,6 +1,9 @@
 from dataclasses import dataclass 
 import subprocess
 from enum import Enum, auto 
+import locale
+
+system_encoding = locale.getpreferredencoding()
 
 class Status(Enum):
     success = auto()
@@ -69,10 +72,10 @@ class Subprocess:
         try:
             result = subprocess.run(
                 command,
-                capture_output=True,  # Capture stdout and stderr
-                text=True,            # Decode output as text (instead of bytes)
-                check=True     ,      # Raise an exception if the return code is non-zero
-                encoding="utf-8" , 
+                capture_output=True,      # Capture stdout and stderr
+                text=True,                # Decode output as text (instead of bytes)
+                check=True,               # Raise an exception if the return code is non-zero
+                encoding=system_encoding, # "utf-8" 
             )
 
             return result.returncode, result.stdout, result.stderr
