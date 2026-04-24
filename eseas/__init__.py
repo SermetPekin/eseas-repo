@@ -45,9 +45,10 @@ except Exception:
     pass
 
 if sys.platform == "win32":
-    from eseas.core.refresh_excel import refresh
+    from eseas.core.refresh_excel import refresh, refresh_macro
 else:
     refresh = None
+    refresh_macro= None
 
 __all__ = [
     "Cruncher",
@@ -63,6 +64,8 @@ __all__ = [
     "sleep",
     "collect",
     "SPath" , 
+    "refresh"
+    "refresh_macro" , 
 ]
 
-__version__ = "2.0.0"
+__version__ = "2.0.15"
