@@ -1,6 +1,6 @@
 from eseas import refresh, Path
 from eseas.tests.test_utils import skip_if_unix
-from eseas.core.refresh_excel import refresh , File ,check_and_get_files
+from eseas.core.refresh_excel import refresh, File, check_and_get_files, refresh_macro
 import unittest
 from pathlib import Path
 import time  
