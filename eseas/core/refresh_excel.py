@@ -220,7 +220,7 @@ def refresh(
 
     try:
         excel_app = get_excel_app(approve=approve, visible=visible)
-        excel.DisplayAlerts = False
+        excel_app.DisplayAlerts = False
         for File_ in check_and_get_files(
             files, macro_names=None, root=root, approve=approve
         ):
@@ -259,7 +259,7 @@ def refresh_macro(
 
     try:
         excel_app = get_excel_app(approve=approve, visible=visible)
-        excel.DisplayAlerts = False
+        excel_app.DisplayAlerts = False
         for File_ in check_and_get_files(
             files, macro_names=macro_names, root=root, approve=approve
         ):
