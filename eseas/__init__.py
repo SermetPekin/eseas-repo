@@ -32,8 +32,7 @@ from eseas.core.collect import collect_parts_of_results as collect
 
 from eseas.data_for_testing.some_data import get_sample_data
 from eseas.core.utils_general2 import walk, walk2, sleep
-from eseas.core._path import SPath 
-
+from eseas.core._path import SPath
 
 # Install global exception handler for comprehensive error logging
 try:
@@ -45,10 +44,10 @@ except Exception:
     pass
 
 if sys.platform == "win32":
-    from eseas.core.refresh_excel import refresh, refresh_macro
+    from eseas.core.refresh_excel import refresh, refresh_macro, refresh_folder
 else:
     refresh = None
-    refresh_macro= None
+    refresh_macro = None
 
 __all__ = [
     "Cruncher",
@@ -63,9 +62,10 @@ __all__ = [
     "refresh",
     "sleep",
     "collect",
-    "SPath" , 
-    "refresh"
-    "refresh_macro" , 
+    "SPath",
+    "refresh",
+    "refresh_macro",
+    "refresh_folder",
 ]
 
-__version__ = "2.0.15"
+__version__ = "2.1.3"
