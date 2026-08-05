@@ -63,8 +63,9 @@ __all__ = [
     "sleep",
     "collect",
     "SPath",
-    "refresh" "refresh_macro",
+    "refresh",
+    "refresh_macro",
     "refresh_folder",
 ]
 
-__version__ = "2.0.15"
+__version__ = "2.1.3"
