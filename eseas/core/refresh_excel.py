@@ -203,24 +203,31 @@ def check_and_get_files(
         yield File_
 
 
-def get_excel_app(approve=False, visible=False):
+def get_excel_app(approve=False, visible=False, silent=True):
     if excel_running():
         shut_excel(approve)
     excel_app = win32com.client.DispatchEx("Excel.Application")
     excel_app.Visible = int(visible)
-
+    if silent:
+        excel_app.DisplayAlerts = False
+        excel_app.AskToUpdateLinks = False
     return excel_app
 
 
 def refresh(
-    files, root: Path | str | None = None, approve: bool = False, visible=False, sleep=0
+    files,
+    root: Path | str | None = None,
+    approve: bool = False,
+    visible=False,
+    silent=True,
+    sleep=0,
 ):
     pythoncom.CoInitialize()
     excel_app = None
 
     try:
-        excel_app = get_excel_app(approve=approve, visible=visible)
-        excel_app.DisplayAlerts = False
+        excel_app = get_excel_app(approve=approve, visible=visible, silent=silent)
+
         for File_ in check_and_get_files(
             files, macro_names=None, root=root, approve=approve
         ):
@@ -252,14 +259,14 @@ def refresh_macro(
     root: Path | str | None = None,
     approve: bool = False,
     visible=False,
+    silent=True,
     sleep=0,
 ):
     pythoncom.CoInitialize()
     excel_app = None
 
     try:
-        excel_app = get_excel_app(approve=approve, visible=visible)
-        excel_app.DisplayAlerts = False
+        excel_app = get_excel_app(approve=approve, visible=visible, silent=silent)
         for File_ in check_and_get_files(
             files, macro_names=macro_names, root=root, approve=approve
         ):
