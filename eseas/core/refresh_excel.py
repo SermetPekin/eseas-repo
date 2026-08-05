@@ -214,6 +214,36 @@ def get_excel_app(approve=False, visible=False, silent=True):
     return excel_app
 
 
+def refresh_folder(
+    folder: Path,
+    approve: bool = False,
+    visible: bool = False,
+    silent: bool = True,
+    sleep: int = 0,
+    extensions: list[str] = [".xlsx", ".xls", ".xlsm"],
+):
+    if isinstance(folder, (tuple, list)):
+        for item in folder:
+            refresh_folder(Path(item))
+        return
+
+    folder = Path(folder)
+    if not folder.exists():
+        raise ValueError("Folder does not exist!")
+    if not folder.is_dir():
+        raise ValueError("Input must be a directory, not a file!")
+
+    import os
+
+    files: list[Path] = [
+        folder / x
+        for x in os.listdir(folder)
+        if (folder / x).suffix.lower() in extensions
+    ]
+
+    return refresh(files, approve=approve, visible=visible, silent=silent, sleep=sleep)
+
+
 def refresh(
     files,
     root: Path | str | None = None,
