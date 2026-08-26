@@ -2,6 +2,27 @@ import json
 from pathlib import Path
 from typing import Any, List
 
+def HOME(stem=None) -> Path:
+    folder = Path.home()
+    if stem:
+        return Path(folder) / stem
+
+    return Path(folder)
+
+
+def DESKTOP(stem=None) -> Path:
+    folder = Path.home() / "Desktop"
+    if stem:
+        return Path(folder) / stem
+    return Path(folder)
+
+
+def DOWNLOADS(stem=None) -> Path:
+    folder = Path.home() / "Downloads"
+    if stem:
+        return Path(folder) / stem
+    return Path(folder)
+
 class SPath(Path):
 
     def __new__(cls, *args, **kwargs):
